@@ -60,7 +60,7 @@ function AppearanceDialog({ appearance, drugName, licenseId, urls, index, onChan
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-2 text-xs" aria-label="圖片放大倍率">
         {[1, 2, 4].map(value => <button key={value} type="button" aria-pressed={zoom === value} onClick={() => setZoom(value)} className={`rounded-lg border px-3 py-2 ${zoom === value ? 'border-emerald-700 bg-emerald-50 text-emerald-800' : 'border-slate-200'}`}>{value === 1 ? '看整張' : `放大 ${value} 倍`}</button>)}
-        <span className="text-slate-500">{zoom > 1 ? '可左右、上下捲動查看刻字' : '點兩下藥錠，可放大該位置'}</span>
+        <span className="text-slate-500">{zoom > 1 ? '可左右、上下捲動查看細節' : '點兩下圖片，可放大該位置'}</span>
       </div>
       <div className="my-4 overflow-hidden rounded-xl border border-slate-200"><AppearanceImage key={urls[index]} url={detailImage?.url || appearance.localImageUrls?.[urls[index]] || urls[index]} alt={`${drugName}－食藥署外觀圖 ${index + 1}`} enlarged zoom={zoom} onZoom={setZoom} /></div>
       {detailImage && <p className="mb-3 text-xs text-slate-500">官方來源清晰圖已存本機 · {detailImage.width} × {detailImage.height} · 取得於 {new Date(detailImage.fetchedAt).toLocaleDateString('zh-TW')}</p>}

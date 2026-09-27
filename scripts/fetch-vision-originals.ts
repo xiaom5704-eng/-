@@ -1,24 +1,35 @@
 import { mkdir, writeFile } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { loadRuntimeConfig } from '../server/runtime';
 import { getTfda, openDrugDatabase } from '../server/medications/store';
 import { allowedOriginalUrl, ReferenceOriginals } from '../server/vision/reference-originals';
+import { LocalMedicationImages } from '../server/medications/local-images';
 
 async function main() {
   const args = process.argv.slice(2);
-  if (args.some(arg => !/^--limit=\d+$/.test(arg) && !/^--id=.+/.test(arg) && arg !== '--refresh'))
-    throw new Error('用法：npm run vision:originals -- [--limit=20] [--id=完整許可證字號] [--refresh]');
+  if (args.some(arg => !/^--limit=\d+$/.test(arg) && !/^--id=.+/.test(arg) && !['--refresh', '--missing-only'].includes(arg)))
+    throw new Error('用法：npm run vision:originals -- [--limit=20] [--id=完整許可證字號] [--refresh 或 --missing-only]');
+  if (args.includes('--refresh') && args.includes('--missing-only')) throw new Error('--refresh 與 --missing-only 請擇一使用；補缺不會重抓已有的本機圖片。');
   const limit = Number(args.find(arg => arg.startsWith('--limit='))?.slice(8) || 20);
   if (!Number.isSafeInteger(limit) || limit < 1 || limit > 10000) throw new Error('limit 請填 1–10000。');
-  const config = loadRuntimeConfig(), db = openDrugDatabase(config.paths.drugDb);
+  const config = loadRuntimeConfig();
+  if (!existsSync(config.paths.drugDb)) throw new Error('尚未安裝本機藥品資料，未建立空資料庫。請先執行 npm run data:install，或核對 DRUG_DB_PATH。');
+  const db = openDrugDatabase(config.paths.drugDb);
   try {
     const originals = new ReferenceOriginals(db, path.join(config.paths.vision, 'originals'));
+    const localImages = new LocalMedicationImages(db, path.join(config.paths.vision, 'index.db'), path.join(config.paths.vision, 'images'));
     const ids = args.filter(arg => arg.startsWith('--id=')).map(arg => arg.slice(5));
     if (ids.some(id => !getTfda(db, id))) throw new Error('指定的許可證未在本機找到，請先核對字號。');
     const rows = ids.length ? [...new Set(ids)] : (db.prepare('SELECT id FROM tfda_appearances ORDER BY id').all() as { id: string }[]).map(row => row.id);
     const saved = new Set<string>();
-    if (!args.includes('--refresh')) for (let offset = 0; offset < rows.length; offset += 500)
-      for (const row of originals.forDrugs(rows.slice(offset, offset + 500))) saved.add(`${row.drug_id}\0${row.source_url}`);
+    if (!args.includes('--refresh')) for (let offset = 0; offset < rows.length; offset += 500) {
+      const batch = rows.slice(offset, offset + 500);
+      for (const row of originals.forDrugs(batch)) saved.add(`${row.drug_id}\0${row.source_url}`);
+      if (args.includes('--missing-only')) for (const drug of localImages.attach(batch.map(id => getTfda(db, id)!))) {
+        for (const url of drug.appearance?.imageUrls || []) if (drug.appearance?.localImageUrls?.[url]) saved.add(`${drug.id}\0${url}`);
+      }
+    }
     const pending = rows.flatMap(id => {
       return (getTfda(db, id)?.appearance?.imageUrls || []).filter(url => allowedOriginalUrl(url) && !saved.has(`${id}\0${url}`)).map(url => ({ id, url }));
     }).slice(0, limit);

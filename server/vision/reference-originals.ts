@@ -20,7 +20,7 @@ export function allowedOriginalUrl(value: string) {
   try {
     const url = new URL(value);
     return url.origin === 'https://mcp.fda.gov.tw' && !url.username && !url.password && !url.hash &&
-      /^\/insert\/shapeImg\/[a-f0-9-]{36}$/i.test(url.pathname) && url.search === '?c=o';
+      /^\/insert\/shapeImg\/[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}(?:_img_[1-9]\d{0,2})?$/i.test(url.pathname) && url.search === '?c=o';
   } catch { return false; }
 }
 

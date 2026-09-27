@@ -80,3 +80,22 @@ test('Source changes during download and deleted files never leave a usable orig
   rmSync(f.originals.fileFor(row.sha256)!);
   assert.equal(f.service.attach([getTfda(f.db, 'SYNTHETIC001')!])[0].appearance?.localDetailImages, undefined);
 });
+
+test('Official numbered image URLs remain license-scoped and survive an offline reopen', async t => {
+  const f = await fixture(t);
+  const numbered = f.source.replace('?c=o', '_img_1?c=o');
+  assert.equal(allowedOriginalUrl(numbered), true);
+  for (const url of [numbered.replace('_img_1', '_img_0'), numbered.replace('_img_1', '_img_1000'), numbered.replace('_img_1', '_img_1.exe'),
+    numbered.replace('_img_1', '_img_1/extra'), numbered.replace('/shapeImg/', '/other/'), numbered + '&extra=1',
+    numbered.replace('5471bb25-2072-4c17-b3dc-cb741a489500', '-'.repeat(36))]) assert.equal(allowedOriginalUrl(url), false, url);
+  let calls = 0;
+  const request: typeof fetch = async url => { calls++; assert.equal(url, numbered); return new Response(f.bytes); };
+  await assert.rejects(f.originals.download('SYNTHETIC001', numbered, request), /目前列出/);
+  assert.equal(calls, 0, 'a valid endpoint is insufficient without this product linkage');
+  f.db.prepare("UPDATE tfda_appearances SET payload=json_set(payload, '$.imageUrls', json(?))").run(JSON.stringify([numbered]));
+  const saved = await f.originals.download('SYNTHETIC001', numbered, request);
+  assert.equal(calls, 1);
+  const reopened = new ReferenceOriginals(f.db, path.join(f.root, 'originals'));
+  assert.equal(reopened.forDrugs(['SYNTHETIC001'])[0].source_url, numbered);
+  assert.equal(f.service.attach([getTfda(f.db, 'SYNTHETIC001')!])[0].appearance!.localDetailImages![numbered].url, `/api/medications/reference-images/${saved.sha256}.webp`);
+});
