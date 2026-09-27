@@ -6,6 +6,7 @@
   "scripts": {
     "data:install": "tsx scripts/setup-local-data.mjs",
     "data:apply-reviewed": "tsx scripts/apply-reviewed-ddinter.ts",
+    "data:import-labels": "tsx scripts/import-tfda-labels.ts",
     "vision:prepare": "node scripts/prepare-vision.mjs",
     "vision:index": "node scripts/index-vision.mjs",
     "vision:originals": "tsx scripts/fetch-vision-originals.ts",

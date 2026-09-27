@@ -5,6 +5,7 @@ import { ingredientName } from '../../shared/medication-view';
 import DrugAppearanceDetails from './DrugAppearanceDetails';
 import SourceTables from './SourceTables';
 import SourceDocument from './SourceDocument';
+import TaiwanLabelLinks from './TaiwanLabelLinks';
 
 const labelStatus: Record<MedicationEvidence['labelStatus'], string> = {
   found: '有成分相符的美國資料可參考',
@@ -29,7 +30,8 @@ export default function MedicationLeaflets({ report }: { report: MedicationRepor
         <a href={entry.localLabel.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-800 underline underline-offset-4">開啟臺灣仿單來源（需連線） <ExternalLink size={15} aria-hidden="true" /></a>
         <p className="text-xs text-emerald-900 mt-2 leading-relaxed">{entry.localLabel.title}</p>
         <SourceDocument saved={entry.localLabel.document} title={entry.localLabel.title} sourceUrl={entry.localLabel.sourceUrl} />
-      </div> : entry.drug.source === 'tfda' && <p className="text-sm text-slate-500 leading-relaxed">目前沒有這個品項的臺灣仿單連結，請查看藥盒內的說明書或詢問藥師。</p>}
+      </div> : !entry.taiwanLabelIndex && entry.drug.source === 'tfda' && <p className="text-sm text-slate-500 leading-relaxed">本機索引尚未找到許可證及品名都相符的臺灣仿單入口，請查看藥盒內的說明書或詢問藥師。</p>}
+      {entry.taiwanLabelIndex && <TaiwanLabelLinks entry={entry.taiwanLabelIndex} />}
       {entry.drug.dosageText && entry.drug.dosageText !== '詳見仿單' && <details className="rounded-xl bg-slate-50 p-3"><summary className="cursor-pointer text-sm font-medium">如何使用（食藥署原文）</summary><p className="whitespace-pre-wrap text-sm leading-7 mt-3">{entry.drug.dosageText}</p></details>}
       <details className="border-t border-slate-100 pt-4">
         <summary className="cursor-pointer text-sm font-medium text-slate-700">美國仿單參考{entry.labels.length ? `（${entry.labels.length} 份・英文${entry.labelLookup?.reused ? '・本機紀錄' : ''}）` : entry.labelStatus === 'not_requested' ? '（尚無保存紀錄）' : entry.labelStatus === 'unavailable' ? '（暫時無法連線）' : entry.labelStatus === 'unmapped' ? '（成分待核對）' : entry.labelStatus === 'incomplete' ? '（尚未完成篩選）' : '（該次未查得相符資料）'}</summary>

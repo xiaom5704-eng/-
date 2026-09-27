@@ -2,6 +2,7 @@ import { patientAgeText, safetyKindText, type MedicationDemo, type MedicationSaf
 import { sourceTableHtml, sourceTableUnavailable } from './label-tables';
 import { interactionDetailScope, type InteractionDetail } from './interaction-detail';
 import { validLocalDocument, type SavedSourceDocument } from './source-document';
+import type { TfdaLabelIndexEntry } from './tfda-label-index';
 import { mechanismDefinitions, mechanismDefinitionUrl, mechanismScope, type InteractionMechanism } from './interaction-mechanism';
 
 export type DrugSource = 'tfda' | 'rxnorm';
@@ -41,7 +42,7 @@ export interface DrugCandidate extends DrugSelection {
 }
 
 export interface DatasetStatus {
-  source: 'tfda' | 'ddinter' | 'tfda_appearance';
+  source: 'tfda' | 'ddinter' | 'tfda_appearance' | 'tfda_labels';
   count: number;
   importedAt: string | null;
   sourceUrl: string;
@@ -52,7 +53,7 @@ export interface DatasetStatus {
 }
 
 export const datasetNames: Record<DatasetStatus['source'], string> = {
-  tfda: '臺灣藥品', ddinter: '交互作用', tfda_appearance: '藥品外觀',
+  tfda: '臺灣藥品', ddinter: '交互作用', tfda_appearance: '藥品外觀', tfda_labels: '仿單與外盒索引',
 };
 
 export interface ResolvedIngredient {
@@ -108,6 +109,7 @@ export interface MedicationEvidence {
   labelLookup?: LabelLookup;
   warnings: string[];
   localLabel?: { title: string; sourceUrl: string; document?: SavedSourceDocument };
+  taiwanLabelIndex?: TfdaLabelIndexEntry;
 }
 
 export interface InteractionEvidence {
@@ -196,6 +198,14 @@ export function reportToMarkdown(report: MedicationReport): string {
     }
     if (entry.drug.dosageText) lines.push(`TFDA 用法用量原文：${text(entry.drug.dosageText)}`);
     if (entry.localLabel) lines.push(`[${text(entry.localLabel.title)}](${entry.localLabel.sourceUrl})`, savedDocumentMarkdown(entry.localLabel.document));
+    if (entry.taiwanLabelIndex) {
+      const index = entry.taiwanLabelIndex;
+      lines.push(`臺灣仿單／外盒索引：許可證及中英文品名相符；取得日期 ${text(index.retrievedAt)}。僅保存連結，原始文件需連線開啟，未核對內容或修訂版本。`,
+        sourceMarkdownLink('TFDA 索引來源', index.sourceUrl), `索引 SHA-256：${text(index.sha256)}`,
+        ...index.labelUrls.map((url, i) => sourceMarkdownLink(`官方仿單入口 ${i + 1}（需連線）`, url)),
+        ...index.packageUrls.map((url, i) => sourceMarkdownLink(`官方外盒圖 ${i + 1}（需連線）`, url)));
+      if (index.unavailableLabelLinks) lines.push('原始資料中的部分仿單連結不完整，已略過。');
+    }
     for (const ingredient of entry.ingredients) {
       if (ingredient.aliasSourceUrl) lines.push(`別名核對：${text(ingredient.original)} → ${text(ingredient.name)}。[核對來源](${ingredient.aliasSourceUrl})`);
       if (ingredient.ddinterNormalization) {

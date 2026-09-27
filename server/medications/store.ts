@@ -8,6 +8,8 @@ import { resolveDosageForm } from './dosage-forms';
 import { initializeDdinterSupplements } from './ddinter-supplements';
 import { initializeDdinterDetails, readDdinterDetail } from './ddinter-details';
 import { initializeSourceDocuments } from './source-documents';
+import { initializeTfdaLabelIndex } from './tfda-label-index';
+import { tfdaLabelIndexUrl } from '../../shared/tfda-label-index';
 import { createDdinterMechanismReader } from './ddinter-mechanisms';
 
 export const TFDA_URL = 'https://data.gov.tw/dataset/9122';
@@ -48,6 +50,7 @@ export function openDrugDatabase(filename = process.env.DRUG_DB_PATH || 'data/dr
   initializeDdinterSupplements(db);
   initializeDdinterDetails(db);
   initializeSourceDocuments(db);
+  initializeTfdaLabelIndex(db);
   initializeSearchIndex(db);
   return db;
 }
@@ -55,11 +58,11 @@ export function openDrugDatabase(filename = process.env.DRUG_DB_PATH || 'data/dr
 export type DrugDatabase = ReturnType<typeof openDrugDatabase>;
 
 export function datasetStatus(db: DrugDatabase): DatasetStatus[] {
-  return (['tfda', 'ddinter', 'tfda_appearance'] as const).map(source => {
+  return (['tfda', 'ddinter', 'tfda_appearance', 'tfda_labels'] as const).map(source => {
     const row = db.prepare('SELECT metadata FROM drug_datasets WHERE source = ?').get(source) as { metadata: string } | undefined;
     const status: DatasetStatus = row ? JSON.parse(row.metadata) : {
       source, count: 0, importedAt: null,
-      sourceUrl: source === 'tfda' ? TFDA_URL : source === 'tfda_appearance' ? APPEARANCE_URL : DDINTER_URL,
+      sourceUrl: source === 'tfda' ? TFDA_URL : source === 'tfda_appearance' ? APPEARANCE_URL : source === 'tfda_labels' ? tfdaLabelIndexUrl : DDINTER_URL,
       license: source === 'ddinter' ? 'CC BY-NC-SA 4.0' : '政府資料開放授權條款第 1 版',
       coverage: '尚未匯入',
     };

@@ -52,14 +52,14 @@ test('Health identifies missing datasets, API errors stay JSON, and conversation
   try {
     const health = await (await fetch(`${base}/api/health`)).json();
     assert.equal(health.status, 'needs_data'); assert.equal(health.service, 'medsafe');
-    assert.deepEqual(health.needsData, ['tfda', 'ddinter', 'tfda_appearance']);
+    assert.deepEqual(health.needsData, ['tfda', 'ddinter', 'tfda_appearance', 'tfda_labels']);
     assert.ok(!JSON.stringify(health).includes(root), 'health does not expose filesystem paths');
     const source = openDrugDatabase(config.paths.drugDb);
     importTfda(source, [{ 許可證字號: 'SYNTHETIC001', 中文品名: '人工測試品', 英文品名: 'TEST', 主成分略述: 'Test ingredient' }]);
     source.close();
     const populated = await (await fetch(`${base}/api/health`)).json();
     assert.equal(populated.datasets[0].count, 1);
-    assert.deepEqual(populated.needsData, ['ddinter', 'tfda_appearance']);
+    assert.deepEqual(populated.needsData, ['ddinter', 'tfda_appearance', 'tfda_labels']);
     const unknown = await fetch(`${base}/api/not-a-route`);
     assert.equal(unknown.status, 404); assert.match(unknown.headers.get('content-type')!, /json/);
     assert.ok((await unknown.json()).error);

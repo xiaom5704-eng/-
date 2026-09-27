@@ -3,6 +3,7 @@ import path from 'node:path';
 import { config } from 'dotenv';
 import { installPublicData } from './install-public-data.mjs';
 import { applyReviewedDdinterFile } from './reviewed-ddinter.ts';
+import { applyTfdaLabelFile } from './tfda-label-bundle.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 config({ path: path.join(root, '.env'), quiet: true });
@@ -17,6 +18,8 @@ try {
     prepareData: async directory => {
       const result = await applyReviewedDdinterFile(path.join(directory, 'drugs.db'));
       console.log(`已核對的補充資料：新增 ${result.addedSnapshots} 份 DDInter 快照、${result.addedPairs.toLocaleString()} 組配對。`);
+      const labels = await applyTfdaLabelFile(path.join(directory, 'drugs.db'));
+      console.log(`本機仿單／外盒索引：${labels.metadata.count.toLocaleString()} 個品項；文件需連線開啟。`);
     } });
   console.log(`本機資料安裝完成，基本快照 ${installed.verifiedFiles.toLocaleString()} 個檔案校驗通過，並完成補入。基本快照準備日期：${installed.preparedAt}。`);
   console.log('執行 npm run dev，開啟終端機顯示的網址即可使用。不需要桌面安裝程式。');

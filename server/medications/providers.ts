@@ -1,6 +1,7 @@
 import type { DrugCandidate, DrugSelection, LabelEvidence, MedicationEvidence, MedicationReport, ReportMode, ResolvedIngredient } from '../../shared/medication';
 import { compareIngredients, datasetStatus, findDdinter, type DrugDatabase } from './store';
 import { verifiedIngredientName, verifiedProductLabel } from './verified-names';
+import { readTfdaLabelIndex } from './tfda-label-index';
 import { evaluateMedicationSafety, type MedicationPatient } from '../../shared/medication-safety';
 import { exactLookupName, findDdinterByRxnorm, ingredientRegistryKey, readIngredientRecord, validConcept, writeIngredientRecord, type IngredientRecord } from './ingredient-registry';
 import { labelContext, labelResult, LABEL_MAX_PAGES, LABEL_PAGE_SIZE, parseLabelPage, readLabelSnapshot, writeLabelSnapshot, type LabelSnapshot } from './label-registry';
@@ -263,7 +264,8 @@ export class DrugProviders {
       if (drug.licenseStatus && drug.licenseStatus !== '未標示註銷') warnings.push(`許可證狀態：${drug.licenseStatus}。`);
       const expiry = /^\d{4}\/\d{2}\/\d{2}$/.test(drug.validUntil) ? new Date(`${drug.validUntil.replaceAll('/', '-')}T23:59:59+08:00`) : null;
       if (expiry && expiry.getTime() < Date.now()) warnings.push('資料中的許可證有效日期已過，請查核 TFDA 最新狀態。');
-      medications.push({ drug, ingredients, labels, labelStatus: status, labelLookup: lookup, warnings, localLabel: verifiedProductLabel(drug) });
+      medications.push({ drug, ingredients, labels, labelStatus: status, labelLookup: lookup, warnings,
+        localLabel: verifiedProductLabel(drug), taiwanLabelIndex: readTfdaLabelIndex(this.db, drug) });
     }
     return { mode, checkedAt: new Date().toISOString(), datasets: datasetStatus(this.db), medications,
       ...(patient ? { safety: evaluateMedicationSafety(drugs, patient) } : {}),
