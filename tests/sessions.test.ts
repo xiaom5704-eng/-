@@ -62,6 +62,41 @@ test('Session inputs fail with JSON errors and preserve existing data', async t 
   assert.deepEqual((await request('/messages/a')).body, []);
 });
 
+test('A first question creates its session atomically and an uncertain-response retry reuses the same row', async t => {
+  const { request } = await fixture(t);
+  const body = { session_id: 'first', role: 'user', content: '諮詢對象年齡：30 歲\n人工問題', client_id: 'attempt:user', newSessionTitle: '新對話測試' };
+  const first = await request('/messages', 'POST', body);
+  assert.equal(first.status, 200);
+  assert.deepEqual((await request('/messages', 'POST', body)).body, first.body);
+  assert.equal((await request('/messages/first')).body.length, 1);
+  await request('/sessions/first', 'PATCH', { title: '手動標題', is_manual_title: 1 });
+  assert.deepEqual((await request('/messages', 'POST', body)).body, first.body);
+  assert.equal((await request('/sessions')).body.find((s: { id: string }) => s.id === 'first').title, '手動標題');
+  assert.equal((await request('/messages', 'POST', { ...body, content: '不同年齡或內容' })).status, 409);
+  assert.equal((await request('/messages', 'POST', { ...body, client_id: 'another:user' })).status, 409);
+  assert.equal((await request('/messages/first')).body.length, 1);
+  assert.equal((await request('/sessions/first/exchange', 'POST', { requestId: 'attempt', userMessageId: first.body.id,
+    userContent: body.content, assistantContent: '人工回答' })).status, 200);
+  assert.equal((await request('/messages/first')).body.length, 2);
+});
+
+test('Failed first-question writes roll back the session and cannot recreate deleted conversations', async t => {
+  const { db, request } = await fixture(t);
+  const body = { session_id: 'new', role: 'user', content: '人工問題', client_id: 'attempt:user', newSessionTitle: '新對話' };
+  db.exec("CREATE TRIGGER reject_first BEFORE INSERT ON messages BEGIN SELECT RAISE(ABORT, 'synthetic write failure'); END;");
+  assert.equal((await request('/messages', 'POST', body)).status, 500);
+  assert.equal((await request('/messages/new')).status, 404);
+  assert.equal((await request('/sessions')).body.length, 1);
+  db.exec('DROP TRIGGER reject_first');
+  assert.equal((await request('/messages', 'POST', body)).status, 200);
+  await request('/sessions/new', 'DELETE');
+  assert.equal((await request('/messages', 'POST', body)).status, 410);
+  assert.equal((await request('/messages/new')).status, 404);
+  for (const change of [{ client_id: undefined }, { newSessionTitle: '' }, { role: 'assistant' }])
+    assert.equal((await request('/messages', 'POST', { ...body, session_id: 'invalid', ...change })).status, 400);
+  assert.equal((await request('/messages/invalid')).status, 404);
+});
+
 test('Report messages retain stable order, and session deletion removes both', async t => {
   const { request } = await fixture(t);
   const saved = await request('/sessions/a/medication-report', 'POST', { content: '純測試報告' });

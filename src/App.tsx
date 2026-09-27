@@ -30,6 +30,7 @@ import { browserSpeechEnvironment, createSpeechController } from './services/spe
 import { readPendingReplies, writePendingReplies, savePendingReply, type PendingReplies, type PendingReply } from './services/pending-replies';
 import { unansweredQuestion } from '../shared/conversation-retry';
 import { medicationReportQuestion, type MedicationSaveAttempt } from '../shared/medication-save';
+import { questionSaveAttempt, type QuestionSaveAttempt } from '../shared/question-save';
 
 export default function App() {
   const [sessions, setSessions] = useState<Session[]>([]);
@@ -47,6 +48,8 @@ export default function App() {
       speechRef.current?.cancel();
       setConsultationAge({ value: '', unit: 'years' });
       setSymptomText('');
+      setInputText('');
+      questionAttempt.current = null;
       setConsultationRevision(revision => revision + 1);
     }
     if (id !== currentSessionIdRef.current) {
@@ -78,6 +81,7 @@ export default function App() {
   const pendingReplySection = useRef<HTMLElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState('');
+  const questionAttempt = useRef<QuestionSaveAttempt | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isHistoryLoading, setIsHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState<string | null>(null);
@@ -261,7 +265,6 @@ export default function App() {
       setIsHistoryLoading(false);
     }
     setSymptomResponse(previous => previous?.sessionId === currentSessionId ? previous : null);
-    setInputText('');
     speechRef.current?.cancel();
     return () => { controller.abort(); messagesRequestRef.current += 1; };
   }, [currentSessionId]);
@@ -296,6 +299,7 @@ export default function App() {
     try {
       const data = await requestJson<Message[]>(`/api/messages/${encodeURIComponent(id)}`, { signal });
       if (isCurrent()) setMessages(data);
+      return data;
     } catch (e) {
       if (isCurrent()) setHistoryError(e instanceof Error ? e.message : '歷史紀錄載入失敗，請重試。');
     } finally {
@@ -391,23 +395,31 @@ export default function App() {
     setIsLoading(true);
     setActionError(null);
     const question = withConsultationAge(inputText, consultationAge);
+    const draft = inputText;
     speechRef.current?.cancelListening();
     const startingSessionId = currentSessionIdRef.current;
-    let sessionId = startingSessionId;
-    const requestId = crypto.randomUUID();
+    const attempt = questionSaveAttempt(question, startingSessionId, questionAttempt.current);
+    questionAttempt.current = attempt;
+    const { sessionId, requestId } = attempt;
     const controller = beginGeneration();
     try {
-      if (!sessionId) {
-        sessionId = await createSession(`新對話 ${new Date().toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}`);
-        controller.signal.throwIfAborted();
-        if (currentSessionIdRef.current === startingSessionId) selectSession(sessionId, true);
+      // The first question and its session are one write. A lost acknowledgement
+      // retains both the draft and request identity for an idempotent retry.
+      const saved = await sendJson<{ id: number }>('/api/messages', { session_id: sessionId, role: 'user', content: question,
+        client_id: `${requestId}:user`, ...(attempt.newSessionTitle ? { newSessionTitle: attempt.newSessionTitle } : {}) });
+      if (!Number.isSafeInteger(saved.id) || saved.id <= 0) throw new Error('問題尚未確認儲存，原文字仍保留，請重試送出。');
+      if (questionAttempt.current === attempt) questionAttempt.current = null;
+      if (currentSessionIdRef.current === startingSessionId) {
+        if (!startingSessionId) selectSession(sessionId, true);
+        setInputText(current => current === draft ? '' : current);
       }
+      if (!startingSessionId) await fetchSessions();
+      const history = await fetchMessages(sessionId);
       controller.signal.throwIfAborted();
-      const saved = await sendJson<{ id: number }>('/api/messages', { session_id: sessionId, role: 'user', content: question, client_id: `${requestId}:user` });
-      if (currentSessionIdRef.current === sessionId) setInputText('');
-      await fetchMessages(sessionId);
-      controller.signal.throwIfAborted();
-      const answer = await trackApiCall(() => chatWithAI(messages, question, userApiKey, selectedEngine, controller.signal));
+      if (!history) return; // fetchMessages already exposes the history reload control.
+      const latest = unansweredQuestion(history, sessionId);
+      if (!latest || latest.message.id !== saved.id) throw new Error('歷史紀錄已更新，請核對最新訊息後再操作。');
+      const answer = await trackApiCall(() => chatWithAI(latest.history, question, userApiKey, selectedEngine, controller.signal));
       controller.signal.throwIfAborted();
       finishGeneration(controller);
       await persistReply({ requestId, sessionId, userMessageId: saved.id, userContent: question, assistantContent: answer, question, answer, kind: 'chat' });

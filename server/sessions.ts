@@ -82,14 +82,28 @@ export function sessionRouter(db: ReturnType<typeof openSessionDatabase>) {
     res.json(db.prepare('SELECT * FROM messages WHERE session_id = ? ORDER BY created_at ASC, id ASC').all(req.params.sessionId));
   });
   router.post('/messages', (req, res) => {
-    const { session_id, role, content, client_id } = req.body || {};
+    const { session_id, role, content, client_id, newSessionTitle } = req.body || {};
     if (!validText(session_id, 200) || !['user', 'assistant'].includes(role) || !validText(content, 2_000_000) ||
-      (client_id !== undefined && !validText(client_id, 240))) {
+      (client_id !== undefined && !validText(client_id, 240)) ||
+      (newSessionTitle !== undefined && (!validText(newSessionTitle, 2000) || role !== 'user' || !validText(client_id, 240)))) {
       res.status(400).json({ error: '訊息資料無效' }); return;
     }
-    if (!exists(session_id)) { res.status(404).json({ error: '對話不存在，訊息未儲存' }); return; }
-    try { res.json({ success: true, id: saveMessage(session_id, role, content, client_id) }); }
-    catch (error) { if (error instanceof MessageConflict) res.status(409).json({ error: error.message }); else throw error; }
+    if (newSessionTitle === undefined && !exists(session_id)) { res.status(404).json({ error: '對話不存在，訊息未儲存' }); return; }
+    try {
+      const id = db.transaction(() => {
+        if (newSessionTitle !== undefined) {
+          if (wasDeleted(session_id)) throw new DeletedSession('原對話已刪除，問題未重新建立對話或寫入。');
+          if (!exists(session_id)) db.prepare('INSERT INTO sessions (id, title) VALUES (?, ?)').run(session_id, newSessionTitle);
+          else if (!existingMessage.get(session_id, client_id)) throw new MessageConflict('對話已存在，請重新載入歷史紀錄核對。');
+        }
+        return saveMessage(session_id, role, content, client_id);
+      })();
+      res.json({ success: true, id });
+    } catch (error) {
+      if (error instanceof DeletedSession) res.status(410).json({ error: error.message });
+      else if (error instanceof MessageConflict) res.status(409).json({ error: error.message });
+      else throw error;
+    }
   });
   router.post('/sessions/:id/exchange', (req, res) => {
     const { requestId, userContent, assistantContent, userMessageId } = req.body || {};
