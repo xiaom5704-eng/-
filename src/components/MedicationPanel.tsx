@@ -18,7 +18,8 @@ import { requestJson } from '../services/http';
 import { observationFromOcr, switchOcrReading, type OcrPage, type OcrTarget, type ScanEngine } from '../../shared/medication-ocr';
 import { summarizeMedicationReport } from '../../shared/medication-summary';
 import { reportMatchesSelection } from '../../shared/medication-view';
-import { getMedicationStatus, queryMedicationReport, searchMedications, matchMedications, loadMedicationDemo } from '../services/medications';
+import { getMedicationStatus, queryMedicationReport, searchMedications, matchMedications, loadMedicationDemo, suggestMedicationNames } from '../services/medications';
+import { canSuggestName } from '../../shared/name-suggestions';
 import { ageError } from '../../shared/consultation';
 import type { MedicationPatient } from '../../shared/medication-safety';
 import MedicationDemo from './MedicationDemo';
@@ -49,8 +50,9 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const [candidates, setCandidateItems] = useState<DrugCandidate[]>([]);
   const [candidatePaging, setCandidatePaging] = useState<CandidatePaging | null>(null);
   const [candidatePageError, setCandidatePageError] = useState('');
+  const [nameSuggestions, setNameSuggestions] = useState<string[] | null>(null);
   // Every replacement (OCR, CV, edits or uploads) invalidates the previous pager.
-  const replaceCandidates = (items: DrugCandidate[]) => { setCandidateItems(items); setCandidatePaging(null); setCandidatePageError(''); };
+  const replaceCandidates = (items: DrugCandidate[]) => { setCandidateItems(items); setCandidatePaging(null); setCandidatePageError(''); setNameSuggestions(null); };
   const [searched, setSearched] = useState(false);
   const [selected, setSelected] = useState<DrugCandidate[]>([]);
   const [files, setFiles] = useState<Attachment[]>([]);
@@ -99,6 +101,9 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const visualMode = scanEngine === 'vision' || scanEngine === 'package';
   const activeVisionStatus = scanEngine === 'package' ? packageStatus : visionStatus;
   const maxFiles = visualMode ? 2 : 4;
+  const suggestionRequest = candidatePaging?.request;
+  const suggestionQuery = suggestionRequest?.kind === 'name' && suggestionRequest.source === 'tfda' ? suggestionRequest.query :
+    suggestionRequest?.kind === 'appearance' && !suggestionRequest.observation.appearance && !suggestionRequest.observation.strength ? suggestionRequest.observation.name : '';
   useEffect(() => { setObservedPill(null); setScanWarnings([]); }, [files, scanEngine]);
 
   function acceptDatasets(value: DatasetStatus[]) {
@@ -189,6 +194,17 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       replaceCandidates(data.candidates); setNotices(data.warnings);
       setCandidatePaging({ ...current, page: data.page });
     } catch (e) { if (version === searchVersion.current && mounted.current) setCandidatePageError((e as Error).message); }
+    finally { if (mounted.current && version === searchVersion.current) setBusy(null); }
+  }
+
+  async function suggestNames() {
+    if (busy || !canSuggestName(suggestionQuery)) return;
+    const version = ++searchVersion.current;
+    setBusy('search'); setError('');
+    try {
+      const result = await suggestMedicationNames(suggestionQuery, dosageForm);
+      if (mounted.current && version === searchVersion.current) setNameSuggestions(result.suggestions);
+    } catch (e) { if (mounted.current && version === searchVersion.current) setError((e as Error).message); }
     finally { if (mounted.current && version === searchVersion.current) setBusy(null); }
   }
 
@@ -432,6 +448,14 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       <div ref={candidateSection} className="scroll-mt-6">
       {notices.map(n => <p key={n} className="mt-3 text-sm text-amber-800">{n}</p>)}
       {searched && !candidates.length && <p className="mt-4 text-sm text-slate-600">未找到品項。請核對拼字、改用成分名稱或切換資料來源；不代表此藥不存在。</p>}
+      {searched && !candidates.length && canSuggestName(suggestionQuery) && <section aria-label="相近品名建議" className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
+        <p className="font-medium text-slate-800">可能是品名拼字不同</p>
+        <p className="mt-1 text-slate-600">最多列出 8 個相差一個字的本機品名寫法，排序不代表正確率。請對照原圖或藥袋，選擇後才重新搜尋，劑型篩選會保留；不會自動確認藥品。</p>
+        {nameSuggestions === null ? <button type="button" disabled={!!busy} onClick={() => void suggestNames()} className={`${secondary} mt-3`}>查詢相近品名</button> :
+          nameSuggestions.length ? <div className="mt-3 flex flex-wrap gap-2">{nameSuggestions.map(name => <button type="button" key={name} disabled={!!busy} className={secondary}
+            onClick={() => { updateQuery(name); setSource('tfda'); void search(name, 'tfda'); }}>改查「{name}」</button>)}</div> :
+            <p className="mt-3 text-slate-600">沒有找到可用的相近寫法；請對照原圖校正，或改用完整許可證字號。</p>}
+      </section>}
       {candidatePaging && <div aria-label="藥品搜尋分頁" className="mt-4 flex flex-wrap items-center justify-between gap-3">
         <p role="status" className="text-sm text-slate-600">{candidatePaging.page.total === null ? `本次列出 ${candidates.length} 筆候選` :
           candidates.length ? `第 ${candidatePaging.page.offset + 1}–${candidatePaging.page.offset + candidates.length} 筆，共 ${candidatePaging.page.total} 筆` : `本頁 0 筆，共 ${candidatePaging.page.total} 筆`}</p>

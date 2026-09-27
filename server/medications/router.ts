@@ -12,6 +12,7 @@ import { parsePageOptions, SearchSnapshotChanged } from './search-index';
 import { measurementSearchNotice } from './search-measurements';
 import { localDosageForms, dosageFormSearchNotice } from './dosage-forms';
 import { LocalMedicationImages } from './local-images';
+import { suggestLocalNames } from './name-suggestions';
 import type { MedicationReport } from '../../shared/medication';
 import { attachSourceDocuments, readSourceDocument } from './source-documents';
 
@@ -39,6 +40,14 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
   router.use('/vision', visionRouter(new VisionService(db), visionQueue));
   router.use('/packages', visionRouter(new PackageVisionService(db), visionQueue));
   router.get('/status', (_req, res) => res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db) }));
+  router.get('/name-suggestions', (req, res) => {
+    const query = req.query.q, form = req.query.dosageForm ?? '';
+    if (typeof query !== 'string' || query.length > 120 || typeof form !== 'string' || form.length > 120) {
+      res.status(400).json({ error: '請提供有效的藥名與劑型。' }); return;
+    }
+    try { res.json(suggestLocalNames(db, query, form)); }
+    catch { res.status(503).json({ error: '本機相近品名查詢未完成，請稍後重試。' }); }
+  });
   router.get('/source-documents/:filename', (req, res) => {
     const match = /^([a-f0-9]{64})\.(pdf|json)$/.exec(req.params.filename);
     const document = match && readSourceDocument(db, match[1]);
