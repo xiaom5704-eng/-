@@ -1,0 +1,131 @@
+[
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/version.json",
+    "retrievedAt": "2026-09-27T09:00:32.487Z",
+    "sha256": "69f5febaa7a57e15cc9ccb79dae197ffe46320b054a78441d3129b0094fa5f2f",
+    "data": {
+      "version": "08-Sep-2026",
+      "apiVersion": "3.1.355"
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=niacinamide&search=0",
+    "retrievedAt": "2026-09-27T09:00:32.959Z",
+    "sha256": "231f22aa5db774036edc9037106c6dd49b40f389434d347b31818d90ae2899cc",
+    "data": {
+      "idGroup": {
+        "rxnormId": [
+          "7405"
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=nicotinamide&search=0",
+    "retrievedAt": "2026-09-27T09:00:33.440Z",
+    "sha256": "231f22aa5db774036edc9037106c6dd49b40f389434d347b31818d90ae2899cc",
+    "data": {
+      "idGroup": {
+        "rxnormId": [
+          "7405"
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=cyanocobalamin&search=0",
+    "retrievedAt": "2026-09-27T09:00:33.925Z",
+    "sha256": "e00b178d75c199299e97073ee52b3a5c7ee1a9b3125cba79dbd45a4331fa37d4",
+    "data": {
+      "idGroup": {
+        "rxnormId": [
+          "11248"
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=vitamin%20B12&search=0",
+    "retrievedAt": "2026-09-27T09:00:34.406Z",
+    "sha256": "e00b178d75c199299e97073ee52b3a5c7ee1a9b3125cba79dbd45a4331fa37d4",
+    "data": {
+      "idGroup": {
+        "rxnormId": [
+          "11248"
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=niacin&search=0",
+    "retrievedAt": "2026-09-27T09:00:34.893Z",
+    "sha256": "bf96bafad6cd8f26b45b32a06042615dcad0bd16c3df2793b7721ee9f5fbc564",
+    "data": {
+      "idGroup": {
+        "rxnormId": [
+          "7393"
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=nicotinic%20acid&search=0",
+    "retrievedAt": "2026-09-27T09:00:35.387Z",
+    "sha256": "bf96bafad6cd8f26b45b32a06042615dcad0bd16c3df2793b7721ee9f5fbc564",
+    "data": {
+      "idGroup": {
+        "rxnormId": [
+          "7393"
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7405/properties.json",
+    "retrievedAt": "2026-09-27T09:00:35.890Z",
+    "sha256": "7dc5c007e8095c4f0d94a6cf8fbf864ad0e99ca2fcf6d093ca1d8d531a8431af",
+    "data": {
+      "properties": {
+        "rxcui": "7405",
+        "name": "niacinamide",
+        "synonym": "",
+        "tty": "IN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11248/properties.json",
+    "retrievedAt": "2026-09-27T09:00:36.932Z",
+    "sha256": "a2b1c250505396aca3f2098e865af2e5491b5b06cbbe55589707000d15273dba",
+    "data": {
+      "properties": {
+        "rxcui": "11248",
+        "name": "vitamin B12",
+        "synonym": "",
+        "tty": "IN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+      }
+    }
+  },
+  {
+    "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7393/properties.json",
+    "retrievedAt": "2026-09-27T09:00:37.881Z",
+    "sha256": "90e8238b68e9e950a65d648bc190db1be0446733885d6491aa862ae3c90376d2",
+    "data": {
+      "properties": {
+        "rxcui": "7393",
+        "name": "niacin",
+        "synonym": "",
+        "tty": "IN",
+        "language": "ENG",
+        "suppress": "N",
+        "umlscui": ""
+      }
+    }
+  }
+]
