@@ -28,13 +28,13 @@ npm run data:install
 
 如果手邊已有 ZIP，也可執行 `npm run data:install -- --file="資料包 ZIP 路徑"`，沿用相同完整性檢查且不連外。自動下載最多等待 10 分鐘；連線太慢或中斷時，先用瀏覽器下載，再指定本機 ZIP 安裝。舊版原始碼沒有此指令時，可使用下述手動步驟。
 
-從 [Releases](https://github.com/xiaom5704-eng/-/releases) 下載 `medsafe-public-data-2026-09-27.zip`。這是首次安裝用的固定快照，並非最新資料保證。
+從 [2026-09-28 資料版](https://github.com/xiaom5704-eng/-/releases/tag/local-web-2026-09-28) 下載 `medsafe-public-data-2026-09-28.zip`（309,353,366 bytes，約 310 MB）。這是首次安裝用的固定快照，並非最新資料保證。已下載 2026-09-27 舊 ZIP 仍可用 `--file` 安裝，會提示其不含後續補圖及新增仿單；線上下載則只接受目前指定版本。
 
 **僅在新下載、尚未建立 `data` 資料夾的專案使用以下步驟。既有使用者請保留原資料，勿直接覆蓋。** Windows PowerShell 在專案根目錄執行（修改 ZIP 路徑）：
 
 ```powershell
 if (Test-Path -LiteralPath './data') { throw 'data 已存在，請改用新的專案資料夾。' }
-Expand-Archive -LiteralPath 'C:/Downloads/medsafe-public-data-2026-09-27.zip' -DestinationPath '.'
+Expand-Archive -LiteralPath 'C:/Downloads/medsafe-public-data-2026-09-28.zip' -DestinationPath '.'
 ```
 
 亦可用解壓縮工具，把 ZIP 內的 `data` 資料夾放在 `package.json` 旁邊：
@@ -59,8 +59,8 @@ Release 的 `SHA256SUMS.txt` 提供 ZIP 雜湊；PowerShell 可執行 `Get-FileH
 資料包包含：
 
 - TFDA 藥品主檔與外觀資料、DDInter 配對及已核對的成分對照。
-- 已建立的藥錠圖片索引、公開參考圖、DINOv2 模型與來源授權文件。
-- 五款比賽案例藥物的本機仿單副本及已整理的來源紀錄；保留各自版本與取得日期。
+- 已建立的藥錠圖片索引（6,146 張可用／5,791 品項）、公開參考圖、378 筆官方清晰圖紀錄、DINOv2 模型與來源授權文件。
+- 五款比賽案例及普拿疼伏冒加強錠的六份本機仿單副本，另含 29,875 品項的官方仿單／外盒連結索引；保留各自版本與取得日期。連結索引不等於已保存所有文件。
 
 不包含金鑰、聊天紀錄、私人照片、藥盒照片圖庫或研究用訓練資料。資料來源及使用條件見 [drug-data.md](drug-data.md)、[vision.md](vision.md)；DDInter 部分遵守 **CC BY-NC-SA 4.0**，不得把整份資料包視為可任意商用。來源資料與模型各自保留原授權。
 

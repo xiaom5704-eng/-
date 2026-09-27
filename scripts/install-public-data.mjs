@@ -6,9 +6,10 @@ import { pipeline } from 'node:stream/promises';
 import path from 'node:path';
 import AdmZip from 'adm-zip';
 
-export const publicDataUrl = 'https://github.com/xiaom5704-eng/-/releases/download/demo-2026-09-27/medsafe-public-data-2026-09-27.zip';
-export const publicDataSha256 = 'a5017ea7a5c2b3a7b3852300f16af2dc90a1db2c2c5a375fbb0e5d90647c1dea';
-const maxArchiveBytes = 170 * 1024 * 1024;
+export const publicDataUrl = 'https://github.com/xiaom5704-eng/-/releases/download/local-web-2026-09-28/medsafe-public-data-2026-09-28.zip';
+export const publicDataSha256 = 'de7d3ba8a1713668f56fabd6bc7188954743c9f58f90cb94b97510b2c6d410d7';
+const previousPublicDataSha256 = 'a5017ea7a5c2b3a7b3852300f16af2dc90a1db2c2c5a375fbb0e5d90647c1dea';
+const maxArchiveBytes = 300 * 1024 * 1024;
 const required = ['drugs.db', 'vision/index.db', 'vision/models/Xenova/dinov2-small/config.json',
   'vision/models/Xenova/dinov2-small/preprocessor_config.json', 'vision/models/Xenova/dinov2-small/onnx/model_quantized.onnx'];
 const sha256 = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -33,7 +34,7 @@ export async function installPublicData({ projectRoot, archivePath = '', downloa
   try {
     const archive = archivePath ? path.resolve(archivePath) : path.join(staging, 'public-data.zip');
     if (!archivePath) {
-      onProgress('正在下載約 160 MB 的公開參考資料；不需要 API Key。');
+      onProgress('正在下載約 310 MB 的公開參考資料；不需要 API Key。');
       const response = await download(publicDataUrl, { signal: AbortSignal.timeout(600_000) });
       if (!response.ok || !response.body) throw new Error(`資料包下載失敗：HTTP ${response.status}。可先下載 ZIP，再用 --file 指定本機檔案。`);
       let bytes = 0, reported = 0;
@@ -48,7 +49,12 @@ export async function installPublicData({ projectRoot, archivePath = '', downloa
     if (!size || size > maxArchiveBytes) throw new Error('資料包大小無效。');
     const digest = createHash('sha256');
     for await (const chunk of createReadStream(archive)) digest.update(chunk);
-    if (digest.digest('hex') !== expectedHash) throw new Error('資料包 SHA-256 不符，未安裝。請重新下載指定版本。');
+    const actualHash = digest.digest('hex');
+    // Preserve previously downloaded, exactly verified ZIPs for offline use.
+    // A download from the current URL must still match the current fixed hash.
+    const previousOffline = archivePath && expectedHash === publicDataSha256 && actualHash === previousPublicDataSha256;
+    if (actualHash !== expectedHash && !previousOffline) throw new Error('資料包 SHA-256 不符，未安裝。請重新下載指定版本。');
+    if (previousOffline) onProgress('使用已核對的 2026-09-27 舊資料包；不包含後續補存的圖片及仿單，其他補入照常執行。');
     onProgress('下載完整性通過，正在逐檔核對並安裝本機資料。');
     const zip = new AdmZip(archive), entries = zip.getEntries(), files = new Map();
     const names = new Set(); let expandedBytes = 0;
