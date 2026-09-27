@@ -86,6 +86,17 @@ npm run dev
 
 ## 4. 修改與檢查
 
+### 先開網頁，才發現沒有資料
+
+新版在藥品資料庫不存在時使用暫存空資料，不會建立空的 `data/drugs.db` 阻擋首次安裝。網頁的「藥物辨識 → 準備本機資料」會提供下一步；對話仍保存於原本的對話資料庫。此時搜尋會明示資料尚未安裝，不以零筆候選表示查無藥品。
+
+- **尚無 data 資料夾**：停止服務，執行 `npm run data:install`（或上述 `--file` 離線安裝），再執行 `npm run dev`。不用重新下載整個專案。
+- **安裝完仍顯示沒有資料**：按「重新讀取資料狀態」可看到是否需要重啟；在服務終端機按 Ctrl+C 後重新執行 `npm run dev`，再重新整理網頁。只有重新整理網頁不會讓舊服務改開新資料庫。
+- **data 已存在但部分來源缺少**：保留既有資料。基本主檔與交互作用用 `npm run data:sync`；外觀 ZIP 用 `npm run data:import-appearance -- "ZIP 路徑"`；仿單／外盒索引用 `npm run data:import-labels`。基本同步不包含圖片模型與完整圖庫，詳細準備步驟見 [README](../README.md)。
+- **使用自訂資料路徑**：核對 `.env` 的 `DRUG_DB_PATH` 與 `VISION_DATA_DIR`，沿用原匯入流程；首次安裝器仍不覆蓋既有資料。
+
+### 程式檢查
+
 ```bash
 npm run lint
 npm test

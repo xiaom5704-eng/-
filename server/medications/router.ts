@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, type Response } from 'express';
 import { datasetStatus, getTfda, searchLocalCandidates, type DrugDatabase } from './store';
 import { DrugProviders } from './providers';
 import type { DrugSelection } from '../../shared/medication';
@@ -19,6 +19,7 @@ import { LocalMedicationImages } from './local-images';
 import { suggestLocalNames } from './name-suggestions';
 import type { MedicationReport } from '../../shared/medication';
 import { attachSourceDocuments, readSourceDocument } from './source-documents';
+import { missingLocalNames, type LocalDataSetup } from '../../shared/local-data';
 
 export function validSelections(value: unknown): value is DrugSelection[] {
   if (!Array.isArray(value) || value.length < 1 || value.length > 6) return false;
@@ -33,8 +34,13 @@ export function validSelections(value: unknown): value is DrugSelection[] {
   });
 }
 
-export function medicationRouter(db: DrugDatabase, providers = new DrugProviders(db), localImages = new LocalMedicationImages(db)) {
+export function medicationRouter(db: DrugDatabase, providers = new DrugProviders(db), localImages = new LocalMedicationImages(db), dataSetup?: () => LocalDataSetup) {
   const router = Router();
+  const requireLocalNames = (res: Response) => {
+    const { available } = db.prepare('SELECT EXISTS(SELECT 1 FROM tfda_drugs) OR EXISTS(SELECT 1 FROM tfda_appearances) AS available').get() as { available: number };
+    if (!available) res.status(503).json({ error: missingLocalNames });
+    return !!available;
+  };
   const reportImages = (report: MedicationReport) => {
     const drugs = localImages.attach(report.medications.map(entry => entry.drug));
     return attachSourceDocuments(db, { ...report, medications: report.medications.map((entry, i) => ({ ...entry, drug: drugs[i] })) });
@@ -48,13 +54,16 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
   const officialPackages = new OfficialPackageReferences(db);
   router.use('/packages', officialPackageRouter(officialPackages, visionQueue));
   router.use('/packages', visionRouter(new PackageVisionService(db, undefined, undefined, undefined, undefined, officialPackages), visionQueue));
-  router.get('/status', (_req, res) => res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db) }));
+  router.get('/status', (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
+    res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db), dataSetup: dataSetup?.() });
+  });
   router.get('/name-suggestions', (req, res) => {
     const query = req.query.q, form = req.query.dosageForm ?? '';
     if (typeof query !== 'string' || query.length > 120 || typeof form !== 'string' || form.length > 120) {
       res.status(400).json({ error: '請提供有效的藥名與劑型。' }); return;
     }
-    try { res.json(suggestLocalNames(db, query, form)); }
+    try { if (requireLocalNames(res)) res.json(suggestLocalNames(db, query, form)); }
     catch { res.status(503).json({ error: '本機相近品名查詢未完成，請稍後重試。' }); }
   });
   router.get('/source-documents/:filename', (req, res) => {
@@ -88,7 +97,7 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
     if (!validObservations(req.body?.observations)) { res.status(400).json({ error: '請提供 1–6 筆有效的藥名或外觀特徵。' }); return; }
     const page = parsePageOptions(req.body.offset, req.body.revision);
     if (!page || (page.offset && req.body.observations.length !== 1)) { res.status(400).json({ error: '分頁格式無效；翻頁時請選定一筆辨識結果。' }); return; }
-    try { res.json({ matches: req.body.observations.map(observation => { const match = matchObservation(db, observation, page); return { ...match, candidates: localImages.attach(match.candidates) }; }) }); }
+    try { if (requireLocalNames(res)) res.json({ matches: req.body.observations.map(observation => { const match = matchObservation(db, observation, page); return { ...match, candidates: localImages.attach(match.candidates) }; }) }); }
     catch (error) { res.status(error instanceof SearchSnapshotChanged ? 409 : 500).json({ error: error instanceof SearchSnapshotChanged ? error.message : '本機外觀比對失敗，請確認資料已完整匯入。' }); }
   });
   router.get('/search', async (req, res) => {
@@ -105,6 +114,7 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
     if (!page || (source === 'rxnorm' && (page.offset || page.revision))) { res.status(400).json({ error: '分頁格式無效；線上 RxNorm 查詢只提供有限候選。' }); return; }
     try {
       if (source === 'tfda') {
+        if (!requireLocalNames(res)) return;
         const result = searchLocalCandidates(db, query, undefined, { ...page, dosageForm });
         const warnings = ['依關鍵字尋找候選，名稱的簡繁字形、空格與部分標點會一併搜尋；請核對原始完整品名、規格及許可證。', ...measurementSearchNotice(query), ...dosageFormSearchNotice(db, dosageForm)];
         if (!datasetStatus(db)[0].count) warnings.push('臺灣藥品主檔尚未載入，目前可能只有外觀紀錄，請由管理者更新資料。');

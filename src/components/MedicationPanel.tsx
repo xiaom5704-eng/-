@@ -4,6 +4,8 @@ import MarkdownContent from './MarkdownContent';
 import type { DatasetStatus, DrugCandidate, DrugSource, MedicationReport, MedicationMatch, MedicationObservation, ReportMode, SearchPagination } from '../../shared/medication';
 import { datasetNames, reportToMarkdown } from '../../shared/medication';
 import MedicationResults from './MedicationResults';
+import MedicationDataSetup from './MedicationDataSetup';
+import type { LocalDataSetup } from '../../shared/local-data';
 import AppearanceSearch from './AppearanceSearch';
 import DrugAppearanceDetails from './DrugAppearanceDetails';
 import OcrReview from './OcrReview';
@@ -41,6 +43,7 @@ const secondary = `${button} border border-slate-200 bg-white text-slate-700 hov
 
 export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, savedRequestId, active = true }: Props) {
   const [datasets, setDatasets] = useState<DatasetStatus[]>([]);
+  const [dataSetup, setDataSetup] = useState<LocalDataSetup>();
   const [statusError, setStatusError] = useState('');
   const [statusLoading, setStatusLoading] = useState(false);
   const statusVersion = useRef(0);
@@ -118,7 +121,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     setStatusLoading(true);
     try {
       const data = await getMedicationStatus();
-      if (mounted.current && version === statusVersion.current) { acceptDatasets(data.datasets); setDosageForms(data.dosageForms || []); }
+      if (mounted.current && version === statusVersion.current) { acceptDatasets(data.datasets); setDosageForms(data.dosageForms || []); setDataSetup(data.dataSetup); }
     } catch {
       if (mounted.current && version === statusVersion.current) setStatusError('目前無法取得資料來源狀態，請確認後端已啟動。');
     } finally { if (mounted.current && version === statusVersion.current) setStatusLoading(false); }
@@ -395,9 +398,9 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
           {datasetNames[d.source]} · {d.count ? `${d.count.toLocaleString()} 筆` : '尚未載入'}
         </span>)}
       </div>
-      {statusError && <div role="alert" className="text-sm text-amber-800 mt-3"><p>{statusError}</p>
-        <button type="button" className={`${secondary} mt-2`} disabled={statusLoading || !!busy} onClick={() => void refreshDatasets()}>{statusLoading ? '正在重新讀取…' : '重新讀取資料狀態'}</button>
-      </div>}
+      {statusError && <p role="alert" className="text-sm text-amber-800 mt-3">{statusError}</p>}
+      {!statusError && <MedicationDataSetup datasets={datasets} setup={dataSetup} />}
+      <button type="button" className={`${secondary} mt-3`} disabled={statusLoading || !!busy} onClick={() => void refreshDatasets()}>{statusLoading ? '正在重新讀取…' : '重新讀取資料狀態'}</button>
     </div>
 
     <MedicationDemo disabled={!!busy} selectedCount={selected.length} onLoad={() => void loadDemo()} />

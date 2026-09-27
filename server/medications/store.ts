@@ -24,6 +24,7 @@ export const appearanceTerms = (value: string, kind: 'shape' | 'color' | 'imprin
 export function openDrugDatabase(filename = process.env.DRUG_DB_PATH || 'data/drugs.db') {
   if (filename !== ':memory:') mkdirSync(path.dirname(path.resolve(filename)), { recursive: true });
   const db = new Database(filename);
+  try {
   db.pragma('journal_mode = WAL');
   db.pragma('busy_timeout = 5000');
   db.exec(`
@@ -53,6 +54,7 @@ export function openDrugDatabase(filename = process.env.DRUG_DB_PATH || 'data/dr
   initializeTfdaLabelIndex(db);
   initializeSearchIndex(db);
   return db;
+  } catch (error) { db.close(); throw error; }
 }
 
 export type DrugDatabase = ReturnType<typeof openDrugDatabase>;
