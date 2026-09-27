@@ -11,15 +11,13 @@ import { initializeSourceDocuments } from './source-documents';
 import { initializeTfdaLabelIndex } from './tfda-label-index';
 import { tfdaLabelIndexUrl } from '../../shared/tfda-label-index';
 import { createDdinterMechanismReader } from './ddinter-mechanisms';
+import { appearanceTerms } from '../../shared/appearance-search';
+export { appearanceTerms } from '../../shared/appearance-search';
 
 export const TFDA_URL = 'https://data.gov.tw/dataset/9122';
 export const DDINTER_URL = 'https://ddinter2.scbdd.com/download/';
 export const APPEARANCE_URL = 'https://data.gov.tw/dataset/9120';
 export const normalizeName = (name: string) => name.normalize('NFKC').toLowerCase().trim().replace(/\s+/g, ' ');
-export const appearanceTerms = (value: string, kind: 'shape' | 'color' | 'imprint') => [...new Set(value.split(kind === 'imprint' ? /;;;|；；；/ : /;;;|；；；|、|,|，|\//).map(part => {
-  const normalized = normalizeName(part).replace(/\s/g, '');
-  return kind === 'color' ? normalized.replace(/色$/, '') : normalized;
-}).filter(Boolean))];
 
 export function openDrugDatabase(filename = process.env.DRUG_DB_PATH || 'data/drugs.db') {
   if (filename !== ':memory:') mkdirSync(path.dirname(path.resolve(filename)), { recursive: true });

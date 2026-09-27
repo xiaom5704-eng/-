@@ -6,6 +6,15 @@ import { APPEARANCE_URL, appearanceTerms, normalizeName, searchLocalCandidates, 
 import { replaceSearchSource, searchRevision, type SearchPageOptions } from './search-index';
 import { measurementSearchNotice } from './search-measurements';
 import { dosageFormSearchNotice } from './dosage-forms';
+import type { AppearanceOptions } from '../../shared/appearance-search';
+
+export function localAppearanceOptions(db: DrugDatabase): AppearanceOptions {
+  const terms = db.prepare(`SELECT kind,value FROM tfda_appearance_terms
+    WHERE kind IN ('shape','color') AND EXISTS (SELECT 1 FROM tfda_appearances a WHERE a.id=tfda_appearance_terms.id)
+    GROUP BY kind,value ORDER BY COUNT(*) DESC,value`).all() as { kind: string; value: string }[];
+  return { shapes: terms.filter(term => term.kind === 'shape').map(term => term.value),
+    colors: terms.filter(term => term.kind === 'color').map(term => term.value) };
+}
 
 const columns = ['許可證字號', '中文品名', '英文品名', '形狀', '特殊劑型', '顏色', '特殊氣味', '刻痕', '外觀尺寸', '標註一', '標註二', '外觀圖檔連結'];
 const MAX_BYTES = 20 * 1024 * 1024;

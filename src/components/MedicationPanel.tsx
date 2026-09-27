@@ -31,6 +31,7 @@ import MedicationPatientField from './MedicationPatientField';
 import { ALLOWED_FILE_TYPES, MAX_FILE_BYTES, MAX_TOTAL_BYTES } from '../services/medication-files';
 import { readMedicationPhoto, readMedicationScan } from '../services/medication-scan';
 import { medicationSaveAttempt, type MedicationSaveAttempt } from '../../shared/medication-save';
+import type { AppearanceOptions } from '../../shared/appearance-search';
 
 type Attachment = { id: string; name: string; data: string; type: string; size: number };
 type Props = { apiKey: string; onSave: (report: MedicationSaveAttempt) => Promise<void>; saveDisabled?: boolean; savedRequestId?: string; active?: boolean };
@@ -50,6 +51,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const [query, setQuery] = useState('');
   const [dosageForm, setDosageForm] = useState('');
   const [dosageForms, setDosageForms] = useState<string[]>([]);
+  const [appearanceOptions, setAppearanceOptions] = useState<AppearanceOptions>();
   const formListId = useId();
   const [source, setSource] = useState<DrugSource>('tfda');
   const [candidates, setCandidateItems] = useState<DrugCandidate[]>([]);
@@ -121,7 +123,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     setStatusLoading(true);
     try {
       const data = await getMedicationStatus();
-      if (mounted.current && version === statusVersion.current) { acceptDatasets(data.datasets); setDosageForms(data.dosageForms || []); setDataSetup(data.dataSetup); }
+      if (mounted.current && version === statusVersion.current) { acceptDatasets(data.datasets); setDosageForms(data.dosageForms || []); setAppearanceOptions(data.appearanceOptions); setDataSetup(data.dataSetup); }
     } catch {
       if (mounted.current && version === statusVersion.current) setStatusError('目前無法取得資料來源狀態，請確認後端已啟動。');
     } finally { if (mounted.current && version === statusVersion.current) setStatusLoading(false); }
@@ -449,7 +451,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
           <p className="text-sm font-semibold text-slate-800">照片難以比對？讓本機 AI 協助讀外觀</p>
           <p className="mt-1 text-xs leading-relaxed text-slate-600">選用功能，需啟動本機 Ollama 並使用支援圖片的模型。照片送至本專案後端的本機模型，不送 Gemini；先讀顏色、形狀與刻字，再由您核對後查本機資料。一般 CV／OCR 不需要 Ollama。</p>
           <button type="button" className={`${secondary} mt-3`} disabled={!!busy || !files.length} onClick={() => void observePill()}>使用 Ollama 外觀輔助</button>
-          {observedPill && <><p className="mt-3 text-xs text-slate-500">{observedPill.model} · {dateText(observedPill.checkedAt)}</p><AppearanceSearch key={observedPill.checkedAt} initial={observedPill.observation.appearance} disabled={!!busy} onEdit={clearSearchResults} onSearch={observation => void searchAppearance(observation)} /></>}
+          {observedPill && <><p className="mt-3 text-xs text-slate-500">{observedPill.model} · {dateText(observedPill.checkedAt)}</p><AppearanceSearch key={observedPill.checkedAt} options={appearanceOptions} initial={observedPill.observation.appearance} disabled={!!busy} onEdit={clearSearchResults} onSearch={observation => void searchAppearance(observation)} /></>}
         </section>}
         {!!ocrPages.length && <div ref={ocrHeading} className="scroll-mt-6"><OcrReview pages={ocrPages} target={scanEngine === 'vision' ? 'pill' : scanEngine === 'package' ? 'label' : ocrTarget} disabled={!!busy}
           onChange={(index, text) => updateOcrPage(index, page => ({ ...page, text }))} onSwitchReading={index => updateOcrPage(index, switchOcrReading)}
@@ -462,7 +464,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
           onSearch={(observation, index) => void searchAppearance(observation, index)}
           onEdit={clearSearchResults} />
       </details>
-      <AppearanceSearch disabled={!!busy} onEdit={clearSearchResults} onSearch={observation => void searchAppearance(observation)} />
+      <AppearanceSearch options={appearanceOptions} disabled={!!busy} onEdit={clearSearchResults} onSearch={observation => void searchAppearance(observation)} />
       <datalist id={formListId}>{dosageForms.map(form => <option key={form} value={form} />)}</datalist>
       <form className="mt-4 space-y-3" onSubmit={e => { e.preventDefault(); if (!busy) void search(); }}>
         <div className="flex flex-col sm:flex-row gap-2">

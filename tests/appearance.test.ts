@@ -72,6 +72,41 @@ test('Chinese and English observations search local records and keep multiple ca
   assert.equal(searchTfda(db, "' OR 1=1 --").length, 0);
 });
 
+test('Appearance choices follow the installed snapshot and retain every selected color and imprint over HTTP', async t => {
+  const db = database(t); let externalCalls = 0;
+  const app = express(); app.use(express.json());
+  app.use('/meds', medicationRouter(db, new DrugProviders(db, (async () => { externalCalls++; throw Error('Must stay local'); }) as typeof fetch)));
+  const server = await listenForFetch(app);
+  t.after(() => new Promise<void>((resolve, reject) => server.close(error => error ? reject(error) : resolve())));
+  const base = `http://127.0.0.1:${(server.address() as { port: number }).port}/meds`;
+  const options = async () => (await (await fetch(`${base}/status`)).json()).appearanceOptions;
+  assert.deepEqual(await options(), { shapes: [], colors: [] });
+  importAppearance(db, csv([
+    row('PINK', { 顏色: '粉色' }),
+    row('DUAL', { 顏色: '紅;;;白', 形狀: '膠囊' }),
+    row('RED', { 顏色: '紅', 形狀: '膠囊' }),
+    row('POWDER', { 顏色: '白', 形狀: '粉劑或散劑' }),
+    row('LIQUID', { 顏色: '透明', 形狀: '液劑(包含糖漿用粉劑)' }),
+  ]), 'synthetic.csv');
+  const before = db.prepare('SELECT * FROM tfda_appearances ORDER BY id').all();
+  const choices = await options();
+  assert.deepEqual(new Set(choices.shapes), new Set(['圓形', '膠囊', '粉劑或散劑', '液劑(包含糖漿用粉劑)']));
+  assert.deepEqual(new Set(choices.colors), new Set(['粉', '紅', '白', '透明']));
+  const match = async (shape: string, color: string, imprints: string[] = []) => (await (await fetch(`${base}/match`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ observations: [observe({ shape, color, imprints })] }),
+  })).json()).matches[0];
+  assert.deepEqual((await match('圓形', '粉')).candidates.map((d: { id: string }) => d.id), ['PINK']);
+  assert.deepEqual((await match('膠囊', '紅、白', ['FY T061'])).candidates.map((d: { id: string }) => d.id), ['DUAL']);
+  assert.equal((await match('膠囊', '紅、白', ['FY'])).total, 0);
+  assert.equal((await match('圓形', '粉紅色')).total, 0, 'choices must not silently broaden free text');
+  assert.deepEqual(db.prepare('SELECT * FROM tfda_appearances ORDER BY id').all(), before);
+  assert.throws(() => importAppearance(db, csv([row(), row()]), 'invalid.csv'));
+  assert.deepEqual(await options(), choices);
+  importAppearance(db, csv([row('UPDATED', { 顏色: '藍', 形狀: '橢圓形' })]), 'updated.csv');
+  assert.deepEqual(await options(), { shapes: ['橢圓形'], colors: ['藍'] });
+  assert.equal(externalCalls, 0);
+});
+
 test('Full imprints match with normalized spaces and either face, without substring or relaxed color matches', t => {
   const db = seed(t);
   const query = (imprints: string[], color = '白色', shape = '圓形') => matchObservation(db, observe({ color, shape, imprints }));

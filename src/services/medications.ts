@@ -3,8 +3,9 @@ import { requestJson as request, sendJson } from './http';
 import type { MedicationPatient } from '../../shared/medication-safety';
 import type { NameSuggestions } from '../../shared/name-suggestions';
 import type { LocalDataSetup } from '../../shared/local-data';
+import type { AppearanceOptions } from '../../shared/appearance-search';
 
-export const getMedicationStatus = () => request<{ datasets: DatasetStatus[]; dosageForms: string[]; dataSetup?: LocalDataSetup }>('/api/medications/status');
+export const getMedicationStatus = () => request<{ datasets: DatasetStatus[]; dosageForms: string[]; appearanceOptions?: AppearanceOptions; dataSetup?: LocalDataSetup }>('/api/medications/status');
 export const suggestMedicationNames = (query: string, dosageForm: string) =>
   request<NameSuggestions>(`/api/medications/name-suggestions?${new URLSearchParams({ q: query, dosageForm })}`);
 export const searchMedications = (query: string, source: DrugSource, offset = 0, revision?: string, dosageForm = '') =>

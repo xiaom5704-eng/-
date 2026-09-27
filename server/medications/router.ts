@@ -2,7 +2,7 @@ import { Router, type Response } from 'express';
 import { datasetStatus, getTfda, searchLocalCandidates, type DrugDatabase } from './store';
 import { DrugProviders } from './providers';
 import type { DrugSelection } from '../../shared/medication';
-import { matchObservation, validObservations } from './appearance';
+import { localAppearanceOptions, matchObservation, validObservations } from './appearance';
 import { VisionService } from '../vision/service';
 import { visionRouter } from '../vision/router';
 import { PackageVisionService } from '../vision/packages';
@@ -56,7 +56,7 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
   router.use('/packages', visionRouter(new PackageVisionService(db, undefined, undefined, undefined, undefined, officialPackages), visionQueue));
   router.get('/status', (_req, res) => {
     res.setHeader('Cache-Control', 'no-store');
-    res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db), dataSetup: dataSetup?.() });
+    res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db), appearanceOptions: localAppearanceOptions(db), dataSetup: dataSetup?.() });
   });
   router.get('/name-suggestions', (req, res) => {
     const query = req.query.q, form = req.query.dosageForm ?? '';
