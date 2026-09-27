@@ -22,7 +22,7 @@ npm ci
 npm run data:install
 ```
 
-指令會下載下述固定快照，核對 ZIP 的 SHA-256 及清單內的每一個檔案，全部通過後才放入 `data/`。中斷或損毀不會留下半套正式資料；既有 `data/`（包含空資料夾）會明確拒絕覆蓋。自訂 `DRUG_DB_PATH`／`VISION_DATA_DIR` 時也不安裝到錯誤位置。這是首次安裝，不是更新既有資料。
+指令會下載下述固定快照，核對 ZIP 的 SHA-256 及清單內的每一個檔案，再於暫存資料庫補入原始碼隨附的 44 份已核對 DDInter 快照，全部通過後才放入 `data/`。中斷、損毀或補入衝突不會留下半套正式資料；既有 `data/`（包含空資料夾）會明確拒絕覆蓋。自訂 `DRUG_DB_PATH`／`VISION_DATA_DIR` 時也不安裝到錯誤位置。這是首次安裝，不是更新既有資料。
 
 如果手邊已有 ZIP，也可執行 `npm run data:install -- --file="資料包 ZIP 路徑"`，沿用相同完整性檢查且不連外。自動下載最多等待 10 分鐘；連線太慢或中斷時，先用瀏覽器下載，再指定本機 ZIP 安裝。舊版原始碼沒有此指令時，可使用下述手動步驟。
 
@@ -50,7 +50,9 @@ medicine-app/
       models/
 ```
 
-Release 的 `SHA256SUMS.txt` 提供 ZIP 雜湊；PowerShell 可執行 `Get-FileHash -Algorithm SHA256 -LiteralPath 'ZIP檔路徑'` 比對。`data/manifest.json` 另保留包內原始檔案的 SHA-256；首次啟動後資料庫可能正常更新，因此應在啟動前核對。
+Release 的 `SHA256SUMS.txt` 提供 ZIP 雜湊；PowerShell 可執行 `Get-FileHash -Algorithm SHA256 -LiteralPath 'ZIP檔路徑'` 比對。`data/manifest.json` 另保留基本快照原始檔案的 SHA-256。自動安裝會在補入前核對；補入及啟動後資料庫會正常改變，不應再以原始資料庫雜湊判斷損毀。
+
+手動解壓縮或已有資料的使用者，更新 main 原始碼後可執行 `npm run data:apply-reviewed`，先備份藥品資料庫，再離線補入這 44 份快照。既有同成分快照保留，重複執行不覆蓋版本或日期。此指令不用金鑰，也不會建立缺少基本資料的空資料庫；來源授權見 [補充資料說明](../resources/ddinter/README.md)。
 
 資料包包含：
 

@@ -87,3 +87,24 @@ test('Data created by another process during download is preserved at publicatio
   assert.deepEqual(await readdir(projectRoot), ['data']);
   assert.equal(await readFile(path.join(projectRoot, 'data/drugs.db'), 'utf8'), 'CONCURRENT USER DATA');
 });
+
+test('Supplement preparation sees only verified staged files and must finish before publication', async t => {
+  const { projectRoot } = await fixture(t), bytes = archive(); let called = 0;
+  await installPublicData({ projectRoot, expectedHash: hash(bytes), download: async () => new Response(bytes), prepareData: async directory => {
+    called++; assert.equal(await readFile(path.join(directory, 'drugs.db'), 'utf8'), 'SYNTHETIC drugs.db');
+    await assert.rejects(readFile(path.join(projectRoot, 'data/drugs.db')));
+    await writeFile(path.join(directory, 'drugs.db'), 'VERIFIED BASE PLUS SUPPLEMENT');
+  } });
+  assert.equal(called, 1);
+  assert.equal(await readFile(path.join(projectRoot, 'data/drugs.db'), 'utf8'), 'VERIFIED BASE PLUS SUPPLEMENT');
+});
+
+test('Failed supplement preparation removes the staged install and never runs on corrupt input', async t => {
+  const { projectRoot } = await fixture(t), bytes = archive(); let called = 0;
+  const prepareData = async (directory: string) => { called++; await writeFile(path.join(directory, 'drugs.db'), 'PARTIAL'); throw new Error('supplement conflict'); };
+  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), download: async () => new Response(bytes), prepareData }), /supplement conflict/);
+  assert.equal(called, 1); assert.deepEqual(await readdir(projectRoot), []);
+  const damaged = archive(zip => zip.updateFile('data/drugs.db', Buffer.from('DAMAGED')));
+  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(damaged), download: async () => new Response(damaged), prepareData }), /校驗失敗/);
+  assert.equal(called, 1); assert.deepEqual(await readdir(projectRoot), []);
+});

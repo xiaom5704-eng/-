@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { config } from 'dotenv';
 import { installPublicData } from './install-public-data.mjs';
+import { applyReviewedDdinterFile } from './reviewed-ddinter.ts';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 config({ path: path.join(root, '.env'), quiet: true });
@@ -12,8 +13,12 @@ try {
   if (path.resolve(root, process.env.DRUG_DB_PATH || 'data/drugs.db') !== path.join(root, 'data/drugs.db') ||
       path.resolve(root, process.env.VISION_DATA_DIR || 'data/vision') !== path.join(root, 'data/vision'))
     throw new Error('目前使用自訂資料路徑，未安裝。請沿用既有資料匯入流程，或在未設定自訂路徑的新專案安裝。');
-  const installed = await installPublicData({ projectRoot: root, archivePath: args[0]?.slice('--file='.length), onProgress: console.log });
-  console.log(`本機資料安裝完成，${installed.verifiedFiles.toLocaleString()} 個檔案校驗通過。快照準備日期：${installed.preparedAt}。`);
+  const installed = await installPublicData({ projectRoot: root, archivePath: args[0]?.slice('--file='.length), onProgress: console.log,
+    prepareData: async directory => {
+      const result = await applyReviewedDdinterFile(path.join(directory, 'drugs.db'));
+      console.log(`已核對的補充資料：新增 ${result.addedSnapshots} 份 DDInter 快照、${result.addedPairs.toLocaleString()} 組配對。`);
+    } });
+  console.log(`本機資料安裝完成，基本快照 ${installed.verifiedFiles.toLocaleString()} 個檔案校驗通過，並完成補入。基本快照準備日期：${installed.preparedAt}。`);
   console.log('執行 npm run dev，開啟終端機顯示的網址即可使用。不需要桌面安裝程式。');
 } catch (error) {
   console.error(error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')

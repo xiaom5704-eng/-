@@ -25,7 +25,7 @@ function safeRelative(value) {
 }
 
 // The CLI fixes the URL and hash. Injected values are used only by isolated tests.
-export async function installPublicData({ projectRoot, archivePath = '', download = fetch, expectedHash = publicDataSha256, onProgress = () => {} }) {
+export async function installPublicData({ projectRoot, archivePath = '', download = fetch, expectedHash = publicDataSha256, onProgress = () => {}, prepareData = async (_directory) => {} }) {
   const root = path.resolve(projectRoot), destination = path.join(root, 'data');
   await requireNewDataDirectory(destination);
   const staging = path.join(root, `.data-install-${randomUUID()}`);
@@ -84,6 +84,8 @@ export async function installPublicData({ projectRoot, archivePath = '', downloa
       await writeFile(target, bytes, { flag: 'wx' });
     }
     await writeFile(path.join(nextData, 'manifest.json'), manifestBytes, { flag: 'wx' });
+    // Enrichment runs only after base verification and before atomic publication.
+    await prepareData(nextData);
     await requireNewDataDirectory(destination);
     await rename(nextData, destination);
     return { directory: destination, verifiedFiles: expected.size, preparedAt: manifest.preparedAt };

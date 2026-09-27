@@ -1,0 +1,2 @@
+# Preserve the exact bytes of pinned public source snapshots on every platform.
+resources/ddinter/*.json -text
