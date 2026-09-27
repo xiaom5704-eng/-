@@ -22,6 +22,14 @@ test('Pill retrieval excludes explicit non-pill formulations without guessing ad
     assert.equal(eligibleForPillSearch({ dosageForm }), false);
 });
 
+test('Pill retrieval respects source non-pill appearance even when a dosage-form name is absent or unfamiliar', () => {
+  for (const dosageForm of ['糖漿劑', '酏劑', '滴劑', '洗髮劑', '擦劑', '（粉）', ''])
+    assert.equal(eligibleForPillSearch({ dosageForm, appearance: { shape: '液劑(包含糖漿用粉劑)' } }), false);
+  assert.equal(eligibleForPillSearch({ dosageForm: '', appearance: { shape: '顆粒劑、粉劑或散劑' } }), false);
+  assert.equal(eligibleForPillSearch({ dosageForm: '糖漿劑' }), false);
+  assert.equal(eligibleForPillSearch({ dosageForm: '膠囊劑', appearance: { shape: '膠囊' } }), true);
+});
+
 test('Real image decoding rejects uniform white and colored photos before loading a model', async () => {
   for (const background of ['#fff', '#ff0000']) {
     const bytes = await sharp({ create: { width: 320, height: 200, channels: 3, background } }).png().toBuffer();

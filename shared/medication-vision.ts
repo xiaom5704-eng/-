@@ -26,10 +26,11 @@ export interface VisualReference { key: string; drugId: string; vector: Float32A
 // Keep tablet/capsule forms (including non-oral tablets), and unknown forms.
 // Clearly incompatible vials, liquids and topical containers stay searchable by
 // name and retain their reference images outside the pill-only CV results.
-export function eligibleForPillSearch(drug: Pick<DrugCandidate, 'dosageForm'>): boolean {
+export function eligibleForPillSearch(drug: Pick<DrugCandidate, 'dosageForm'> & { appearance?: { shape?: string } }): boolean {
+  if (/液劑|粉劑|顆粒|散劑/.test(drug.appearance?.shape || '')) return false;
   const form = drug.dosageForm || '';
   if (/錠|膠囊|丸劑/.test(form)) return true;
-  return !/注射|輸液|液|乳膏|軟膏|凝膠|貼|氣體|粉劑|散劑|顆粒|浣腸|口內膏|牙膏|棒劑|植入|栓劑|噴|口溶膜/.test(form);
+  return !/注射|輸液|液|乳膏|軟膏|凝膠|貼|氣體|粉劑|散劑|顆粒|浣腸|口內膏|牙膏|棒劑|植入|栓劑|噴|口溶膜|糖漿|酏劑|滴劑|洗髮|擦劑|[（(]粉[）)]/.test(form);
 }
 
 // A retrieval threshold, not a calibrated probability of drug identity.

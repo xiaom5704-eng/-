@@ -6,7 +6,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 import { getTfda, type DrugDatabase } from '../medications/store';
 
-const TRANSFORM = 'official-reference-webp-q95-max8192-v1';
+export const ORIGINAL_TRANSFORM = 'official-reference-webp-q95-max8192-v1';
 const MAX_BYTES = 50_000_000;
 const sha256 = (bytes: Buffer) => createHash('sha256').update(bytes).digest('hex');
 export interface OriginalReference {
@@ -38,7 +38,7 @@ export class ReferenceOriginals {
     let index: Database.Database | undefined;
     try {
       index = new Database(filename, { readonly: true, fileMustExist: true });
-      return (index.prepare(`SELECT * FROM reference_originals WHERE transform=? AND ${sql}`).all(TRANSFORM, ...args) as OriginalReference[])
+      return (index.prepare(`SELECT * FROM reference_originals WHERE transform=? AND ${sql}`).all(ORIGINAL_TRANSFORM, ...args) as OriginalReference[])
         .filter(row => this.current(row) && !!this.filename(row.sha256) && existsSync(this.filename(row.sha256)!));
     } catch { return []; }
     finally { index?.close(); }
@@ -87,7 +87,7 @@ export class ReferenceOriginals {
         fetched_at TEXT NOT NULL, transform TEXT NOT NULL, PRIMARY KEY(drug_id, source_url));
         CREATE INDEX IF NOT EXISTS original_hashes ON reference_originals(sha256);`);
       index.prepare('INSERT OR REPLACE INTO reference_originals VALUES (?,?,?,?,?,?,?,?,?,?)')
-        .run(drugId, sourceUrl, row.sha256, row.source_sha256, row.source_width, row.source_height, row.width, row.height, row.fetched_at, TRANSFORM);
+        .run(drugId, sourceUrl, row.sha256, row.source_sha256, row.source_width, row.source_height, row.width, row.height, row.fetched_at, ORIGINAL_TRANSFORM);
     } finally { index.close(); }
     return row;
   }
