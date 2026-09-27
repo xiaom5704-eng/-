@@ -6,6 +6,8 @@ import { matchObservation, validObservations } from './appearance';
 import { VisionService } from '../vision/service';
 import { visionRouter } from '../vision/router';
 import { PackageVisionService } from '../vision/packages';
+import { PersonalPillReferences } from '../vision/personal-pills';
+import { personalPillRouter } from '../vision/personal-pill-router';
 import { pillObserverRouter } from '../vision/observer';
 import { caseProducts, infantDemo, matchesCaseProduct, validMedicationPatient } from '../../shared/medication-safety';
 import { parsePageOptions, SearchSnapshotChanged } from './search-index';
@@ -36,8 +38,11 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
     return attachSourceDocuments(db, { ...report, medications: report.medications.map((entry, i) => ({ ...entry, drug: drugs[i] })) });
   };
   const visionQueue = { busy: false };
+  const personalPills = new PersonalPillReferences(db);
+  const pillVision = new VisionService(db, undefined, undefined, undefined, undefined, 'pill', personalPills);
   router.use('/vision/observe', pillObserverRouter(visionQueue));
-  router.use('/vision', visionRouter(new VisionService(db), visionQueue));
+  router.use('/vision', personalPillRouter(personalPills, pillVision, visionQueue));
+  router.use('/vision', visionRouter(pillVision, visionQueue));
   router.use('/packages', visionRouter(new PackageVisionService(db), visionQueue));
   router.get('/status', (_req, res) => res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db) }));
   router.get('/name-suggestions', (req, res) => {

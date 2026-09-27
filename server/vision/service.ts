@@ -7,16 +7,19 @@ import { searchRevision } from '../medications/search-index';
 import { MODEL_VERSION, MODEL_PATH, INDEX_PATH, IMAGE_ROOT, DIMENSIONS } from './config.mjs';
 import { LocalMedicationImages } from '../medications/local-images';
 import { isUnitVisionVector } from '../../shared/vision-vector.mjs';
+import { pillReferenceIdentity, canCollectPillReference } from '../../shared/pill-references';
+import type { PersonalPillReferences } from './personal-pills';
 
 interface Row { key: string; drug_id: string; source_url: string; sha256: string; embedding: Buffer; product_name?: string; source_note?: string }
-interface IndexedReference extends VisualReference { sourceUrl: string; sha: string; productName?: string; sourceNote?: string }
+export interface IndexedReference extends VisualReference { sourceUrl: string; sha: string; productName?: string; sourceNote?: string; personalIdentity?: string }
 export class VisionService {
   private cache: { version: string; rows: IndexedReference[] } | undefined;
   constructor(private drugs: DrugDatabase, private indexPath = INDEX_PATH, private imagesPath = IMAGE_ROOT,
     private modelPath = MODEL_PATH, private embed = async (bytes: Buffer): Promise<Float32Array> => (await import('./model.mjs')).imageEmbedding(bytes),
-    private kind: 'pill' | 'package' = 'pill') {}
+    private kind: 'pill' | 'package' = 'pill', private personal?: PersonalPillReferences) {}
 
   private matchesSource(reference: IndexedReference, drug = getTfda(this.drugs, reference.drugId)) {
+    if (reference.personalIdentity) return !!drug && canCollectPillReference(drug) && pillReferenceIdentity(drug) === reference.personalIdentity;
     return this.kind === 'package' ? !!drug && normalizeName(drug.name) === normalizeName(reference.productName || '')
       : !!drug && eligibleForPillSearch(drug) && drug.appearance?.imageUrls.includes(reference.sourceUrl);
   }
@@ -31,7 +34,7 @@ export class VisionService {
     } catch { return []; }
   }
 
-  status(): VisionStatus {
+  private officialStatus(): VisionStatus {
     const empty: VisionStatus = { ready: false, imageCount: 0, drugCount: 0, kind: this.kind, model: 'DINOv2 Small（本機圖片檢索）' };
     if (!existsSync(this.indexPath)) return { ...empty, reason: this.kind === 'package' ? '藥盒圖庫尚無參考照片，可先收錄已核對品名的藥盒，或使用 OCR 查藥名。' : '參考圖片索引尚未建立，請先使用 OCR 或手動搜尋。' };
     let db: Database.Database | undefined;
@@ -63,6 +66,22 @@ export class VisionService {
     finally { db?.close(); }
   }
 
+  status(): VisionStatus {
+    const official = this.officialStatus();
+    // Never reuse rows from an old index when its current validation fails.
+    if (!official.ready) this.cache = undefined;
+    if (!this.personal || this.kind !== 'pill') return official;
+    const { references, library } = this.personal.snapshot();
+    const modelReady = existsSync(path.join(this.modelPath, 'onnx/model_quantized.onnx'));
+    const personal = modelReady ? references : [];
+    const available = [...this.availableReferences(), ...personal];
+    return { ...official, ready: !!available.length, imageCount: available.length,
+      drugCount: new Set(available.map(row => row.drugId)).size, personalImageCount: personal.length,
+      reason: available.length ? undefined : official.reason,
+      sourceVersion: [official.sourceVersion, ...(personal.length ? ['使用者核對的本機藥錠照片'] : [])].filter(Boolean).join('；'),
+      personalWarning: [library.warning, ...(!official.ready && personal.length ? [official.reason] : [])].filter(Boolean).join('；') || undefined };
+  }
+
   imagePath(sha: string): string | null {
     if (!this.status().ready) return null;
     if (!/^[a-f0-9]{64}$/.test(sha) || !this.availableReferences().some(row => row.sha === sha)) return null;
@@ -73,7 +92,7 @@ export class VisionService {
   async search(images: Buffer[], imprint: string, signal: AbortSignal): Promise<VisionResult> {
     signal.throwIfAborted();
     const initial = this.status();
-    if (!initial.ready || !this.cache) throw new Error(initial.reason || '圖片比對尚未就緒。');
+    if (!initial.ready) throw new Error(initial.reason || '圖片比對尚未就緒。');
     const vectors = [];
     for (const bytes of images) {
       signal.throwIfAborted();
@@ -84,7 +103,7 @@ export class VisionService {
     signal.throwIfAborted();
     const status = this.status();
     if (!status.ready) throw new Error(status.reason || '圖片比對尚未就緒。');
-    const references = this.availableReferences();
+    const references = [...this.availableReferences(), ...(this.kind === 'pill' ? this.personal?.snapshot().references || [] : [])];
     // Exact imprints search the entire appearance database, including products
     // without a usable reference vector. They are independent retrieval evidence.
     const imprintDrugs = this.kind === 'pill' && imprint.trim() ?
@@ -107,7 +126,8 @@ export class VisionService {
       const imprintMatched = exactIds.has(drug.id);
       matches.push({ drug, similarity: match.similarity, matchedBy: imageMatched ? imprintMatched ? 'image_and_imprint' : 'image' : 'imprint',
         imprint: this.kind === 'package' ? 'not_given' : compareImprint(imprint, drug.appearance),
-        images: imageRows.map(row => ({ url: `/api/medications/${this.kind === 'package' ? 'packages' : 'vision'}/images/${row.sha}.webp`, sourceUrl: row.sourceUrl, ...(row.sourceNote ? { sourceNote: row.sourceNote } : {}) })) });
+        images: imageRows.map(row => ({ url: `/api/medications/${this.kind === 'package' ? 'packages' : 'vision'}/${row.personalIdentity ? 'personal-images' : 'images'}/${row.sha}.webp`, sourceUrl: row.sourceUrl,
+          ...(row.personalIdentity ? { provenance: 'personal' as const } : {}), ...(row.sourceNote ? { sourceNote: row.sourceNote } : {}) })) });
       if (!imprint.trim() && matches.length === 8) break;
     }
     const included = new Set(matches.map(match => match.drug.id));
@@ -128,6 +148,8 @@ export class VisionService {
     const warnings = ['候選依照片相似或您填寫的完整刻字找到，尚未確認藥品身分；相似度不是辨識正確率。',
       '圖片比對只涵蓋可用的本機參考圖；刻字另查本機外觀資料，不受圖片門檻限制。沒有候選不代表藥品不存在。',
       '藥錠比對排除來源已標示為針劑、液劑、藥膏等製劑；這些品項仍可用藥名搜尋與查看圖片。外觀不能決定用法或給藥途徑。'];
+    if (status.personalImageCount) warnings.push('本次圖庫包含使用者核對後自行收錄的照片，非官方照片；相似候選仍需對照許可證、藥袋與實物。');
+    if (status.personalWarning) warnings.push(status.personalWarning);
     if (images.length === 2) warnings.push('兩張照片以同一種藥的不同面合併比對，請勿混入不同藥品。');
     const visual = candidates.filter(candidate => candidate.matchedBy !== 'imprint');
     if (visual.length > 1 && Math.abs(visual[0].similarity! - visual[1].similarity!) < 0.04) warnings.push('多個品項外觀接近，請補充刻字、藥袋或請藥師核對。');

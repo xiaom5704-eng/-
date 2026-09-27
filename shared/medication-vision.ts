@@ -5,12 +5,13 @@ export interface VisionStatus {
   ready: boolean; reason?: string; imageCount: number; drugCount: number;
   indexedAt?: string; sourceVersion?: string; model: string;
   kind?: 'pill' | 'package'; productCount?: number;
+  personalImageCount?: number; personalWarning?: string;
 }
 export interface VisionCandidate {
   drug: DrugCandidate; similarity: number | null;
   matchedBy: 'image' | 'imprint' | 'image_and_imprint';
   imprint: 'match' | 'different' | 'missing' | 'not_given';
-  images: { url: string; sourceUrl: string; sourceNote?: string }[];
+  images: { url: string; sourceUrl: string; sourceNote?: string; provenance?: 'personal' }[];
 }
 export interface VisionResult {
   status: VisionStatus; candidates: VisionCandidate[];

@@ -29,6 +29,7 @@ export default function VisionResults({ result, disabled, onReview, onOcr, onLab
       {item.drug.licenseStatus && <p className="mt-1 text-xs text-slate-600">許可證狀態：{item.drug.licenseStatus}</p>}
       {item.imprint !== 'not_given' && <p className={`mt-2 text-sm ${item.imprint === 'match' ? 'text-emerald-800' : 'text-amber-800'}`}>{imprintText[item.imprint]}</p>}
       {packaging ? <PackageReferenceImages images={item.images} name={item.drug.name} /> : item.drug.appearance && <DrugAppearanceDetails appearance={item.drug.appearance} drugName={item.drug.name} licenseId={item.drug.id} />}
+      {!packaging && item.images.some(image => image.provenance === 'personal') && <PackageReferenceImages images={item.images.filter(image => image.provenance === 'personal')} name={item.drug.name} kind="pill" />}
       <button type="button" disabled={disabled} onClick={() => onReview(item.drug)} className="mt-3 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800 disabled:opacity-50">查看此候選的品項資料</button>
       <details className="mt-2 text-xs text-slate-500"><summary className="cursor-pointer">比對依據</summary>
         <p className="mt-2">{item.similarity === null ? '此品項沒有可用的圖片特徵，未進行照片比對。' : `影像相似度 ${item.similarity.toFixed(3)}（不是正確率）。${item.matchedBy === 'imprint' ? '本次照片未全數達到圖片比對門檻。' : '本次照片均通過圖片檢索門檻，仍需人工核對。'}`}</p>
@@ -38,6 +39,7 @@ export default function VisionResults({ result, disabled, onReview, onOcr, onLab
     <div className="rounded-xl bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">{result.warnings.map(warning => <p key={warning}>{warning}</p>)}</div>
     <details className="text-xs leading-relaxed text-slate-500"><summary className="cursor-pointer">圖片庫與模型來源</summary>
       <p className="mt-2">本次可用：{result.status.drugCount.toLocaleString()} 種藥品、{result.status.imageCount.toLocaleString()} 張圖。來源版本：{result.status.sourceVersion}。{result.status.model}。</p>
+      {!!result.status.personalImageCount && <p>其中 {result.status.personalImageCount} 張是使用者核對後收錄的本機照片，來源列於圖片下方，並非 TFDA 官方照片。</p>}
       {packaging ? <p>藥盒照片為本機使用者收錄，來源逐張列於圖片下方，並非 TFDA 官方藥盒圖庫。品名對照本機 TFDA 許可證資料，圖片授權依個別來源。</p> : <><p>衛生福利部食品藥物管理署藥品外觀資料集，依政府資料開放授權條款第 1 版利用；原圖轉為 WebP，透過 Pill Detective TW 鏡像取得並核對。</p>
       <p className="mt-1 flex flex-wrap gap-3"><a href="https://data.gov.tw/dataset/9120" target="_blank" rel="noreferrer" className="underline">TFDA 資料</a><a href="https://data.gov.tw/license" target="_blank" rel="noreferrer" className="underline">資料授權</a><a href="https://github.com/liangRXdev/pill-detective-tw" target="_blank" rel="noreferrer" className="underline">圖片鏡像</a><a href="https://github.com/facebookresearch/dinov2" target="_blank" rel="noreferrer" className="underline">DINOv2 模型</a></p></>}
     </details>

@@ -10,6 +10,8 @@ import OcrReview from './OcrReview';
 import ObservationReview from './ObservationReview';
 import VisionResults from './VisionResults';
 import PackageReferenceForm from './PackageReferenceForm';
+import PillReferenceLibrary from './PillReferenceLibrary';
+import { pillReferenceIdentity, type PersonalPillLibrary } from '../../shared/pill-references';
 import PhotoCropDialog from './PhotoCropDialog';
 import CameraDialog from './CameraDialog';
 import type { VisionResult, VisionStatus } from '../../shared/medication-vision';
@@ -60,6 +62,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const [scanEngine, setScanEngine] = useState<ScanEngine>('vision');
   const [visionStatus, setVisionStatus] = useState<VisionStatus | null>(null);
   const [packageStatus, setPackageStatus] = useState<VisionStatus | null>(null);
+  const [personalLibrary, setPersonalLibrary] = useState<PersonalPillLibrary | null>(null);
   const [visionResult, setVisionResult] = useState<VisionResult | null>(null);
   const [visionImprint, setVisionImprint] = useState('');
   const [readPhotoText, setReadPhotoText] = useState(true);
@@ -122,10 +125,14 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   }
 
   async function refreshVisionStatus() {
-    await Promise.all(([['vision', setVisionStatus], ['packages', setPackageStatus]] as const).map(async ([route, update]) => {
+    await Promise.all([refreshPersonalLibrary(), ...([['vision', setVisionStatus], ['packages', setPackageStatus]] as const).map(async ([route, update]) => {
       try { const data = await requestJson<VisionStatus>(`/api/medications/${route}/status`); if (mounted.current) update(data); }
       catch { if (mounted.current) update({ ready: false, imageCount: 0, drugCount: 0, model: '', reason: '無法連線至本機圖片比對服務，請確認後端已啟動。' }); }
-    }));
+    })]);
+  }
+  async function refreshPersonalLibrary() {
+    try { const data = await requestJson<PersonalPillLibrary>('/api/medications/vision/personal-references'); if (mounted.current) setPersonalLibrary(data); }
+    catch { if (mounted.current) setPersonalLibrary({ photos: [], warning: '無法讀取自存照片，請確認後端已啟動後重試。' }); }
   }
   useEffect(() => {
     if (!active) return;
@@ -284,6 +291,26 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     finally { scanController.current = null; if (mounted.current) { setBusy(null); setScanProgress(''); } }
   }
 
+  async function updatePersonalLibrary(url: string, body: unknown, notice: string) {
+    const controller = new AbortController(); scanController.current = controller;
+    setBusy('reference'); setError(''); setNotices([]); setScanProgress('正在更新本機藥錠照片圖庫…');
+    try {
+      const result = await requestJson<{ status: VisionStatus; library: PersonalPillLibrary }>(url, {
+        method: 'POST', signal: controller.signal, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+      });
+      if (!mounted.current || controller.signal.aborted) return;
+      setVisionStatus(result.status); setPersonalLibrary(result.library); setVisionResult(null); setNotices([notice]);
+    } catch (e) { if (mounted.current) setError(controller.signal.aborted ? '已取消等待，請重新讀取自存照片確認狀態；相同照片可重送。' : (e as Error).message); }
+    finally { scanController.current = null; if (mounted.current) { setBusy(null); setScanProgress(''); } }
+  }
+
+  function registerPill(drug: DrugCandidate, sourceNote: string) {
+    if (files.length < 1 || files.length > 2 || files.some(file => file.type === 'application/pdf')) { setError('收錄藥錠請選擇 1–2 張同一品項照片。'); return; }
+    void updatePersonalLibrary('/api/medications/vision/personal-references', {
+      images: files.map(file => file.data), drugId: drug.id, identity: pillReferenceIdentity(drug), sourceNote, confirmed: true,
+    }, `已收錄「${drug.name}」的藥錠照片；後續比對仍須人工核對，不會自動確認藥品。`);
+  }
+
   function updateOcrPage(index: number, update: (page: OcrPage) => OcrPage) {
     clearSearchResults();
     setOcrPages(previous => previous.map((page, i) => i === index ? update(page) : page));
@@ -390,6 +417,8 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
         {visualMode && <div className="mt-3 rounded-xl border border-emerald-100 bg-emerald-50/60 p-3 text-sm">
           <p className="font-medium text-emerald-900">{activeVisionStatus?.ready ? scanEngine === 'package' ? `本機藥盒圖庫 · ${activeVisionStatus.productCount || 0} 種包裝品名／${activeVisionStatus.imageCount} 張圖` : `本機藥錠圖庫 · ${activeVisionStatus.drugCount.toLocaleString()} 種藥品／${activeVisionStatus.imageCount.toLocaleString()} 張圖` : activeVisionStatus?.reason || '正在確認本機圖片庫…'}</p>
           <button type="button" disabled={!!busy} onClick={() => void refreshVisionStatus()} className="mt-2 text-xs text-emerald-800 underline">重新檢查圖片庫</button>
+          {!!activeVisionStatus?.personalImageCount && <p className="mt-2 text-xs text-slate-600">含 {activeVisionStatus.personalImageCount} 張使用者核對的自存照片，非官方參考圖。</p>}
+          {activeVisionStatus?.personalWarning && <p className="mt-2 text-xs text-amber-800">{activeVisionStatus.personalWarning}</p>}
           <p className="mt-2 text-xs leading-relaxed text-slate-600">{scanEngine === 'package' ? '拍攝同一藥盒的正面或側面，保留完整盒身、品名與規格。此模式搜尋已收錄的包裝參考圖，預設同時讀取文字；核對品名後可直接查本機資料。' : '一次比對一種藥，可上傳正反面各一張。請先裁切多餘背景，讓整顆藥錠與刻字清楚可見。拍攝藥盒時請選「藥盒照片比對」。'}</p>
           <label className="mt-3 flex items-start gap-2 text-xs text-slate-700"><input type="checkbox" checked={readPhotoText} disabled={!!busy} onChange={event => setReadPhotoText(event.target.checked)} className="mt-0.5 accent-emerald-700" />同時用本機 OCR 讀取{scanEngine === 'package' ? '藥盒文字' : '刻字'}，核對後可直接查資料</label>
           {scanEngine === 'vision' && <><label className="mt-3 block text-xs text-slate-700">刻字（選填，完整一面刻字會另查本機資料）<input aria-label="核對藥錠刻字" maxLength={80} disabled={!!busy} value={visionImprint} onChange={event => { setVisionImprint(event.target.value); setVisionResult(null); clearSearchResults(); }} placeholder="例如 FY T061；不確定可先留空" className="mt-1 block w-full rounded-lg border border-slate-300 bg-white p-2 text-sm" /></label>
@@ -423,6 +452,8 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
           onChange={(index, text) => updateOcrPage(index, page => ({ ...page, text }))} onSwitchReading={index => updateOcrPage(index, switchOcrReading)}
           onSearch={searchOcrLine} onQueryEdit={clearSearchResults} /></div>}
         {scanEngine === 'package' && <PackageReferenceForm key={files.map(file => file.id).join(',')} disabled={!!busy} photoCount={files.filter(file => file.type !== 'application/pdf').length} onSave={(name, note) => void registerPackage(name, note)} />}
+        {scanEngine === 'vision' && <PillReferenceLibrary key={files.map(file => file.id).join(',') + selected.map(pillReferenceIdentity).join(',')} selected={selected} photoCount={files.filter(file => file.type !== 'application/pdf').length} disabled={!!busy} library={personalLibrary}
+          onSave={registerPill} onRefresh={() => void refreshVisionStatus()} onDisable={key => void updatePersonalLibrary(`/api/medications/vision/personal-references/${key}/disable`, {}, '已停用這張照片，後續不再用於比對；其他參考圖保持可用。')} />}
         <div ref={visionHeading} className="scroll-mt-6">{visionResult && <VisionResults result={visionResult} disabled={!!busy} onImprintSearch={input => void searchAppearance({ name: '', strength: '', dosageForm: '', appearance: { shape: '', color: '', imprints: [input] } })} onPackage={() => { setScanEngine('package'); setVisionResult(null); void extract('package', 'label'); }} onOcr={() => void extract('local', 'pill')} onLabelOcr={() => { setScanEngine('local'); setOcrTarget('label'); setVisionResult(null); void extract('local', 'label'); }} onReview={drug => { searchVersion.current++; replaceCandidates([drug]); setSearched(true); setNotices(['您正在核對候選，請確認品名、規格與實際包裝後再分析。']); setQuery(drug.name); setSource('tfda'); setDosageForm(drug.dosageForm); }} />}</div>
         <ObservationReview matches={scanMatches} disabled={!!busy} formListId={formListId} onSelect={showMatch}
           onSearch={(observation, index) => void searchAppearance(observation, index)}
@@ -525,7 +556,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       <details className="rounded-xl border border-slate-200 bg-white p-4 text-xs text-slate-600"><summary className="cursor-pointer font-medium">資料版本、涵蓋範圍與授權</summary>{report.datasets.map(d => <div key={d.source} className="mt-3 space-y-1 break-words"><a href={d.sourceUrl} target="_blank" rel="noreferrer" className="text-emerald-800 underline">{datasetNames[d.source]}</a><p>匯入：{dateText(d.importedAt)} · {d.count.toLocaleString()} 筆</p><p>{d.coverage}</p><p>{d.fileName}</p><p>{d.license}</p></div>)}</details>
     </section>}
 
-    {cropId && files.find(file => file.id === cropId) && <PhotoCropDialog data={files.find(file => file.id === cropId)!.data} onClose={() => setCropId(null)} onApply={data => { setFiles(previous => previous.map(file => file.id === cropId ? { ...file, data, name: file.name.replace(/\.[^.]+$/, '') + '-裁切.jpg', type: 'image/jpeg', size: Math.ceil(data.split(',')[1].length * 3 / 4) } : file)); setVisionResult(null); setOcrPages([]); setScanMatches([]); replaceCandidates([]); setSearched(false); setNotices([]); }} />}
+    {cropId && files.find(file => file.id === cropId) && <PhotoCropDialog data={files.find(file => file.id === cropId)!.data} onClose={() => setCropId(null)} onApply={data => { setFiles(previous => previous.map(file => file.id === cropId ? { ...file, id: crypto.randomUUID(), data, name: file.name.replace(/\.[^.]+$/, '') + '-裁切.jpg', type: 'image/jpeg', size: Math.ceil(data.split(',')[1].length * 3 / 4) } : file)); setVisionResult(null); setOcrPages([]); setScanMatches([]); replaceCandidates([]); setSearched(false); setNotices([]); }} />}
     {cameraOpen && <CameraDialog onCapture={file => void addFiles([file])} onClose={() => setCameraOpen(false)} />}
   </div>;
 }
