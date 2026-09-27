@@ -2,17 +2,23 @@
 
 藥物專案：以 React + Express + SQLite 建立的教學應用，提供藥品資料查詢、藥袋候選名稱辨識，以及依諮詢對象年齡調整的一般照護資訊，涵蓋嬰幼兒、兒童、青少年、成人與高齡者。
 
-## 下載與開始使用
+## 在 VS Code 啟動本機網頁
+
+專案以本機網頁為主要使用方式，不需要 Windows 桌面安裝程式。首次取得專案時，在終端機執行：
 
 ```bash
 git clone https://github.com/xiaom5704-eng/-.git medicine-app
 cd medicine-app
 npm ci
+npm run data:install
+npm run dev
 ```
 
-也可從 GitHub 的 **Code → Download ZIP** 下載並解壓縮。請使用 Node.js 24。首次安裝套件及 OCR 模型需要網路。
+也可從 GitHub 的 **Code → Download ZIP** 下載並解壓縮。已下載時，用 VS Code 開啟含有 `package.json` 的資料夾，在「終端機 → 新增終端機」從 `npm ci` 開始執行，略過 `git clone` 與 `cd`。請使用 Node.js 24。首次安裝套件及 OCR 模型需要網路。
 
-要使用已整理的藥品、交互作用、參考圖與五款案例仿單，請依[完整資料包與首次啟動](docs/GitHub下載與啟動.md)安裝 Release 資料包，再執行 `npm run dev`。只需基本藥名與交互作用資料時，也可自行執行 `npm run data:sync`。本機查藥、OCR、圖片候選比對及年齡案例不需要 Gemini 金鑰；自由問答仍需 Gemini 或已啟動的 Ollama。
+`data:install` 僅供首次安裝：下載約 160 MB 的固定公開資料快照，核對 ZIP 與全部資料檔案後才建立 `data/`。已經有 `data/` 時會拒絕覆蓋；資料備妥後，日常只需 `npm run dev`，開啟終端機顯示的網址（預設 `http://localhost:3000`）。這不是資料自動更新指令。
+
+已下載資料 ZIP 時可用 `npm run data:install -- --file="資料包 ZIP 路徑"` 離線安裝。自訂資料庫／圖庫路徑的使用者請沿用既有匯入流程。詳細步驟見[完整資料包與首次啟動](docs/GitHub下載與啟動.md)。只需基本藥名與交互作用資料時，也可自行執行 `npm run data:sync`。本機查藥、OCR、圖片候選比對及年齡案例不需要 Gemini 金鑰；自由問答仍需 Gemini 或已啟動的 Ollama。
 
 ## 依年齡諮詢
 
@@ -148,11 +154,11 @@ npm run vision:index
 
 ```bash
 npm ci
-npm run data:sync
+npm run data:install
 npm run dev
 ```
 
-開啟 http://localhost:3000 。資料同步會下載 TFDA 官方 ZIP 與 DDInter 官方八類 CSV，建立 `data/drugs.db`。完整資料通過驗證後才發布 `data/raw/drug-datasets.zip` 離線包；下載中斷或來源格式錯誤保留原資料庫及備份。之後可用 `npm run data:sync -- --offline` 重新匯入，亦相容舊版九個散檔。尚未匯入也可啟動，但介面會顯示資料尚未載入，不會假裝查詢成功。
+開啟 http://localhost:3000 。`data:install` 安裝已整理的固定展示快照；已備妥資料時略過此步驟。若想自行從來源建立或更新基本主檔，改用 `npm run data:sync`：下載 TFDA 官方 ZIP 與 DDInter 官方八類 CSV，建立 `data/drugs.db`。完整資料通過驗證後才發布 `data/raw/drug-datasets.zip` 離線包；下載中斷或來源格式錯誤保留原資料庫及備份。之後可用 `npm run data:sync -- --offline` 重新匯入，亦相容舊版九個散檔。尚未匯入也可啟動，但介面會顯示資料尚未載入，不會假裝查詢成功。
 
 需要自訂設定時，把 `.env.example` 複製成 `.env`：
 
@@ -211,7 +217,9 @@ Cloud Run workflow 保留為手動觸發，推送程式碼不會自動部署。�
 
 分享 Windows 安裝包時須另行核對該次打包與原生啟動結果，不能把原始碼推送成功當成桌面版驗證通過。
 
-## Windows 桌面版
+## 歷史桌面實驗（本機網頁不需要）
+
+目前維護與使用目標是 VS Code／終端機啟動的本機網頁，以下僅保留既有實驗與程式供參考；不需執行這些指令，也不以桌面驗證作為網頁版完成條件。
 
 備妥上述資料後，`npm run electron:build -- --dir` 建立可執行目錄，`npm run electron:check` 檢查實際打包服務、圖片模型與重啟保存。`npm run electron:build` 產生 NSIS 安裝檔。Electron 會自行啟動本機服務、使用可寫入的使用者資料目錄，不需要另外執行 `npm start`。本機藥品查詢與案例不需模型金鑰，自由問答仍需 Gemini 或 Ollama。
 

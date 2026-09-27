@@ -6,6 +6,7 @@ release/
 coverage/
 # Downloaded datasets, local registries, uploaded photos and generated reports.
 data/
+.data-install-*/
 test-results/
 public/ocr/
 

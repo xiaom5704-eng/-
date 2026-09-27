@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "data:install": "node scripts/setup-local-data.mjs",
     "vision:prepare": "node scripts/prepare-vision.mjs",
     "vision:index": "node scripts/index-vision.mjs",
     "vision:originals": "tsx scripts/fetch-vision-originals.ts",
