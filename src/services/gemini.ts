@@ -2,24 +2,22 @@ import { requestJson } from './http';
 import { GEMINI_MODEL, getGeminiClient, geminiErrorMessage } from './gemini-client';
 import { consultationInstruction } from '../../shared/consultation';
 
-type Engine = 'gemini' | 'ollama';
-export async function withAIFallback(engine: Engine, providers: Record<Engine, () => Promise<string | null | undefined>>, required = false, signal?: AbortSignal) {
-  const order: Engine[] = engine === 'gemini' ? ['gemini', 'ollama'] : ['ollama', 'gemini'];
-  const failures: string[] = [];
-  for (const provider of order) {
+export type Engine = 'gemini' | 'ollama';
+// The displayed selection is the only destination, including background titles.
+// A configured key is not permission to silently switch a local request to cloud.
+export async function withSelectedAI(engine: Engine, providers: Record<Engine, () => Promise<string | null | undefined>>, required = false, signal?: AbortSignal) {
+  signal?.throwIfAborted();
+  try {
+    const result = await providers[engine]();
     signal?.throwIfAborted();
-    try {
-      const result = await providers[provider]();
-      signal?.throwIfAborted();
-      if (typeof result === 'string' && result.trim()) return result.trim();
-      if (result !== null && result !== undefined) failures.push(`${provider === 'gemini' ? 'Gemini' : 'Ollama'} 沒有產生回答文字。`);
-    } catch (error) {
-      signal?.throwIfAborted();
-      failures.push(`${provider === 'gemini' ? 'Gemini' : 'Ollama'}：${error instanceof Error ? error.message : '請求失敗，請稍後重試。'}`);
-    }
+    if (typeof result === 'string' && result.trim()) return result.trim();
+    if (required) throw new Error('沒有產生回答文字，請重試或在上方切換引擎。');
+    return null;
+  } catch (error) {
+    signal?.throwIfAborted();
+    if (required) throw new Error(`${engine === 'gemini' ? 'Gemini' : 'Ollama'}：${error instanceof Error ? error.message : '請求失敗，請稍後重試。'}`);
+    return null;
   }
-  if (required) throw new Error(failures.join('\n') || '目前沒有可用的 AI 引擎，請設定 Gemini 金鑰或啟動 Ollama。');
-  return null;
 }
 
 const callOllama = async (prompt: string, system?: string, signal?: AbortSignal) => {
@@ -55,7 +53,6 @@ async function medicalReply(history: ConversationMessage[], message: string, sys
 
   const tryGemini = async () => {
     try {
-      if (!apiKey && !import.meta.env?.VITE_GEMINI_API_KEY) return null;
       const collapsedHistory: { role: 'user' | 'model', parts: { text: string }[] }[] = [];
       for (const h of history) {
         const role = h.role === 'user' ? 'user' : 'model';
@@ -89,20 +86,22 @@ async function medicalReply(history: ConversationMessage[], message: string, sys
     }
   };
 
-  return withAIFallback(selectedEngine, { gemini: tryGemini, ollama: tryOllama }, true, signal);
+  return withSelectedAI(selectedEngine, { gemini: tryGemini, ollama: tryOllama }, true, signal);
 }
 
-export const testGeminiKey = async (apiKey: string): Promise<boolean> => {
+export const testGeminiKey = async (apiKey: string, signal?: AbortSignal): Promise<boolean> => {
+  signal?.throwIfAborted();
   try {
     const ai = getGeminiClient(apiKey);
     await ai.models.generateContent({
       model: GEMINI_MODEL,
       contents: "Reply with OK only.",
-      config: { maxOutputTokens: 8 }
+      config: { maxOutputTokens: 8, abortSignal: signal }
     });
     // A successful request validates access even when a tiny output budget yields no text.
-    return true;
+    signal?.throwIfAborted(); return true;
   } catch (error) {
+    signal?.throwIfAborted();
     throw new Error(geminiErrorMessage(error));
   }
 };
@@ -125,11 +124,10 @@ AI：${aiResponse}
         contents: [{ parts: [{ text: prompt }] }]
       });
       return response.text?.trim() || null;
-    } catch (e) {
-      console.error(geminiErrorMessage(e));
+    } catch {
       return null;
     }
   };
 
-  return withAIFallback(selectedEngine, { gemini: tryGemini, ollama: () => callOllama(prompt) });
+  return withSelectedAI(selectedEngine, { gemini: tryGemini, ollama: () => callOllama(prompt) });
 }

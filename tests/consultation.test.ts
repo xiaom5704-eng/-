@@ -56,7 +56,7 @@ test('Gemini symptom requests carry exact age and prior context separately from 
   assert.match(JSON.stringify(body.systemInstruction), /緊急情況先提醒/);
 });
 
-test('Fallback preserves the same target age and all-age instructions', async t => {
+test('Manual retry with another engine preserves the same target age and all-age instructions', async t => {
   let fallback: any;
   t.mock.method(globalThis, 'fetch', async (url: unknown, init?: RequestInit) => {
     const address = url instanceof Request ? url.url : String(url);
@@ -66,7 +66,10 @@ test('Fallback preserves the same target age and all-age instructions', async t 
     }
     return new Response(JSON.stringify({ error: { code: 503, message: 'unavailable' } }), { status: 503, headers: { 'Content-Type': 'application/json' } });
   });
-  const answer = await chatWithAI([], withConsultationAge('問題', { value: '16', unit: 'years' }), 'synthetic-test-key-not-a-credential', 'gemini');
+  const question = withConsultationAge('問題', { value: '16', unit: 'years' });
+  await assert.rejects(chatWithAI([], question, 'synthetic-test-key-not-a-credential', 'gemini'), /Gemini/);
+  assert.equal(fallback, undefined, 'The original failed request must not reach another engine');
+  const answer = await chatWithAI([], question, 'synthetic-test-key-not-a-credential', 'ollama');
   assert.equal(answer, '備援回覆');
   assert.match(fallback.prompt, /16 歲/);
   assert.match(fallback.system, /青少年/);

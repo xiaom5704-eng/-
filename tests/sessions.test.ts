@@ -9,7 +9,7 @@ import Database from 'better-sqlite3';
 import express from 'express';
 import { openSessionDatabase, sessionRouter } from '../server/sessions';
 import { requestJson } from '../src/services/http';
-import { withAIFallback } from '../src/services/gemini';
+import { withSelectedAI } from '../src/services/gemini';
 import { listenForFetch } from './http-listener';
 
 async function fixture(t: TestContext) {
@@ -249,9 +249,9 @@ test('Message identity migration and exchange retries survive database reopening
   }
 });
 
-test('The selected AI provider runs first and a successful response skips fallback', async () => {
+test('Only the selected AI provider is called for a successful answer', async () => {
   const calls: string[] = [];
-  const answer = await withAIFallback('ollama', {
+  const answer = await withSelectedAI('ollama', {
     ollama: async () => { calls.push('ollama'); return ' 回應 '; },
     gemini: async () => { calls.push('gemini'); return '不應執行'; },
   });
@@ -259,11 +259,11 @@ test('The selected AI provider runs first and a successful response skips fallba
   assert.deepEqual(calls, ['ollama']);
 });
 
-test('AI errors and blank responses trigger fallback; total failure stays a failure', async () => {
-  assert.equal(await withAIFallback('gemini', {
-    gemini: async () => { throw new Error('offline'); }, ollama: async () => '備援回應',
-  }), '備援回應');
-  assert.equal(await withAIFallback('ollama', { ollama: async () => ' ', gemini: async () => null }), null);
+test('Optional AI titles remain absent on failure without contacting the other provider', async () => {
+  assert.equal(await withSelectedAI('gemini', {
+    gemini: async () => { throw new Error('offline'); }, ollama: async () => assert.fail('Unexpected provider'),
+  }), null);
+  assert.equal(await withSelectedAI('ollama', { ollama: async () => ' ', gemini: async () => assert.fail('Unexpected provider') }), null);
 });
 
 test('HTTP errors cannot masquerade as successful writes, including HTML error pages', async t => {

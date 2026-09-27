@@ -22,6 +22,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Session, Message } from './types';
 import MedicationPanel from './components/MedicationPanel';
 import ConsultationAgeField from './components/ConsultationAgeField';
+import AIConnection from './components/AIConnection';
 import { ageError, withConsultationAge, type ConsultationAge } from '../shared/consultation';
 import { getSymptomAdvice, chatWithAI, generateTitleSummary, testGeminiKey } from './services/gemini';
 import { requestJson, sendJson } from './services/http';
@@ -142,8 +143,6 @@ export default function App() {
   const [newTitle, setNewTitle] = useState('');
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
   const [userApiKey, setUserApiKey] = useState('');
-  const [isOllamaOnline, setIsOllamaOnline] = useState<boolean | null>(null);
-  const [ollamaModel, setOllamaModel] = useState<string | null>(null);
   const [isGeminiValid, setIsGeminiValid] = useState<boolean>(false);
   const [selectedEngine, setSelectedEngine] = useState<'gemini' | 'ollama'>(import.meta.env.VITE_GEMINI_API_KEY ? 'gemini' : 'ollama');
   const [showApiKeyInput, setShowApiKeyInput] = useState(false);
@@ -152,9 +151,7 @@ export default function App() {
     if (engine === 'gemini') {
       const hasKey = userApiKey || import.meta.env.VITE_GEMINI_API_KEY;
       if (!hasKey) {
-        alert('請先配置 API 金鑰以啟用 Gemini');
         setShowApiKeyInput(true);
-        setSelectedEngine('ollama');
         return;
       }
     }
@@ -163,6 +160,18 @@ export default function App() {
   const [isTestingKey, setIsTestingKey] = useState(false);
   const [keyTestResult, setKeyTestResult] = useState<'success' | 'error' | null>(null);
   const [keyTestError, setKeyTestError] = useState('');
+  const keyTestController = useRef<AbortController | null>(null);
+  const apiKeyDialog = useRef<HTMLDialogElement>(null);
+  const closeApiKeySettings = () => {
+    keyTestController.current?.abort(); keyTestController.current = null;
+    setIsTestingKey(false); setShowApiKeyInput(false);
+  };
+  useEffect(() => {
+    const dialog = apiKeyDialog.current;
+    if (showApiKeyInput) dialog?.showModal();
+    return () => dialog?.close();
+  }, [showApiKeyInput]);
+  useEffect(() => () => { keyTestController.current?.abort(); }, []);
   const [showGuideModal, setShowGuideModal] = useState(false);
   const [showDisclaimerModal, setShowDisclaimerModal] = useState(() => {
     const lastAccepted = localStorage.getItem('disclaimerAcceptedAt');
@@ -208,28 +217,10 @@ export default function App() {
 
   useEffect(() => {
     fetchSessions();
-    checkOllamaStatus();
-    const interval = setInterval(checkOllamaStatus, 30000); // Check every 30s
-    return () => clearInterval(interval);
   }, []);
 
-  const checkOllamaStatus = async () => {
-    try {
-      const res = await fetch('/api/ai/ollama/status');
-      const data = await res.json();
-      setIsOllamaOnline(data.status === 'online');
-      if (data.status === 'online' && data.model) {
-        setOllamaModel(data.model);
-      } else {
-        setOllamaModel(null);
-      }
-    } catch (e) {
-      setIsOllamaOnline(false);
-      setOllamaModel(null);
-    }
-  };
-
   const handleTestKey = async () => {
+    if (keyTestController.current) return;
     setKeyTestError('');
     if (!userApiKey.trim()) {
       setUserApiKey('');
@@ -242,20 +233,20 @@ export default function App() {
 
     setIsTestingKey(true);
     setKeyTestResult(null);
+    const controller = new AbortController(); keyTestController.current = controller;
     try {
-      await trackApiCall(() => testGeminiKey(userApiKey));
+      await trackApiCall(() => testGeminiKey(userApiKey, controller.signal));
+      controller.signal.throwIfAborted();
       setIsGeminiValid(true);
       setKeyTestResult('success');
       setSelectedEngine('gemini');
-      setTimeout(() => {
-        setShowApiKeyInput(false);
-      }, 1500);
     } catch (error) {
+      if (controller.signal.aborted) return;
       setIsGeminiValid(false);
       setKeyTestResult('error');
       setKeyTestError(error instanceof Error ? error.message : '無法連線至 Gemini，請稍後再試。');
     } finally {
-      setIsTestingKey(false);
+      if (keyTestController.current === controller) { keyTestController.current = null; setIsTestingKey(false); }
     }
   };
 
@@ -658,46 +649,7 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2 sm:gap-4">
-            {/* AI Status Box */}
-            <div className="hidden md:flex items-center bg-white px-4 py-1.5 rounded-lg text-sm font-medium border border-slate-200 shadow-sm">
-              <span className="text-slate-600 mr-2">優先引擎：</span>
-              {selectedEngine === 'gemini' 
-                ? <span className={`${isGeminiValid ? 'text-blue-600' : 'text-slate-600'} font-bold flex items-center gap-1`}><span className={`w-2 h-2 rounded-full ${isGeminiValid ? 'bg-blue-500' : 'bg-slate-300'}`} />Gemini · {isGeminiValid ? '金鑰已測試' : '金鑰未測試'}</span>
-                : <span className={`${isOllamaOnline ? 'text-emerald-600' : 'text-slate-600'} font-bold flex items-center gap-1`}><span className={`w-2 h-2 rounded-full ${isOllamaOnline ? 'bg-emerald-500' : 'bg-slate-300'}`} />Ollama · {isOllamaOnline === null ? '檢查中' : isOllamaOnline ? '可連線' : '未就緒'}</span>}
-            </div>
-
-            {/* Engine Selectors */}
-            <div className="hidden sm:flex items-center gap-2 bg-slate-100 p-1 rounded-full">
-              <button 
-                onClick={() => handleEngineChange('ollama')}
-                className={`relative group flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${selectedEngine === 'ollama' ? 'bg-white text-emerald-700 shadow-sm border border-emerald-200' : 'text-slate-500 hover:text-slate-700 border border-transparent'}`}
-                title="優先使用 Ollama 本地端"
-              >
-                <div className={`w-2 h-2 rounded-full ${isOllamaOnline ? 'bg-emerald-500' : 'bg-slate-300'}`} />
-                Ollama
-                {isOllamaOnline && ollamaModel && (
-                  <div className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-50">
-                    目前模型：{ollamaModel}
-                  </div>
-                )}
-              </button>
-              <button 
-                onClick={() => handleEngineChange('gemini')}
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${selectedEngine === 'gemini' ? 'bg-white text-blue-700 shadow-sm border border-blue-200' : 'text-slate-500 hover:text-slate-700 border border-transparent'}`}
-                title="優先使用 Gemini 雲端模式"
-              >
-                <div className={`w-2 h-2 rounded-full ${isGeminiValid ? 'bg-blue-500' : 'bg-slate-300'}`} />
-                Gemini
-              </button>
-            </div>
-
-            {/* Config Button */}
-            <button 
-              onClick={() => setShowApiKeyInput(!showApiKeyInput)}
-              className="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors border border-slate-200"
-            >
-              配置金鑰
-            </button>
+            <AIConnection engine={selectedEngine} onChange={handleEngineChange} onConfigure={() => setShowApiKeyInput(true)} geminiValid={isGeminiValid} disabled={isLoading} />
 
             {/* Tabs */}
             <nav className="flex flex-wrap bg-slate-100 p-1 rounded-xl gap-1">
@@ -726,16 +678,16 @@ export default function App() {
         {/* API Key Input Overlay */}
         <AnimatePresence>
           {showApiKeyInput && (
-            <motion.div 
+            <motion.dialog ref={apiKeyDialog} aria-labelledby="gemini-settings-title" onCancel={event => { event.preventDefault(); closeApiKeySettings(); }}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="absolute top-16 left-0 right-0 bg-white border-b border-slate-200 p-6 z-20 shadow-lg"
+              className="m-auto max-h-[90dvh] w-[calc(100%-2rem)] max-w-3xl overflow-y-auto rounded-2xl bg-white p-5 shadow-xl backdrop:bg-slate-900/50"
             >
               <div className="max-w-3xl mx-auto flex flex-col gap-6">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-slate-800">Gemini API 設定與測試</h3>
-                  <button onClick={() => setShowApiKeyInput(false)} className="text-slate-400 hover:text-slate-600">
+                  <h3 id="gemini-settings-title" className="text-base font-bold text-slate-800">Gemini API 設定與測試</h3>
+                  <button type="button" aria-label="關閉金鑰設定" onClick={closeApiKeySettings} className="shrink-0 p-2 text-slate-500 hover:text-slate-700">
                     <X size={20} />
                   </button>
                 </div>
@@ -743,10 +695,12 @@ export default function App() {
                 <p className="text-sm text-slate-500">
                   如果您無法使用本地 Ollama，請輸入您的「Gemini API 金鑰」以啟用雲端 AI 功能。
                   您可以從 <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noreferrer" className="text-emerald-600 underline">Google AI Studio</a> 獲取金鑰。
+                  金鑰僅保留於本次頁面，重新整理後需重新輸入。只有選擇 Gemini 時，聊天內容才送往 Google。
                 </p>
 
-                <div className="flex gap-4">
+                <div className="flex flex-col gap-3 sm:flex-row">
                   <input 
+                    aria-label="Gemini API 金鑰" autoComplete="off"
                     type="password" 
                     disabled={isTestingKey}
                     value={userApiKey}
@@ -757,7 +711,7 @@ export default function App() {
                       setIsGeminiValid(false);
                     }}
                     placeholder="在此輸入 Gemini API Key..."
-                    className="flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500"
+                    className="min-w-0 flex-1 p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                   <button 
                     onClick={handleTestKey}
@@ -765,7 +719,7 @@ export default function App() {
                     className="px-6 py-3 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-700 transition-colors disabled:opacity-50 flex items-center gap-2"
                   >
                     {isTestingKey && <Loader2 size={16} className="animate-spin" />}
-                    儲存並關閉
+                    {userApiKey.trim() ? '測試並啟用 Gemini' : '使用 Ollama'}
                   </button>
                 </div>
 
@@ -782,7 +736,8 @@ export default function App() {
                   </div>
                 )}
 
-                <div className="grid grid-cols-3 gap-4 mt-2">
+                <p className="text-xs text-slate-500">本頁 AI 請求統計（包含聊天、症狀、標題與金鑰測試）</p>
+                <div className="grid grid-cols-3 gap-2">
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
                     <div className="text-xs text-slate-500 mb-1">平均延遲</div>
                     <div className="text-xl font-bold text-emerald-600">
@@ -792,7 +747,7 @@ export default function App() {
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
                     <div className="text-xs text-slate-500 mb-1">成功率</div>
                     <div className="text-xl font-bold text-blue-600">
-                      {apiMetrics.totalRequests > 0 ? Math.round((apiMetrics.successfulRequests / apiMetrics.totalRequests) * 100) : 100}%
+                      {apiMetrics.totalRequests > 0 ? `${Math.round((apiMetrics.successfulRequests / apiMetrics.totalRequests) * 100)}%` : '尚無紀錄'}
                     </div>
                   </div>
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
@@ -801,7 +756,7 @@ export default function App() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.dialog>
           )}
         </AnimatePresence>
 
@@ -844,7 +799,7 @@ export default function App() {
                     </h3>
                     <p className="mb-2">
                       Ollama 是一個可以讓你在「自己的電腦上」執行大型語言模型（例如 Llama 3, Mistral 等）的工具。
-                      它的最大優點是「完全免費、保護隱私（資料不會上傳到雲端），且不需要網路連線」即可運作。
+                      已下載的本機模型可在這台電腦執行，不需 Gemini 金鑰。若專案另設遠端服務或使用 Ollama 雲端模型，內容仍會傳至該服務；請核對自己的設定。
                     </p>
                     <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
                       <p className="font-medium text-slate-700 mb-2">如何安裝與啟動 Ollama：</p>
@@ -882,16 +837,16 @@ export default function App() {
                       系統如何選擇 AI？
                     </h3>
                     <p>
-                      本系統採用「智慧切換機制」：
+                      您可以在上方選擇本次使用的引擎：
                     </p>
                     <ul className="list-disc list-inside space-y-2 mt-2 ml-2">
                       <li>
                         <span className="font-medium text-slate-700">依選定引擎使用：</span>
-                        文字功能依上方選定引擎優先嘗試，Ollama 由後端代理連線 (預設 <code className="bg-slate-100 px-1 py-0.5 rounded">http://127.0.0.1:11434</code>)。若選定服務無法使用，一般聊天會嘗試另一引擎；藥物頁的查詢摘要直接依資料狀態生成，不呼叫模型。
+                        聊天、症狀回答與自動標題只使用上方選定引擎，Ollama 由後端代理連線 (預設 <code className="bg-slate-100 px-1 py-0.5 rounded">http://127.0.0.1:11434</code>)。藥物頁的查詢摘要直接依資料狀態生成，不呼叫模型。
                       </li>
                       <li>
-                        <span className="font-medium text-slate-700">自動切換 Gemini：</span>
-                        如果 Ollama 未啟動，且您已設定了有效的 Gemini API Key，一般文字功能會嘗試使用 Gemini。此備援只用於一般文字功能；本機圖片比對或 OCR 失敗不會自動上傳雲端。
+                        <span className="font-medium text-slate-700">連線失敗時：</span>
+                        展開「連線狀態與使用方式」查看原因。原問題仍保留，可重新連線後重試，或自行選擇另一引擎再重試。設定金鑰不會讓 Ollama 失敗時自動改用 Gemini；本機圖片比對或 OCR 也不自動上傳雲端。
                       </li>
                       <li>
                         <span className="font-medium text-slate-700">本機照片比對與 OCR：</span>

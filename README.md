@@ -22,6 +22,10 @@ npm run dev
 
 ## 依年齡諮詢
 
+聊天、症狀回答與自動標題**只使用畫面選定的引擎**。窄螢幕也能切換 Ollama／Gemini；設定金鑰不會讓 Ollama 失敗時自動改送 Gemini。失敗後可修復連線或手動切換，再按「重試回答上一個問題」，沿用原問題與原年齡。症狀頁保留表單，可再次取得建議。
+
+展開「連線狀態與使用方式」可查看 Ollama 設定模型、重新檢查，並區分服務連不上、模型未安裝或回應格式錯誤。若服務已啟動但缺少設定模型，會列出已安裝名稱，方便在 VS Code 調整 `.env` 的 `OLLAMA_MODEL` 後重新啟動。這是連線／模型清單檢查，不能保證模型推論成功；依 [Ollama 的模型清單 API](https://docs.ollama.com/api/tags) 取得資料。
+
 對話與症狀頁可填寫年齡（歲／月／天），也可在問題中直接說明。填寫的年齡會隨問題傳給所選 AI 並儲存至本次對話；未填時參考本次問題及對話上下文，不預設為嬰兒。新建或切換對話會清空年齡與症狀草稿，已送出的年齡仍保留在原對話紀錄中。請為不同對象建立不同對話。
 
 年齡客製化目前用於 AI 一般照護資訊與追問內容，並非個人化診斷或劑量計算。藥品交互作用仍是成分層級查詢；仿單保留來源提供的兒童、高齡者及特定族群段落，不由 AI 補寫年齡限制。
@@ -191,7 +195,7 @@ npm run dev
 - `VITE_GEMINI_API_KEY`：僅供本機開發選用，會嵌入前端程式；共用部署請留空，讓使用者在介面輸入自己的金鑰。介面金鑰僅保存在頁面記憶體，重新整理後清除。
 - `VITE_GEMINI_MODEL`：金鑰測試、文字與照片／PDF 辨識共用同一模型，預設 `gemini-3-flash-preview`。Google 提供此模型的免費層，但實際可用額度取決於專案；修改後須重新建置前端。遇到 429 時介面會區分無模型額度及暫時限流，不將它誤報為金鑰無效。
 
-Ollama 文字功能使用 `llama3.2:3b`，可先執行 `ollama pull llama3.2:3b`。藥錠照片使用本機 CV，文字／PDF 使用本機 OCR，Gemini 為選用輔助。一般文字功能依選定引擎優先嘗試，失敗時會嘗試另一個引擎；此聊天備援規則不套用到 CV／OCR。藥物報告的查詢摘要直接依資料狀態生成，不呼叫模型。
+Ollama 文字功能預設 `llama3.2:3b`，可先執行 `ollama pull llama3.2:3b`。藥錠照片使用本機 CV，文字／PDF 使用本機 OCR，Gemini 為選用輔助。所有文字功能只使用選定引擎，失敗時不自動切換；CV／OCR 也不自動上傳雲端。Ollama 依後端設定連線，選用遠端服務或 Ollama 雲端模型時，不應視為離線處理（[官方說明](https://docs.ollama.com/faq#does-ollama-send-my-prompts-and-answers-back-to-ollamacom)）。藥物報告的查詢摘要直接依資料狀態生成，不呼叫模型。
 
 ## 檢查與建置
 
@@ -256,7 +260,8 @@ Cloud Run workflow 保留為手動觸發，推送程式碼不會自動部署。�
 - `shared/medication.ts`：共用資料型別、狀態文案與報告格式。
 - `scripts/sync-drug-data.ts`：官方資料更新。
 - `tests/medications.test.ts`：配對、資料完整性與錯誤處理測試。
-- `tests/sessions.test.ts`：對話儲存、舊資料庫升級、AI 備援與請求失敗的回歸測試。
+- `tests/sessions.test.ts`：對話儲存、舊資料庫升級、AI 引擎選擇與請求失敗的回歸測試。
+- `tests/ai-selection.test.ts`、`tests/ollama.test.ts`：選定引擎失敗、空回覆、已配置金鑰時不改送其他引擎、取消與 Ollama 連線狀態的檢查。
 - `tests/gemini.test.ts`：共用模型、金鑰驗證、零額度與錯誤訊息的回歸測試。
 - `tests/ollama.test.ts`：本機模型逾時、斷線、缺少模型及文字功能的錯誤回報測試。
 

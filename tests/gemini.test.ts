@@ -45,3 +45,12 @@ test('Gemini error messages are readable and do not expose raw provider errors o
   assert.ok(!message.includes(syntheticKey));
   assert.ok(!message.includes('Unknown error'));
 });
+
+test('Closing key validation aborts the SDK request and cannot report a late success', async t => {
+  const controller = new AbortController();
+  t.mock.method(globalThis, 'fetch', async (_url, init) => {
+    assert.ok(init?.signal); controller.abort();
+    return json({ candidates: [{ content: { role: 'model', parts: [{ text: 'Late OK' }] } }] });
+  });
+  await assert.rejects(testGeminiKey(syntheticKey, controller.signal), { name: 'AbortError' });
+});

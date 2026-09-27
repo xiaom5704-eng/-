@@ -2,7 +2,7 @@ import { test, type TestContext } from 'node:test';
 import assert from 'node:assert/strict';
 import express from 'express';
 import { ollamaRouter } from '../server/ollama';
-import { chatWithAI, getSymptomAdvice, withAIFallback } from '../src/services/gemini';
+import { chatWithAI, getSymptomAdvice, withSelectedAI } from '../src/services/gemini';
 import { requestJson } from '../src/services/http';
 import { listenForFetch } from './http-listener';
 
@@ -19,10 +19,13 @@ async function fixture(t: TestContext, fetcher: typeof fetch, timeoutMs = 1000) 
   const server = await listenForFetch(app);
   t.after(() => new Promise<void>(resolve => server.close(() => resolve())));
   const { port } = server.address() as { port: number };
-  return async (body: unknown = { prompt: 'Synthetic connection test' }, signal?: AbortSignal) => {
+  return Object.assign(async (body: unknown = { prompt: 'Synthetic connection test' }, signal?: AbortSignal) => {
     const response = await fetch(`http://127.0.0.1:${port}/`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal });
     return { status: response.status, body: await response.json() };
-  };
+  }, { status: async () => {
+    const response = await fetch(`http://127.0.0.1:${port}/status`);
+    return { status: response.status, body: await response.json(), cache: response.headers.get('cache-control') };
+  } });
 }
 
 test('Ollama proxy waits for the full response and preserves the selected model and prompt', async t => {
@@ -80,14 +83,14 @@ test('Chat displays the Ollama timeout detail and skips Gemini when no key is co
   assert.equal(calls, 1);
 });
 
-test('Chat retains both provider failure reasons without exposing Gemini raw errors', async t => {
+test('Gemini failure preserves the selected-provider reason without falling back or exposing raw errors', async t => {
   t.mock.method(globalThis, 'fetch', async (url: string | URL | Request) => {
-    if (String(url).startsWith('/api/')) return json({ error: '無法連到 Ollama 背景服務。' }, 503);
+    if (String(url).startsWith('/api/')) assert.fail('Ollama must not receive the Gemini request');
     return json({ error: { code: 429, message: 'Quota exceeded, limit: 0, sensitive-diagnostic-value' } }, 429);
   });
   await assert.rejects(chatWithAI([], 'test', 'synthetic-test-key', 'gemini'), error => {
     assert.match((error as Error).message, /Gemini：.*沒有此 Gemini 模型的可用額度/);
-    assert.match((error as Error).message, /Ollama：.*背景服務/);
+    assert.doesNotMatch((error as Error).message, /Ollama/);
     assert.ok(!(error as Error).message.includes('sensitive-diagnostic-value'));
     return true;
   });
@@ -117,18 +120,43 @@ test('Closing the HTTP client interrupts upstream Ollama instead of leaving gene
   })]);
 });
 
-test('Cancelled calls never invoke fallback, including a late result from a provider ignoring abort', async () => {
+test('Cancelled calls reject late results and never invoke the other provider', async () => {
   for (const result of ['Late result', '']) {
     const controller = new AbortController(); let fallback = false;
-    await assert.rejects(withAIFallback('ollama', {
+    await assert.rejects(withSelectedAI('ollama', {
       ollama: async () => { controller.abort(); return result; },
       gemini: async () => { fallback = true; return 'Must not run'; },
     }, true, controller.signal), { name: 'AbortError' });
     assert.equal(fallback, false);
   }
-  await assert.rejects(withAIFallback('gemini', {
+  await assert.rejects(withSelectedAI('gemini', {
     gemini: async () => assert.fail('Aborted before starting'), ollama: async () => assert.fail('Must not fall back'),
   }, true, AbortSignal.abort()), { name: 'AbortError' });
+});
+
+test('Ollama status distinguishes installed models, missing model and service failure without invoking generation', async t => {
+  const installed = await fixture(t, async url => {
+    assert.equal(url, 'http://test-ollama.invalid/api/tags');
+    return json({ models: [{ name: 'test-model' }, { name: 'another-model' }] });
+  });
+  const ready = await installed.status(); assert.equal(ready.body.status, 'online'); assert.equal(ready.body.code, 'ready');
+  assert.equal(ready.cache, 'no-store'); assert.deepEqual(ready.body.installedModels, ['test-model', 'another-model']);
+  const missing = await fixture(t, async () => json({ models: [{ name: 'another-model' }] }));
+  const result = (await missing.status()).body;
+  assert.equal(result.status, 'offline'); assert.equal(result.code, 'model_missing'); assert.equal(result.model, 'test-model');
+  assert.deepEqual(result.installedModels, ['another-model']); assert.match(result.message, /已啟動/);
+  const offline = await fixture(t, async () => { throw new Error('Private upstream diagnostic'); });
+  const unreachable = (await offline.status()).body; assert.equal(unreachable.code, 'unreachable');
+  assert.ok(!JSON.stringify(unreachable).includes('Private upstream diagnostic'));
+});
+
+test('Invalid Ollama status data is distinguished from a valid empty model list', async t => {
+  for (const response of [json({ models: null }), json({ models: [null] }), json({ models: [{ name: 1 }] }), json({ models: [] }, 503), new Response('not JSON')]) {
+    const request = await fixture(t, async () => response);
+    const result = (await request.status()).body; assert.equal(result.code, 'invalid_response'); assert.equal(result.status, 'offline');
+  }
+  const empty = await fixture(t, async () => json({ models: [] }));
+  assert.equal((await empty.status()).body.code, 'model_missing');
 });
 
 test('Chat and symptom requests forward cancellation without disguising it as a connection error', async t => {

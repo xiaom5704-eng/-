@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import type { OllamaStatus } from '../shared/ai-status';
 
 type OllamaOptions = { baseUrl?: string; model?: string; timeoutMs?: number; fetcher?: typeof fetch };
 function positiveInteger(value: unknown, fallback: number) {
@@ -56,13 +57,22 @@ export function ollamaRouter(options: OllamaOptions = {}) {
   });
 
   router.get('/status', async (_req, res) => {
+    res.setHeader('Cache-Control', 'no-store');
+    const reply = (code: OllamaStatus['code'], message: string, installedModels: string[] = []) =>
+      res.json({ status: code === 'ready' ? 'online' : 'offline', model, code, message, installedModels } satisfies OllamaStatus);
     try {
       const response = await fetcher(`${baseUrl}/api/tags`, { signal: AbortSignal.timeout(2000) });
-      const data = await response.json();
-      const installed = response.ok && Array.isArray(data.models) && data.models.some((item: { name: string }) => item.name === model);
-      res.json({ status: installed ? 'online' : 'offline', model });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !Array.isArray(data?.models) || data.models.some((item: unknown) => !item || typeof item !== 'object' || !('name' in item) || typeof item.name !== 'string')) {
+        reply('invalid_response', 'Ollama 服務有回應，但無法讀取模型清單，請檢查服務設定或稍後重試。'); return;
+      }
+      const installedModels: string[] = [...new Set<string>(data.models.map((item: { name: string }) => item.name))];
+      const installed = installedModels.includes(model);
+      reply(installed ? 'ready' : 'model_missing', installed
+        ? 'Ollama 可連線，設定的模型已安裝。首次回答仍可能需要載入模型。'
+        : `Ollama 已啟動，但找不到設定的模型 ${model}。請安裝該模型，或將專案的 OLLAMA_MODEL 改為已安裝名稱後重新啟動。`, installedModels);
     } catch {
-      res.json({ status: 'offline', model });
+      reply('unreachable', '無法連到 Ollama 背景服務。請啟動 Ollama 或檢查 OLLAMA_API_BASE_URL，再按重新檢查。');
     }
   });
   return router;
