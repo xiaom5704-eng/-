@@ -3,17 +3,17 @@
   "name": "智慧醫療助理 - 專業藥物與症狀諮詢",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/822/822118.png",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/png"
+      "src": "/favicon.ico",
+      "sizes": "256x256",
+      "type": "image/x-icon"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/822/822118.png",
+      "src": "/app-icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/822/822118.png",
+      "src": "/app-icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

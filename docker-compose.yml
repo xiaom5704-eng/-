@@ -6,6 +6,11 @@ services:
     environment:
       - OLLAMA_API_BASE_URL=http://ollama-service:11434
       - NODE_ENV=production
+      - DRUG_DB_PATH=/app/data/drugs.db
+      - CHAT_DB_PATH=/app/data/medsafe.db
+      - OPENFDA_API_KEY=${OPENFDA_API_KEY:-}
+    volumes:
+      - ./data:/app/data
     depends_on:
       - ollama-service
     restart: always

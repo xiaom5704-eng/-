@@ -12,10 +12,5 @@ export interface Message {
   role: 'user' | 'assistant';
   content: string;
   created_at?: string;
-}
-
-export interface MedicationFile {
-  id: string;
-  preview: string;
-  name: string;
+  client_id?: string | null;
 }

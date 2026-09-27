@@ -1,9 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", "Noto Sans TC", "Microsoft JhengHei", "PingFang TC", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -23,9 +23,107 @@ body {
   @apply bg-slate-200 rounded-full hover:bg-slate-300 transition-colors;
 }
 
-.prose p {
-  @apply leading-relaxed;
+.markdown-content {
+  font-size: 1rem;
+  line-height: 1.85;
+  overflow-wrap: anywhere;
 }
+
+.markdown-content :where(p, li) {
+  line-height: inherit;
+}
+
+.markdown-content :where(p, ul, ol, blockquote) {
+  margin-block: 0.8em;
+}
+
+.markdown-content :where(h1, h2, h3, h4) {
+  line-height: 1.5;
+  margin-block: 1.3em 0.55em;
+}
+
+.markdown-content > :first-child {
+  margin-top: 0;
+}
+
+.markdown-content > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-table {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-block: 1em;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+}
+
+.markdown-table:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+.markdown-content .markdown-table table {
+  width: 100%;
+  min-width: 32rem;
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.markdown-content .markdown-table :where(th, td) {
+  min-width: 7rem;
+  padding: 0.8rem 1rem;
+  vertical-align: top;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.markdown-content .markdown-table th {
+  background: #f1f5f9;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.markdown-content .markdown-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.source-table {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+}
+
+.source-table:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+.source-table table {
+  width: 100%;
+  min-width: 28rem;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #334155;
+}
+
+.source-table :where(th, td) {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+.source-table :where(th, caption) {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+
+.source-table caption { padding: 0.75rem; }
+.source-table :where(p, ul, ol) { margin-block: 0.3em; }
+.source-table ul { list-style: disc inside; }
+.source-table ol { list-style: decimal inside; }
 
 /* Sound Wave Animation */
 @keyframes wave {

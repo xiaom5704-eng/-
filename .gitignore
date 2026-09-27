@@ -4,6 +4,10 @@ dist/
 dist-server/
 release/
 coverage/
+# Downloaded datasets, local registries, uploaded photos and generated reports.
+data/
+test-results/
+public/ocr/
 
 # Databases
 *.db

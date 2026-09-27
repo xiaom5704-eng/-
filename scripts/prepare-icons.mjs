@@ -1,0 +1,23 @@
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { Stethoscope } from 'lucide-react';
+import sharp from 'sharp';
+import { writeFile, copyFile } from 'node:fs/promises';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
+const root = fileURLToPath(new URL('../', import.meta.url));
+const require = createRequire(import.meta.url);
+const glyph = renderToStaticMarkup(createElement(Stethoscope, { width: 320, height: 320, color: 'white', strokeWidth: 1.7, x: 96, y: 96 }));
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#059669"/>${glyph}</svg>`;
+await writeFile(path.join(root, 'public/app-icon.svg'), svg);
+for (const size of [192, 512]) await sharp(Buffer.from(svg)).resize(size, size).png().toFile(path.join(root, `public/app-icon-${size}.png`));
+const png = await sharp(Buffer.from(svg)).resize(256, 256).png().toBuffer();
+const header = Buffer.alloc(22);
+header.writeUInt16LE(1, 2); header.writeUInt16LE(1, 4);
+header.writeUInt16LE(1, 10); header.writeUInt16LE(32, 12);
+header.writeUInt32LE(png.length, 14); header.writeUInt32LE(22, 18);
+await writeFile(path.join(root, 'public/favicon.ico'), Buffer.concat([header, png]));
+await copyFile(path.join(path.dirname(require.resolve('lucide-react/package.json')), 'LICENSE'), path.join(root, 'public/app-icon-LICENSE.txt'));
+console.log('應用程式圖示已準備完成（沿用 Lucide 聽診器）。');

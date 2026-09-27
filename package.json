@@ -4,48 +4,55 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "vision:prepare": "node scripts/prepare-vision.mjs",
+    "vision:index": "node scripts/index-vision.mjs",
+    "vision:originals": "tsx scripts/fetch-vision-originals.ts",
+    "vision:import-package": "tsx scripts/import-package.ts",
+    "vision:check-package": "tsx scripts/check-package.ts",
+    "vision:check": "tsx scripts/check-vision.ts",
+    "ocr:prepare": "node scripts/prepare-ocr.mjs",
+    "icons:prepare": "node scripts/prepare-icons.mjs",
+    "predev": "npm run icons:prepare && npm run ocr:prepare",
+    "prebuild": "npm run icons:prepare && npm run ocr:prepare",
+    "data:sync": "tsx scripts/sync-drug-data.ts",
+    "data:enrich": "tsx scripts/enrich-ingredients.ts",
+    "data:enrich-ddinter": "tsx scripts/enrich-ddinter-names.ts",
+    "data:enrich-ddinter-web": "tsx scripts/enrich-ddinter-web.ts",
+    "data:enrich-ddinter-details": "tsx scripts/enrich-ddinter-details.ts",
+    "data:cache-documents": "tsx scripts/cache-source-documents.ts",
+    "data:check-search": "tsx scripts/check-local-search.ts",
+    "data:check-labels": "tsx scripts/check-labels.ts",
+    "runtime:check": "node scripts/check-runtime.mjs",
+    "data:import-appearance": "tsx scripts/import-drug-appearance.ts",
+    "test": "tsx --test tests/*.test.ts",
     "dev": "tsx server.ts",
-    "build": "vite build && esbuild server.ts --bundle --platform=node --format=esm --outfile=dist-server/server.js --external:better-sqlite3 --external:express --external:vite",
-    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron:build": "npm run build && electron-builder",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=dist-server/server.js",
+    "preelectron:dev": "npm run icons:prepare && npm run ocr:prepare",
+    "electron:dev": "node scripts/desktop-dev.mjs",
+    "electron:build": "node scripts/package-desktop.mjs",
+    "electron:check": "node scripts/check-desktop.mjs",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit --noUnusedLocals --noUnusedParameters",
     "start": "node dist-server/server.js"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^22.12.0 || ^24.0.0"
   },
   "main": "electron/main.cjs",
-  "build": {
-    "appId": "com.medsafe.ai",
-    "productName": "智慧醫療助理",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "dist-server/**/*",
-      "electron/**/*",
-      "package.json",
-      "medsafe.db"
-    ],
-    "win": {
-      "target": "nsis",
-      "icon": "public/favicon.ico"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
-    }
-  },
   "dependencies": {
     "@google/genai": "^1.29.0",
+    "@huggingface/transformers": "3.8.1",
+    "@paddleocr/paddleocr-js": "0.4.2",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.14",
+    "@tesseract.js-data/chi_tra": "^1.0.0",
+    "@tesseract.js-data/eng": "^1.0.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "adm-zip": "^0.6.1",
     "better-sqlite3": "^12.4.1",
     "concurrently": "^9.2.1",
+    "csv-parse": "^7.0.2",
     "dotenv": "^17.2.3",
     "electron": "^41.0.1",
     "electron-builder": "^26.8.1",
@@ -53,9 +60,15 @@
     "express": "^4.21.2",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
+    "opencc-js": "1.4.2",
+    "parse5": "8.0.1",
+    "pdfjs-dist": "5.4.624",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "sharp": "0.34.5",
+    "tesseract.js": "^7.0.0",
     "vite": "^6.2.0",
     "wait-on": "^9.0.4"
   },
@@ -68,5 +81,10 @@
     "tsx": "^4.21.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
+  },
+  "overrides": {
+    "@paddleocr/paddleocr-js": {
+      "onnxruntime-web": "1.24.3"
+    }
   }
 }
