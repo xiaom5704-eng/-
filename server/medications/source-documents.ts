@@ -4,7 +4,7 @@ import type { DrugCandidate, MedicationReport } from '../../shared/medication';
 import { localDocumentPath, type SavedSourceDocument } from '../../shared/source-document';
 import { getTfda, type DrugDatabase } from './store';
 
-// Exact source PDFs visually checked 2026-09-23/24, including license, formulation
+// Exact source PDFs visually checked 2026-09-23/24/27, including license, formulation
 // and every page. Add a new catalog entry for a revised file; retain old hashes
 // so saved reports can continue to open the exact version they cited.
 export const documentSources = [
@@ -18,6 +18,12 @@ export const documentSources = [
     sha256: '2408aa630735f96fcd5d1f79102d09761155a438dddb7f5704be673906e84bfc' },
   { id: 'fencaine-2015', product: caseProducts[4], source: safetySources.fencaineLabel,
     sha256: 'fdfcae0affc1c40cc4374374cd46c6a8deb059b15bba7ad593cd7d7ed65d8605' },
+  { id: 'panadol-cold-extra-2021', product: { id: '衛署藥輸字第023784號', ingredients: [
+    'PHENYLEPHRINE HCL', 'CAFFEINE ANHYDROUS', 'ASCORBIC ACID (COATED)', 'NOSCAPINE', 'TERPIN HYDRATE', 'ACETAMINOPHEN FINE',
+  ] }, source: { title: '普拿疼伏冒加強錠歷史仿單（TFDA 公開）',
+    url: 'https://mcp.fda.gov.tw/insert/pdfcasefile/i_3534897f-e297-46cb-8114-0020ad10496c',
+    version: '檔名 110-06-04；文件 ©2021；非最新版保證', scope: '衛署藥輸字第023784號：六成分錠劑、使用注意與警語' },
+    sha256: '20cdffc84d45b30845fcd944688dade58d8bedb9d68cef827207b00bbe7d8854' },
 ] as const;
 export type DocumentSource = typeof documentSources[number];
 export const MAX_DOCUMENT_BYTES = 5_000_000;
@@ -78,7 +84,6 @@ export function attachSourceDocuments(db: DrugDatabase, report: MedicationReport
   };
 }
 
-export function matchingDocumentProduct(drug: Pick<DrugCandidate, 'source' | 'id'> & Partial<Pick<DrugCandidate, 'ingredients'>>) {
-  const spec = caseProducts.find(item => item.id === drug.id);
-  return !!spec && Array.isArray(drug.ingredients) && matchesCaseProduct(drug as DrugCandidate, spec);
+export function matchingDocumentSource(drug: Pick<DrugCandidate, 'source' | 'id'> & Partial<Pick<DrugCandidate, 'ingredients'>>) {
+  return Array.isArray(drug.ingredients) ? documentSources.find(spec => matchesCaseProduct(drug as DrugCandidate, spec.product))?.source : undefined;
 }

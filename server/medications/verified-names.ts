@@ -1,6 +1,6 @@
 import type { DrugSelection } from '../../shared/medication';
 import { safetySources } from '../../shared/medication-safety';
-import { matchingDocumentProduct } from './source-documents';
+import { matchingDocumentSource } from './source-documents';
 
 const coldExtraLicense = '衛署藥輸字第023784號';
 const coldExtraLabel = {
@@ -29,15 +29,6 @@ export function verifiedIngredientName(original: string, drug?: DrugSelection) {
 }
 
 export function verifiedProductLabel(drug: DrugSelection & { ingredients?: string[] }) {
-  if (drug.source !== 'tfda') return undefined;
-  if (drug.id === coldExtraLicense) {
-    const expected = ['ACETAMINOPHEN FINE', 'ASCORBIC ACID (COATED)', 'CAFFEINE ANHYDROUS'];
-    const actual = drug.ingredients?.map(name => name.normalize('NFKC').trim().toUpperCase()).sort();
-    return actual?.length === expected.length && actual.every((name, i) => name === expected[i]) ? coldExtraLabel : undefined;
-  }
-  if (!matchingDocumentProduct(drug)) return undefined;
-  const source = ({ '衛署藥製字第038983號': safetySources.noscapine, '衛署藥製字第043588號': safetySources.cypromin,
-    '衛署藥製字第027569號': safetySources.sominLabel, '衛署藥製字第031990號': safetySources.fencaineLabel,
-    '內衛藥製字第007592號': safetySources.kbt } as Record<string, typeof safetySources.noscapine>)[drug.id];
+  const source = matchingDocumentSource(drug);
   return source ? { title: `${source.title}（${source.version}）`, sourceUrl: source.url } : undefined;
 }

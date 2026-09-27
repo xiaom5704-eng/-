@@ -48,7 +48,7 @@ export const infantDemo = {
 };
 export interface MedicationDemo { id: string; title: string; description: string; sourceUrl: string; notes: string[] }
 
-export function matchesCaseProduct(drug: DrugCandidate, spec: typeof caseProducts[number]) {
+export function matchesCaseProduct(drug: DrugCandidate, spec: { readonly id: string; readonly ingredients: readonly string[] }) {
   const names = drug.ingredients.map(name => name.normalize('NFKC').trim().toUpperCase()).sort();
   return drug.source === 'tfda' && drug.id === spec.id && names.length === spec.ingredients.length &&
     [...spec.ingredients].sort().every((name, i) => names[i] === name);

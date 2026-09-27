@@ -109,8 +109,8 @@ test('Verified aliases detect both duplicate ingredients even while RxNorm is of
 
 test('Verified names unblock complete-ingredient label lookup and retain provenance in saved reports', async () => {
   const db = database();
-  importTfda(db, [{ ...row('Reviewed product', '衛署藥輸字第023784號'), 主成分略述: 'ACETAMINOPHEN FINE;;CAFFEINE ANHYDROUS;;ASCORBIC ACID (COATED)' }]);
-  const names: Record<string, string> = { acetaminophen: '161', caffeine: '1886', 'ascorbic acid': '1151' };
+  importTfda(db, [{ ...row('Reviewed product', '衛署藥輸字第023784號'), 主成分略述: 'ACETAMINOPHEN FINE;;CAFFEINE ANHYDROUS;;ASCORBIC ACID (COATED);;NOSCAPINE;;TERPIN HYDRATE;;PHENYLEPHRINE HCL' }]);
+  const names: Record<string, string> = { acetaminophen: '161', caffeine: '1886', 'ascorbic acid': '1151', noscapine: '900001', 'terpin hydrate': '900002', 'phenylephrine hcl': '900003' };
   let labelCalls = 0;
   const providers = new DrugProviders(db, (async (url: URL) => {
     if (url.pathname.endsWith('/version.json')) return json({ version: '08-Sep-2026' });
@@ -127,15 +127,16 @@ test('Verified names unblock complete-ingredient label lookup and retain provena
       const id = url.pathname.split('/')[3];
       return json({ properties: { rxcui: id, name: Object.keys(names).find(n => names[n] === id), tty: 'IN', suppress: 'N' } });
     }
-    const id = names[url.searchParams.get('name') || ''];
+    const id = names[(url.searchParams.get('name') || '').toLowerCase()];
     return json({ idGroup: id ? { rxnormId: [id] } : {} });
   }) as unknown as typeof fetch);
   const report = await providers.report([getTfda(db, '衛署藥輸字第023784號')!]);
   assert.equal(labelCalls, 1);
   assert.equal(report.medications[0].labelStatus, 'found');
-  assert.ok(report.medications[0].ingredients.every(i => i.rxCui && i.aliasSourceUrl));
+  assert.ok(report.medications[0].ingredients.every(i => i.rxCui));
+  assert.equal(report.medications[0].ingredients.filter(i => i.aliasSourceUrl).length, 3);
   const markdown = reportToMarkdown(report);
-  assert.ok(markdown.includes('2016 版'));
+  assert.ok(markdown.includes('©2021'));
   assert.ok(markdown.includes('別名核對：ACETAMINOPHEN FINE → acetaminophen'));
   assert.ok(markdown.includes('precision.fda.gov'));
 });
