@@ -6,6 +6,8 @@ import { matchObservation, validObservations } from './appearance';
 import { VisionService } from '../vision/service';
 import { visionRouter } from '../vision/router';
 import { PackageVisionService } from '../vision/packages';
+import { OfficialPackageReferences } from '../vision/official-packages';
+import { officialPackageRouter } from '../vision/official-package-router';
 import { PersonalPillReferences } from '../vision/personal-pills';
 import { personalPillRouter } from '../vision/personal-pill-router';
 import { pillObserverRouter } from '../vision/observer';
@@ -43,7 +45,9 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
   router.use('/vision/observe', pillObserverRouter(visionQueue));
   router.use('/vision', personalPillRouter(personalPills, pillVision, visionQueue));
   router.use('/vision', visionRouter(pillVision, visionQueue));
-  router.use('/packages', visionRouter(new PackageVisionService(db), visionQueue));
+  const officialPackages = new OfficialPackageReferences(db);
+  router.use('/packages', officialPackageRouter(officialPackages, visionQueue));
+  router.use('/packages', visionRouter(new PackageVisionService(db, undefined, undefined, undefined, undefined, officialPackages), visionQueue));
   router.get('/status', (_req, res) => res.json({ datasets: datasetStatus(db), dosageForms: localDosageForms(db) }));
   router.get('/name-suggestions', (req, res) => {
     const query = req.query.q, form = req.query.dosageForm ?? '';

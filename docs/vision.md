@@ -66,6 +66,14 @@
 
 ## API 與儲存
 
+### 保存官方藥盒參考頁
+
+已確認品項的「藥品說明書」可從 TFDA 本機索引下載指定外盒圖片或 PDF，保存後逐頁核對，再明確啟用照片比對。未核對、停用、來源／品項變更、檔案損毀或特徵失效的頁面不參與檢索；未核對及停用頁面仍可離線預覽。PDF 最多 8 頁且全部成功才保存，不只取第一頁。使用流程與限制見[本機仿單索引](本機仿單索引.md)。
+
+`GET /api/medications/packages/official-references?drugId=許可證` 讀取本機狀態；`POST /official-references` 要求 `drugId`、`sourceUrl`、`indexSha256`，後端重讀當前主檔／索引並驗證網址。`POST /official-references/:key/enable` 要求 `confirmed: true`；`POST /official-references/:key/disable` 只停用比對。`GET /official-images/:sha.webp` 提供仍符合當前來源且通過雜湊核對的本機預覽，使用 `private, no-store`。
+
+檔案另存 `data/vision/official-packages/`，不修改個人藥盒或官方藥錠索引。保存與 CV 共用推論佇列，使用相同 DINOv2 特徵及既有藥盒門檻。PDF.js 與明確安裝的 `@napi-rs/canvas` 在後端逐頁轉圖，字型與 CMap 使用本機套件資源，不執行 PDF 內的 JavaScript。
+
 ### 收錄已核對的藥錠照片
 
 藥錠模式下展開「收錄與管理已核對的藥錠照片」。先搜尋藥名或許可證，核對候選並按「確認並分析」，再回到收錄表單選擇該品項。對照實物、原包裝／藥袋或藥師資料，確認上方 1–2 張照片都是同一品項的不同面，填寫照片來源與核對依據、勾選確認後才保存。不要把 AI 候選當作正確標籤；照片與來源文字勿包含病人個資。

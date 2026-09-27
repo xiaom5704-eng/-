@@ -40,7 +40,7 @@ export default function VisionResults({ result, disabled, onReview, onOcr, onLab
     <details className="text-xs leading-relaxed text-slate-500"><summary className="cursor-pointer">圖片庫與模型來源</summary>
       <p className="mt-2">本次可用：{result.status.drugCount.toLocaleString()} 種藥品、{result.status.imageCount.toLocaleString()} 張圖。來源版本：{result.status.sourceVersion}。{result.status.model}。</p>
       {!!result.status.personalImageCount && <p>其中 {result.status.personalImageCount} 張是使用者核對後收錄的本機照片，來源列於圖片下方，並非 TFDA 官方照片。</p>}
-      {packaging ? <p>藥盒照片為本機使用者收錄，來源逐張列於圖片下方，並非 TFDA 官方藥盒圖庫。品名對照本機 TFDA 許可證資料，圖片授權依個別來源。</p> : <><p>衛生福利部食品藥物管理署藥品外觀資料集，依政府資料開放授權條款第 1 版利用；原圖轉為 WebP，透過 Pill Detective TW 鏡像取得並核對。</p>
+      {packaging ? <p>藥盒來源包含自行收錄照片及已保存的 TFDA 外盒／標籤圖，逐張列於圖片下方。官方來源可用圖片 {result.status.officialPackageImageCount || 0} 張；不代表官方完整圖片庫或實拍辨識率。圖片可能是平面標籤、不同視角或舊包裝，授權依個別來源。</p> : <><p>衛生福利部食品藥物管理署藥品外觀資料集，依政府資料開放授權條款第 1 版利用；原圖轉為 WebP，透過 Pill Detective TW 鏡像取得並核對。</p>
       <p className="mt-1 flex flex-wrap gap-3"><a href="https://data.gov.tw/dataset/9120" target="_blank" rel="noreferrer" className="underline">TFDA 資料</a><a href="https://data.gov.tw/license" target="_blank" rel="noreferrer" className="underline">資料授權</a><a href="https://github.com/liangRXdev/pill-detective-tw" target="_blank" rel="noreferrer" className="underline">圖片鏡像</a><a href="https://github.com/facebookresearch/dinov2" target="_blank" rel="noreferrer" className="underline">DINOv2 模型</a></p></>}
     </details>
   </section>;

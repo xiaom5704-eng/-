@@ -18,7 +18,7 @@ const labelStatus: Record<MedicationEvidence['labelStatus'], string> = {
 const sectionNames: Record<string, string> = { 適應症: '這個藥用來做什麼', 用法用量: '如何使用', 兒童使用資訊: '兒童使用須知', 高齡者使用資訊: '高齡者使用須知', 特定族群使用資訊: '特定族群使用須知', 禁忌: '哪些情況不宜使用', 交互作用: '與其他藥一起使用', 警語: '使用時要注意什麼', 警語與注意事項: '警語與注意事項' };
 const labelDate = (date: string) => /^\d{8}$/.test(date) ? `${date.slice(0, 4)}/${date.slice(4, 6)}/${date.slice(6)}` : date;
 
-export default function MedicationLeaflets({ report }: { report: MedicationReport }) {
+export default function MedicationLeaflets({ report, onPackageChange }: { report: MedicationReport; onPackageChange?: () => void }) {
   return <div className="space-y-4">
     <div><h4 className="text-xl font-bold text-slate-900">每款藥，分開看清楚</h4><p className="text-sm text-slate-600 mt-2 leading-relaxed">先看臺灣藥品資料；完整說明書與英文參考資料可再展開。</p></div>
     {report.medications.map(entry => <article key={`${entry.drug.source}:${entry.drug.id}`} className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 space-y-4">
@@ -31,7 +31,7 @@ export default function MedicationLeaflets({ report }: { report: MedicationRepor
         <p className="text-xs text-emerald-900 mt-2 leading-relaxed">{entry.localLabel.title}</p>
         <SourceDocument saved={entry.localLabel.document} title={entry.localLabel.title} sourceUrl={entry.localLabel.sourceUrl} />
       </div> : !entry.taiwanLabelIndex && entry.drug.source === 'tfda' && <p className="text-sm text-slate-500 leading-relaxed">本機索引尚未找到許可證及品名都相符的臺灣仿單入口，請查看藥盒內的說明書或詢問藥師。</p>}
-      {entry.taiwanLabelIndex && <TaiwanLabelLinks entry={entry.taiwanLabelIndex} />}
+      {entry.taiwanLabelIndex && <TaiwanLabelLinks entry={entry.taiwanLabelIndex} onPackageChange={onPackageChange} />}
       {entry.drug.dosageText && entry.drug.dosageText !== '詳見仿單' && <details className="rounded-xl bg-slate-50 p-3"><summary className="cursor-pointer text-sm font-medium">如何使用（食藥署原文）</summary><p className="whitespace-pre-wrap text-sm leading-7 mt-3">{entry.drug.dosageText}</p></details>}
       <details className="border-t border-slate-100 pt-4">
         <summary className="cursor-pointer text-sm font-medium text-slate-700">美國仿單參考{entry.labels.length ? `（${entry.labels.length} 份・英文${entry.labelLookup?.reused ? '・本機紀錄' : ''}）` : entry.labelStatus === 'not_requested' ? '（尚無保存紀錄）' : entry.labelStatus === 'unavailable' ? '（暫時無法連線）' : entry.labelStatus === 'unmapped' ? '（成分待核對）' : entry.labelStatus === 'incomplete' ? '（尚未完成篩選）' : '（該次未查得相符資料）'}</summary>

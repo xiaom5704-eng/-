@@ -3,6 +3,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import sharp from 'sharp';
 import { openDrugDatabase } from '../server/medications/store';
 import { PackageVisionService } from '../server/vision/packages';
+import { OfficialPackageReferences } from '../server/vision/official-packages';
 
 const file = process.argv[2];
 if (!file) throw new Error('請提供本機測試照片路徑。這只檢查搜尋，不會收錄照片。');
@@ -10,7 +11,7 @@ const db = openDrugDatabase();
 const oldFetch = globalThis.fetch;
 globalThis.fetch = async () => { throw new Error('Offline test: external fetch is disabled'); };
 try {
-  const service = new PackageVisionService(db);
+  const service = new PackageVisionService(db, undefined, undefined, undefined, undefined, new OfficialPackageReferences(db));
   const original = await readFile(file);
   const rows = [];
   for (const [name, bytes] of [

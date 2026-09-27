@@ -6,6 +6,7 @@ export interface VisionStatus {
   indexedAt?: string; sourceVersion?: string; model: string;
   kind?: 'pill' | 'package'; productCount?: number;
   personalImageCount?: number; personalWarning?: string;
+  officialPackageImageCount?: number; referenceWarning?: string;
 }
 export interface VisionCandidate {
   drug: DrugCandidate; similarity: number | null;

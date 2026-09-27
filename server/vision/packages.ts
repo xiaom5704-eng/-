@@ -7,13 +7,14 @@ import { normalizeName, type DrugDatabase } from '../medications/store';
 import { VisionService } from './service';
 import { PACKAGE_INDEX_PATH, PACKAGE_IMAGE_ROOT, MODEL_PATH, MODEL_VERSION, DIMENSIONS } from './config.mjs';
 import { isUnitVisionVector } from '../../shared/vision-vector.mjs';
+import type { OfficialPackageReferences } from './official-packages';
 
 export class PackageVisionService extends VisionService {
   readonly register: (images: Buffer[], productName: string, sourceNote: string, signal: AbortSignal) => Promise<{ status: ReturnType<VisionService['status']>; productName: string; licenseCount: number }>;
 
   constructor(drugs: DrugDatabase, indexPath = PACKAGE_INDEX_PATH, imageRoot = PACKAGE_IMAGE_ROOT, modelRoot = MODEL_PATH,
-    embed = async (bytes: Buffer): Promise<Float32Array> => (await import('./model.mjs')).imageEmbedding(bytes)) {
-    super(drugs, indexPath, imageRoot, modelRoot, embed, 'package');
+    embed = async (bytes: Buffer): Promise<Float32Array> => (await import('./model.mjs')).imageEmbedding(bytes), officialPackages?: OfficialPackageReferences) {
+    super(drugs, indexPath, imageRoot, modelRoot, embed, 'package', undefined, officialPackages);
     this.register = async (images, productName, sourceNote, signal) => {
       signal.throwIfAborted();
       const name = productName.trim(), note = sourceNote.trim();
