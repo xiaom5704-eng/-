@@ -1,0 +1,3010 @@
+{
+  "schema": 1,
+  "source": "US National Library of Medicine, RxNorm API",
+  "termsUrl": "https://lhncbc.nlm.nih.gov/RxNav/TermsofService.html",
+  "tfdaSource": "https://data.gov.tw/dataset/9122",
+  "version": {
+    "version": "08-Sep-2026",
+    "apiVersion": "3.1.355"
+  },
+  "scope": "Exact full TFDA qualification spellings only. Canonical formatting retains the salt/hydrate qualifier; the standalone base must independently resolve to the same active IN as the exact PIN relationship. This is ingredient-level matching, not product, route, dose or clinical equivalence.",
+  "entries": [
+    {
+      "original": "ACEBUTOLOL (HCL)",
+      "canonicalName": "ACEBUTOLOL HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ACEBUTOLOL&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ACEBUTOLOL%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:55.810Z"
+    },
+    {
+      "original": "AMIKACIN (SULFATE)",
+      "canonicalName": "AMIKACIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMIKACIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMIKACIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:27:56.781Z"
+    },
+    {
+      "original": "AMLODIPINE (BESYLATE)",
+      "canonicalName": "AMLODIPINE BESYLATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMLODIPINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMLODIPINE%20BESYLATE&search=0",
+      "checkedAt": "2026-09-27T14:29:26.718Z"
+    },
+    {
+      "original": "AMOXICILLIN (SODIUM)",
+      "canonicalName": "AMOXICILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:18.336Z"
+    },
+    {
+      "original": "AMOXICILLIN (TRIHYDRATE)",
+      "canonicalName": "AMOXICILLIN TRIHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN%20TRIHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:27:41.656Z"
+    },
+    {
+      "original": "AMPICILLIN (AS TRIHYDRATE)",
+      "canonicalName": "AMPICILLIN TRIHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN%20TRIHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:29:14.406Z"
+    },
+    {
+      "original": "AMPICILLIN (SODIUM)",
+      "canonicalName": "AMPICILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:57.013Z"
+    },
+    {
+      "original": "AMPICILLIN (TRIHYDRATE)",
+      "canonicalName": "AMPICILLIN TRIHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN%20TRIHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:28:20.782Z"
+    },
+    {
+      "original": "ATORVASTATIN (CALCIUM)",
+      "canonicalName": "ATORVASTATIN CALCIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ATORVASTATIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ATORVASTATIN%20CALCIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:55.527Z"
+    },
+    {
+      "original": "BETAMETHASONE (AS VALERATE)",
+      "canonicalName": "BETAMETHASONE VALERATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE%20VALERATE&search=0",
+      "checkedAt": "2026-09-27T14:27:46.541Z"
+    },
+    {
+      "original": "BETAMETHASONE (SODIUM PHOSPHATE)",
+      "canonicalName": "BETAMETHASONE SODIUM PHOSPHATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE%20SODIUM%20PHOSPHATE&search=0",
+      "checkedAt": "2026-09-27T14:28:16.889Z"
+    },
+    {
+      "original": "BROMOCRIPTINE (MESILATE)",
+      "canonicalName": "BROMOCRIPTINE MESILATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BROMOCRIPTINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BROMOCRIPTINE%20MESILATE&search=0",
+      "checkedAt": "2026-09-27T14:27:51.916Z"
+    },
+    {
+      "original": "CARBENICILLIN (SODIUM)",
+      "canonicalName": "CARBENICILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CARBENICILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CARBENICILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:29:40.368Z"
+    },
+    {
+      "original": "CASPOFUNGIN ( AS ACETATE)",
+      "canonicalName": "CASPOFUNGIN ACETATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CASPOFUNGIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CASPOFUNGIN%20ACETATE&search=0",
+      "checkedAt": "2026-09-27T14:28:37.833Z"
+    },
+    {
+      "original": "CEFADROXIL (MONOHYDRATE)",
+      "canonicalName": "CEFADROXIL MONOHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFADROXIL&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFADROXIL%20MONOHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:28:42.743Z"
+    },
+    {
+      "original": "CEFAZOLIN (SODIUM)",
+      "canonicalName": "CEFAZOLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFAZOLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFAZOLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:27:36.813Z"
+    },
+    {
+      "original": "CEFMETAZOLE (SODIUM)",
+      "canonicalName": "CEFMETAZOLE SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFMETAZOLE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFMETAZOLE%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:29:19.363Z"
+    },
+    {
+      "original": "CEFOPERAZONE (SODIUM)",
+      "canonicalName": "CEFOPERAZONE SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOPERAZONE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOPERAZONE%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:28.104Z"
+    },
+    {
+      "original": "CEFOTAXIME (SODIUM)",
+      "canonicalName": "CEFOTAXIME SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOTAXIME&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOTAXIME%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:32.961Z"
+    },
+    {
+      "original": "CEFOXITIN (SODIUM)",
+      "canonicalName": "CEFOXITIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOXITIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOXITIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:08.016Z"
+    },
+    {
+      "original": "CEFUROXIME (SODIUM)",
+      "canonicalName": "CEFUROXIME SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFUROXIME&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFUROXIME%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:27:54.355Z"
+    },
+    {
+      "original": "CEPHALEXIN (MONOHYDRATE)",
+      "canonicalName": "CEPHALEXIN MONOHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEPHALEXIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEPHALEXIN%20MONOHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:28:25.659Z"
+    },
+    {
+      "original": "CHLORDIAZEPOXIDE (HCL)",
+      "canonicalName": "CHLORDIAZEPOXIDE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CHLORDIAZEPOXIDE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CHLORDIAZEPOXIDE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:30:03.557Z"
+    },
+    {
+      "original": "CIPROFLOXACIN (HCL)",
+      "canonicalName": "CIPROFLOXACIN HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CIPROFLOXACIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CIPROFLOXACIN%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:28:47.637Z"
+    },
+    {
+      "original": "CITRIC ACID (MONOHYDRATE)",
+      "canonicalName": "CITRIC ACID MONOHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CITRIC%20ACID&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CITRIC%20ACID%20MONOHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:29:45.238Z"
+    },
+    {
+      "original": "CLEMASTINE (FUMARATE)",
+      "canonicalName": "CLEMASTINE FUMARATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLEMASTINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLEMASTINE%20FUMARATE&search=0",
+      "checkedAt": "2026-09-27T14:27:44.092Z"
+    },
+    {
+      "original": "CLINDAMYCIN (HCL)",
+      "canonicalName": "CLINDAMYCIN HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLINDAMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLINDAMYCIN%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:11.921Z"
+    },
+    {
+      "original": "CLOXACILLIN (SODIUM)",
+      "canonicalName": "CLOXACILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLOXACILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLOXACILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:59.496Z"
+    },
+    {
+      "original": "DEXAMETHASONE (SODIUM PHOSPHATE)",
+      "canonicalName": "DEXAMETHASONE SODIUM PHOSPHATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DEXAMETHASONE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DEXAMETHASONE%20SODIUM%20PHOSPHATE&search=0",
+      "checkedAt": "2026-09-27T14:30:27.724Z"
+    },
+    {
+      "original": "DICLOXACILLIN (SODIUM)",
+      "canonicalName": "DICLOXACILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DICLOXACILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DICLOXACILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:23.237Z"
+    },
+    {
+      "original": "DILTIAZEM (HCL)",
+      "canonicalName": "DILTIAZEM HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DILTIAZEM&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DILTIAZEM%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:58.216Z"
+    },
+    {
+      "original": "DOBUTAMINE (HCL)",
+      "canonicalName": "DOBUTAMINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOBUTAMINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOBUTAMINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:30:00.712Z"
+    },
+    {
+      "original": "DOXAZOSIN (AS MESYLATE)",
+      "canonicalName": "DOXAZOSIN MESYLATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXAZOSIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXAZOSIN%20MESYLATE&search=0",
+      "checkedAt": "2026-09-27T14:29:37.917Z"
+    },
+    {
+      "original": "DOXEPIN (HCL)",
+      "canonicalName": "DOXEPIN HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXEPIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXEPIN%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:42.792Z"
+    },
+    {
+      "original": "DOXYCYCLINE (HCL)",
+      "canonicalName": "DOXYCYCLINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXYCYCLINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXYCYCLINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:27:22.656Z"
+    },
+    {
+      "original": "EPINEPHRINE (HCL)",
+      "canonicalName": "EPINEPHRINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=EPINEPHRINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=EPINEPHRINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:30:08.486Z"
+    },
+    {
+      "original": "ERYTHROMYCIN (ESTOLATE)",
+      "canonicalName": "ERYTHROMYCIN ESTOLATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ERYTHROMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ERYTHROMYCIN%20ESTOLATE&search=0",
+      "checkedAt": "2026-09-27T14:27:59.239Z"
+    },
+    {
+      "original": "FENOPROFEN (CALCIUM)",
+      "canonicalName": "FENOPROFEN CALCIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENOPROFEN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENOPROFEN%20CALCIUM&search=0",
+      "checkedAt": "2026-09-27T14:30:22.751Z"
+    },
+    {
+      "original": "FENTANYL (CITRATE)",
+      "canonicalName": "FENTANYL CITRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENTANYL&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENTANYL%20CITRATE&search=0",
+      "checkedAt": "2026-09-27T14:30:31.733Z"
+    },
+    {
+      "original": "FLUOXETINE (HYDROCHLORIDE)",
+      "canonicalName": "FLUOXETINE HYDROCHLORIDE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLUOXETINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLUOXETINE%20HYDROCHLORIDE&search=0",
+      "checkedAt": "2026-09-27T14:29:09.454Z"
+    },
+    {
+      "original": "FLURAZEPAM (HCL)",
+      "canonicalName": "FLURAZEPAM HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLURAZEPAM&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLURAZEPAM%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:30:20.322Z"
+    },
+    {
+      "original": "FOSFOMYCIN (SODIUM)",
+      "canonicalName": "FOSFOMYCIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FOSFOMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FOSFOMYCIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:30:06.027Z"
+    },
+    {
+      "original": "GENTAMICIN (AS SULFATE)",
+      "canonicalName": "GENTAMICIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GENTAMICIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GENTAMICIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:27:34.396Z"
+    },
+    {
+      "original": "GRANISETRON (HCL)",
+      "canonicalName": "GRANISETRON HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GRANISETRON&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GRANISETRON%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:28:35.397Z"
+    },
+    {
+      "original": "HYDROXOCOBALAMIN (ACETATE)",
+      "canonicalName": "HYDROXOCOBALAMIN ACETATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=HYDROXOCOBALAMIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=HYDROXOCOBALAMIN%20ACETATE&search=0",
+      "checkedAt": "2026-09-27T14:28:40.271Z"
+    },
+    {
+      "original": "KANAMYCIN (SULFATE)",
+      "canonicalName": "KANAMYCIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KANAMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KANAMYCIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:28:12.902Z"
+    },
+    {
+      "original": "KETAMINE (HCL)",
+      "canonicalName": "KETAMINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETAMINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETAMINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:27:29.485Z"
+    },
+    {
+      "original": "KETOTIFEN (FUMARATE)",
+      "canonicalName": "KETOTIFEN FUMARATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETOTIFEN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETOTIFEN%20FUMARATE&search=0",
+      "checkedAt": "2026-09-27T14:28:30.559Z"
+    },
+    {
+      "original": "LANREOTIDE (ACETATE)",
+      "canonicalName": "LANREOTIDE ACETATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LANREOTIDE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LANREOTIDE%20ACETATE&search=0",
+      "checkedAt": "2026-09-27T14:29:29.145Z"
+    },
+    {
+      "original": "LEVAMISOLE (HCL)",
+      "canonicalName": "LEVAMISOLE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LEVAMISOLE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LEVAMISOLE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:27:49.008Z"
+    },
+    {
+      "original": "LIDOCAINE (HCL)",
+      "canonicalName": "LIDOCAINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LIDOCAINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LIDOCAINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:30:25.201Z"
+    },
+    {
+      "original": "LINCOMYCIN (HCL)",
+      "canonicalName": "LINCOMYCIN HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LINCOMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LINCOMYCIN%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:16.899Z"
+    },
+    {
+      "original": "METHOTREXATE (SODIUM)",
+      "canonicalName": "METHOTREXATE SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METHOTREXATE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METHOTREXATE%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:30:34.196Z"
+    },
+    {
+      "original": "METOCLOPRAMIDE (HCL)",
+      "canonicalName": "METOCLOPRAMIDE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METOCLOPRAMIDE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METOCLOPRAMIDE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:28:50.115Z"
+    },
+    {
+      "original": "MINOCYCLINE (HCL)",
+      "canonicalName": "MINOCYCLINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=MINOCYCLINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=MINOCYCLINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:06.929Z"
+    },
+    {
+      "original": "NAPROXEN (SODIUM)",
+      "canonicalName": "NAPROXEN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NAPROXEN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NAPROXEN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:29:04.433Z"
+    },
+    {
+      "original": "NEOMYCIN (SULFATE)",
+      "canonicalName": "NEOMYCIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NEOMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NEOMYCIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:27:17.292Z"
+    },
+    {
+      "original": "NETILMICIN (SULFATE)",
+      "canonicalName": "NETILMICIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NETILMICIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NETILMICIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:29:31.566Z"
+    },
+    {
+      "original": "NOREPINEPHRINE ( AS BITARTRATE)",
+      "canonicalName": "NOREPINEPHRINE BITARTRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NOREPINEPHRINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NOREPINEPHRINE%20BITARTRATE&search=0",
+      "checkedAt": "2026-09-27T14:30:37.165Z"
+    },
+    {
+      "original": "OXACILLIN (SODIUM)",
+      "canonicalName": "OXACILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXACILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXACILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:28:53.064Z"
+    },
+    {
+      "original": "OXYTETRACYCLINE (HCL)",
+      "canonicalName": "OXYTETRACYCLINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXYTETRACYCLINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXYTETRACYCLINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:28:15.446Z"
+    },
+    {
+      "original": "PHENYTOIN (SODIUM)",
+      "canonicalName": "PHENYTOIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PHENYTOIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PHENYTOIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:29:35.480Z"
+    },
+    {
+      "original": "PIPERACILLIN (SODIUM)",
+      "canonicalName": "PIPERACILLIN SODIUM",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PIPERACILLIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PIPERACILLIN%20SODIUM&search=0",
+      "checkedAt": "2026-09-27T14:29:14.403Z"
+    },
+    {
+      "original": "POLYMYXIN B (SULFATE)",
+      "canonicalName": "POLYMYXIN B SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POLYMYXIN%20B&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POLYMYXIN%20B%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:28:10.468Z"
+    },
+    {
+      "original": "POTASSIUM CITRATE (MONOHYDRATE)",
+      "canonicalName": "POTASSIUM CITRATE MONOHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POTASSIUM%20CITRATE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POTASSIUM%20CITRATE%20MONOHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:30:16.414Z"
+    },
+    {
+      "original": "PRAZOSIN (HCL)",
+      "canonicalName": "PRAZOSIN HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PRAZOSIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PRAZOSIN%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:29:01.970Z"
+    },
+    {
+      "original": "PROCHLORPERAZINE (MALEATE)",
+      "canonicalName": "PROCHLORPERAZINE MALEATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PROCHLORPERAZINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PROCHLORPERAZINE%20MALEATE&search=0",
+      "checkedAt": "2026-09-27T14:27:19.776Z"
+    },
+    {
+      "original": "RANITIDINE (HCL)",
+      "canonicalName": "RANITIDINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=RANITIDINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=RANITIDINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:28:01.676Z"
+    },
+    {
+      "original": "SALBUTAMOL (SULFATE)",
+      "canonicalName": "SALBUTAMOL SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SALBUTAMOL&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SALBUTAMOL%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:27:39.232Z"
+    },
+    {
+      "original": "SERTRALINE (AS HYDROCHLORIDE )",
+      "canonicalName": "SERTRALINE HYDROCHLORIDE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SERTRALINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SERTRALINE%20HYDROCHLORIDE&search=0",
+      "checkedAt": "2026-09-27T14:29:24.264Z"
+    },
+    {
+      "original": "SODIUM ACETATE (TRIHYDRATE)",
+      "canonicalName": "SODIUM ACETATE TRIHYDRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SODIUM%20ACETATE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SODIUM%20ACETATE%20TRIHYDRATE&search=0",
+      "checkedAt": "2026-09-27T14:30:13.965Z"
+    },
+    {
+      "original": "STREPTOMYCIN (SULFATE)",
+      "canonicalName": "STREPTOMYCIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=STREPTOMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=STREPTOMYCIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:27:26.669Z"
+    },
+    {
+      "original": "TAMOXIFEN (CITRATE)",
+      "canonicalName": "TAMOXIFEN CITRATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TAMOXIFEN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TAMOXIFEN%20CITRATE&search=0",
+      "checkedAt": "2026-09-27T14:29:50.779Z"
+    },
+    {
+      "original": "TETRACYCLINE (HCL)",
+      "canonicalName": "TETRACYCLINE HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TETRACYCLINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TETRACYCLINE%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:27:31.957Z"
+    },
+    {
+      "original": "TIMOLOL (MALEATE)",
+      "canonicalName": "TIMOLOL MALEATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TIMOLOL&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TIMOLOL%20MALEATE&search=0",
+      "checkedAt": "2026-09-27T14:28:45.182Z"
+    },
+    {
+      "original": "TOBRAMYCIN (SULFATE)",
+      "canonicalName": "TOBRAMYCIN SULFATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TOBRAMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TOBRAMYCIN%20SULFATE&search=0",
+      "checkedAt": "2026-09-27T14:29:21.837Z"
+    },
+    {
+      "original": "TRIPTORELIN (ACETATE)",
+      "canonicalName": "TRIPTORELIN ACETATE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TRIPTORELIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TRIPTORELIN%20ACETATE&search=0",
+      "checkedAt": "2026-09-27T14:29:53.380Z"
+    },
+    {
+      "original": "VANCOMYCIN (HCL)",
+      "canonicalName": "VANCOMYCIN HCL",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VANCOMYCIN&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VANCOMYCIN%20HCL&search=0",
+      "checkedAt": "2026-09-27T14:28:05.561Z"
+    },
+    {
+      "original": "VENLAFAXINE (AS HYDROCHLORIDE)",
+      "canonicalName": "VENLAFAXINE HYDROCHLORIDE",
+      "baseLookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VENLAFAXINE&search=0",
+      "lookupUrl": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VENLAFAXINE%20HYDROCHLORIDE&search=0",
+      "checkedAt": "2026-09-27T14:29:48.154Z"
+    }
+  ],
+  "snapshots": [
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/version.json",
+      "retrievedAt": "2026-09-27T14:27:14.831Z",
+      "sha256": "69f5febaa7a57e15cc9ccb79dae197ffe46320b054a78441d3129b0094fa5f2f",
+      "raw": "{\"version\":\"08-Sep-2026\",\"apiVersion\":\"3.1.355\"}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NEOMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:15.343Z",
+      "sha256": "b4e621f68874a0b5ab1852aaad0b400e8eb23ad61c1f40354d9f850f1c21cdea",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7299\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7299/properties.json",
+      "retrievedAt": "2026-09-27T14:27:15.828Z",
+      "sha256": "70d12ae8c1aef9d62142beb69828af2ebbce351be95a7cd9d72ce62d24a1160f",
+      "raw": "{\"properties\":{\"rxcui\":\"7299\",\"name\":\"neomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NEOMYCIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:16.311Z",
+      "sha256": "a1d502bc201a5f1be0057c5226c9bf0a40d24c488c5ff75911978d811d820cb0",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7300\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7300/properties.json",
+      "retrievedAt": "2026-09-27T14:27:16.811Z",
+      "sha256": "b314c6bddbbdfdefb1ffb78ef1662d80d3d8c9458b0b168541f766750dd5a6b3",
+      "raw": "{\"properties\":{\"rxcui\":\"7300\",\"name\":\"neomycin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7300/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:17.291Z",
+      "sha256": "797ba469a46ec899e02cd97c210b5aace520efe5ddc05ac10432308334880981",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"7299\",\"name\":\"neomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PROCHLORPERAZINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:17.783Z",
+      "sha256": "5d955ae1f7056142b232c85c193f02be8d25d4c2c2f2b2e94f7a63e61e4ee777",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"8704\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8704/properties.json",
+      "retrievedAt": "2026-09-27T14:27:18.275Z",
+      "sha256": "75213e5da552c186ec222656c120471688973a310fb79231395d90db63d025d6",
+      "raw": "{\"properties\":{\"rxcui\":\"8704\",\"name\":\"prochlorperazine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PROCHLORPERAZINE%20MALEATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:18.766Z",
+      "sha256": "379db9a43de0b580df1b3ec6265c7197980732aa6b623a8974d884c34bd6b89c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"8706\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8706/properties.json",
+      "retrievedAt": "2026-09-27T14:27:19.258Z",
+      "sha256": "d31cb1823399141f48aabbfe988d23d9c7010cad1f89e10045d21b1cae2d7b4c",
+      "raw": "{\"properties\":{\"rxcui\":\"8706\",\"name\":\"prochlorperazine maleate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8706/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:19.773Z",
+      "sha256": "79a7305f044cac7e6ce0bb9a594d96b21ae7facf2dc59ef3c1471709ef7ea9e9",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"8704\",\"name\":\"prochlorperazine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXYCYCLINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:20.258Z",
+      "sha256": "f2b7edb2618f67406709e596788080e65f2296a25c5d3b1b8ef6be86265411aa",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3640\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3640/properties.json",
+      "retrievedAt": "2026-09-27T14:27:21.175Z",
+      "sha256": "5667af8352dc4b10598ff5badf1bca18bfd882879646a4547cc2f4df4ee8dc08",
+      "raw": "{\"properties\":{\"rxcui\":\"3640\",\"name\":\"doxycycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXYCYCLINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:27:21.663Z",
+      "sha256": "7ca931c52fc6accde5a2151ebd24136702a6574e3dfe6f2fb499446298459c6b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"236647\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236647/properties.json",
+      "retrievedAt": "2026-09-27T14:27:22.141Z",
+      "sha256": "0008d92bf5b0529add85dfdc8f90b5453e45c5500d881bf8a97542068a4c268d",
+      "raw": "{\"properties\":{\"rxcui\":\"236647\",\"name\":\"doxycycline hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236647/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:22.655Z",
+      "sha256": "db473a9e1063d5202066cba0a1d36126c8fccbf637140331a4cc6c5bc1557ca5",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3640\",\"name\":\"doxycycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=STREPTOMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:23.137Z",
+      "sha256": "0d9754d79a68498fa8d397c598bce32bd1f423270e874992a3b3f09bc44d356d",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10109\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10109/properties.json",
+      "retrievedAt": "2026-09-27T14:27:25.117Z",
+      "sha256": "4a33506e8fb770f8a3d20787af670cc353c30f94b5b9651058a71aa5eb3fa4bc",
+      "raw": "{\"properties\":{\"rxcui\":\"10109\",\"name\":\"streptomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=STREPTOMYCIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:25.637Z",
+      "sha256": "f0aa09a55c1532ad9ed1b49cee37e59e7b2dfd43f823202fb7a61b79d8fb828f",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10110\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10110/properties.json",
+      "retrievedAt": "2026-09-27T14:27:26.186Z",
+      "sha256": "88f13ac7a75e47d5320d4cea27560978787458b1ec5c0d28bde8e29156b5c6f1",
+      "raw": "{\"properties\":{\"rxcui\":\"10110\",\"name\":\"streptomycin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10110/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:26.668Z",
+      "sha256": "45ee2fc16efbebd975242e3d8a245d02ad3390a4cae2a3f5396ead372f9e0f19",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"10109\",\"name\":\"streptomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETAMINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:27.220Z",
+      "sha256": "bc4556ec0a285450bed181eab8af9daeef4dd3fba9579933cb10431148b81da4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6130\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6130/properties.json",
+      "retrievedAt": "2026-09-27T14:27:27.790Z",
+      "sha256": "4a0054552c0680daef2aee60e84c1ef54e3161496e4960c313b0e01f6d108708",
+      "raw": "{\"properties\":{\"rxcui\":\"6130\",\"name\":\"ketamine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETAMINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:27:28.329Z",
+      "sha256": "f45e93b806e9be3947707429238f6c92b0e7c7a4c8c2900a2eb5de13827db8d8",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203184\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203184/properties.json",
+      "retrievedAt": "2026-09-27T14:27:28.888Z",
+      "sha256": "5fe91e36f22c4a4d7fecc190db0ab8119618b22c1970e54d251e0fdc3e15aa49",
+      "raw": "{\"properties\":{\"rxcui\":\"203184\",\"name\":\"ketamine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203184/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:29.484Z",
+      "sha256": "7b30d3cdc86124a9c3e35f248ea0f0c44e5df74997facb22f08f2e5a9584b634",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6130\",\"name\":\"ketamine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TETRACYCLINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:30.011Z",
+      "sha256": "9b3a12e0bc95a85741012e0f79b7ddeebb28c147b790977418636277f1b127de",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10395\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10395/properties.json",
+      "retrievedAt": "2026-09-27T14:27:30.503Z",
+      "sha256": "0cb7a92bbbdb69e138cc444b8e81346dcf0c1f60232e8d58531867e385718e83",
+      "raw": "{\"properties\":{\"rxcui\":\"10395\",\"name\":\"tetracycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TETRACYCLINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:27:30.991Z",
+      "sha256": "1a85b289f3c974078065f01653a0a29357e76de4739095cd678e882d15fcbba4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142446\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142446/properties.json",
+      "retrievedAt": "2026-09-27T14:27:31.470Z",
+      "sha256": "ab5b56f6ddbfb743f2e820bc60b6c962a632dd3ff4989201be761921d33d60e0",
+      "raw": "{\"properties\":{\"rxcui\":\"142446\",\"name\":\"tetracycline hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142446/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:31.956Z",
+      "sha256": "5d6ec02f69af6b4ad28ec6a7e835e762021e3c0d2dc00d37b73863b6aa4de6a6",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"10395\",\"name\":\"tetracycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GENTAMICIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:32.440Z",
+      "sha256": "c2e5d8b38dbc7a75a7c327f5bc4df016d3b1145bb16c3fe54f1ed30792d41ea5",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"1596450\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1596450/properties.json",
+      "retrievedAt": "2026-09-27T14:27:32.927Z",
+      "sha256": "82867dd0da147fb424e05d30c88356745f5c77c682d7f772c68fe04fb59ff034",
+      "raw": "{\"properties\":{\"rxcui\":\"1596450\",\"name\":\"gentamicin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GENTAMICIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:33.417Z",
+      "sha256": "1710360a6588114da7111bac38562f3ef5dcdaf57c50990b456fc5446ac0a065",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"1870193\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1870193/properties.json",
+      "retrievedAt": "2026-09-27T14:27:33.906Z",
+      "sha256": "92bf92246dfe94191d76f0a7898303edac924e2b6f76c21701a2989c45bd6e3c",
+      "raw": "{\"properties\":{\"rxcui\":\"1870193\",\"name\":\"gentamicin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1870193/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:34.395Z",
+      "sha256": "657cd38b8da079b8797b84c3a362882a70606cc13e57bf0abdb02d0ed6043b64",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"1596450\",\"name\":\"gentamicin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFAZOLIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:34.886Z",
+      "sha256": "237fb424c0fd0b8e02eaa054a12a735c3a14e63d08aae8fc41668fb127c13419",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2180\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2180/properties.json",
+      "retrievedAt": "2026-09-27T14:27:35.365Z",
+      "sha256": "f6ee98ca1b6237915d09ca4f6b8c8117c26e7c4d2d55880bc4adae6efb71dd2e",
+      "raw": "{\"properties\":{\"rxcui\":\"2180\",\"name\":\"cefazolin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFAZOLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:27:35.850Z",
+      "sha256": "7768a896f222f0297a40d23667d8a8dea581bea16f7dfed6886ec3fe87806339",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203171\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203171/properties.json",
+      "retrievedAt": "2026-09-27T14:27:36.332Z",
+      "sha256": "ab54416f49be0618c5fad5f889f4cd72222fdb53ba327eee246a8588b6c0b736",
+      "raw": "{\"properties\":{\"rxcui\":\"203171\",\"name\":\"cefazolin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203171/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:36.812Z",
+      "sha256": "89d595a570eea5af436375b41d355e716f207cbfd7a874fa7a4387da1acfbc60",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2180\",\"name\":\"cefazolin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SALBUTAMOL&search=0",
+      "retrievedAt": "2026-09-27T14:27:37.297Z",
+      "sha256": "48147f17a6572ab4184089196e5d8adedf8adb82386a1f15c6540060651b19e8",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"435\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/435/properties.json",
+      "retrievedAt": "2026-09-27T14:27:37.780Z",
+      "sha256": "070ae5ba6535c95cd118d8e8f933a06cb5c1805e4680fdde1790906cf4a05d7a",
+      "raw": "{\"properties\":{\"rxcui\":\"435\",\"name\":\"albuterol\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SALBUTAMOL%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:38.270Z",
+      "sha256": "ad7b4f254bc5e831a2ee8b3049c14e4b182738a0412f491d756ba6171ac72a5e",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142153\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142153/properties.json",
+      "retrievedAt": "2026-09-27T14:27:38.746Z",
+      "sha256": "3d300a5ca4c7c9e435b1c286cefb1f52cc202c50edb868a128294f7004bdfe00",
+      "raw": "{\"properties\":{\"rxcui\":\"142153\",\"name\":\"albuterol sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142153/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:39.231Z",
+      "sha256": "8bc0292dbaebb3fad1417c196d9fa0b400638ff01c6cad6d9dbfe310bd4c5674",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"435\",\"name\":\"albuterol\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:39.723Z",
+      "sha256": "ccf220e62eb300dbdfde534c797877e3141d9d30750f52824f9ed388ea9fcc8a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"723\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/723/properties.json",
+      "retrievedAt": "2026-09-27T14:27:40.208Z",
+      "sha256": "cd02bae92a493620804b2d0bcb32c484b722552e53962072cbe01acd3fa470cc",
+      "raw": "{\"properties\":{\"rxcui\":\"723\",\"name\":\"amoxicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN%20TRIHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:40.692Z",
+      "sha256": "24e367f11f295441f38699ae37becb5c586fedf61e3e59438834d124cab0c64f",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"133008\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/133008/properties.json",
+      "retrievedAt": "2026-09-27T14:27:41.175Z",
+      "sha256": "36bb1381f7dd4b37d46c63e0dc6547e93a6ed716d6fa3cba614fb16cdb7f3776",
+      "raw": "{\"properties\":{\"rxcui\":\"133008\",\"name\":\"amoxicillin trihydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/133008/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:41.655Z",
+      "sha256": "d783257f97c2255fc54c0d4b7a18dab72c032308cfa39d3abd4d16a5d02be02e",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"723\",\"name\":\"amoxicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLEMASTINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:42.138Z",
+      "sha256": "ceeb7a9a106d6a90d59709666a0933e14df5865cd8596f00db1653dc59f49ac6",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2578\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2578/properties.json",
+      "retrievedAt": "2026-09-27T14:27:42.619Z",
+      "sha256": "d497f10ceb68da6e508dbfe17f205a8bd58a90e65f98f57033551d0a3625ffb9",
+      "raw": "{\"properties\":{\"rxcui\":\"2578\",\"name\":\"clemastine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLEMASTINE%20FUMARATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:43.118Z",
+      "sha256": "0be1b0f56db146dff02930eadf71b6688c5e6ec1f2f598bb83d5b76e0f26e906",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142430\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142430/properties.json",
+      "retrievedAt": "2026-09-27T14:27:43.612Z",
+      "sha256": "c4cb263110bf128c6b0da98796899e7796a3730df4b9de1e51bc56a49753a8fd",
+      "raw": "{\"properties\":{\"rxcui\":\"142430\",\"name\":\"clemastine fumarate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142430/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:44.092Z",
+      "sha256": "5b73fe68a1d7cb8caedc86159623bb397428066c99225b45bf5df5ab381a3ae4",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2578\",\"name\":\"clemastine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE&search=0",
+      "retrievedAt": "2026-09-27T14:27:44.579Z",
+      "sha256": "56e93b32b58315b4b5f2701a5e880965681d0a3b4edf9932e0f83fb7954e33b9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"1514\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1514/properties.json",
+      "retrievedAt": "2026-09-27T14:27:45.078Z",
+      "sha256": "ba304b8a46eb5b400fb23bd4bbbe66462dff1132e1597c5aec0c3889a17fd8ee",
+      "raw": "{\"properties\":{\"rxcui\":\"1514\",\"name\":\"betamethasone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE%20VALERATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:45.564Z",
+      "sha256": "83762bf18131222bbadae8fd609d530de6dbf4bad4650eb1e9d852a314b8e590",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"227897\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227897/properties.json",
+      "retrievedAt": "2026-09-27T14:27:46.045Z",
+      "sha256": "06091275bad0b9c31b40416d682bcd5679079d296ae07b76b6a4e352094525be",
+      "raw": "{\"properties\":{\"rxcui\":\"227897\",\"name\":\"betamethasone valerate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227897/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:46.539Z",
+      "sha256": "4af39156ee269adb71cc5462d23e96e1c0093bd60342d870edf71caae23a27b7",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"1514\",\"name\":\"betamethasone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LEVAMISOLE&search=0",
+      "retrievedAt": "2026-09-27T14:27:47.032Z",
+      "sha256": "bbad9a293e79380b6fa850fbd586ef70ec5d5e39bf76b6ce88530603be3165c2",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6371\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6371/properties.json",
+      "retrievedAt": "2026-09-27T14:27:47.521Z",
+      "sha256": "84d700a7ff9d3504388dd02a4ef12b67bf95611a70b9442456cb7f571933f8f0",
+      "raw": "{\"properties\":{\"rxcui\":\"6371\",\"name\":\"levamisole\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LEVAMISOLE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:27:48.012Z",
+      "sha256": "824279fe641123b5f9aa0fd69be519901010802a57b77e7ea5f6c2f4477c7499",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"227227\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227227/properties.json",
+      "retrievedAt": "2026-09-27T14:27:48.509Z",
+      "sha256": "a8a4bc368f43b6e292ad0adbfeb9da9f4c3cdbba5362c63e0eec93b6743503ae",
+      "raw": "{\"properties\":{\"rxcui\":\"227227\",\"name\":\"levamisole hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227227/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:49.006Z",
+      "sha256": "3d80c1236f9088dc2cbe724763740aceb54c233032a73735c16cc86ae311dfc1",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6371\",\"name\":\"levamisole\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PROCHLORPERAZINE%20METHANESULFONATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:49.497Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BROMOCRIPTINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:49.983Z",
+      "sha256": "8c9a821d3115f179ffe940baefb63afb7477d62801cdfa51629e23bd41b88595",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"1760\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/1760/properties.json",
+      "retrievedAt": "2026-09-27T14:27:50.464Z",
+      "sha256": "290023b733556e82e560849c5d9f75bbed9e524ba3b0082d414c1a57069bf912",
+      "raw": "{\"properties\":{\"rxcui\":\"1760\",\"name\":\"bromocriptine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BROMOCRIPTINE%20MESILATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:50.943Z",
+      "sha256": "830557a6fa3ce463eace2dba406619033548b141807b7c00f253587bd3a8954a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142426\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142426/properties.json",
+      "retrievedAt": "2026-09-27T14:27:51.430Z",
+      "sha256": "c0823375a4420ac69f4657dea252a624803f806029416efd1fa64ba19ebb560c",
+      "raw": "{\"properties\":{\"rxcui\":\"142426\",\"name\":\"bromocriptine mesylate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142426/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:51.915Z",
+      "sha256": "c578218bee206a375173cb6ab6efb40499737a6e465581e8a69d9167984b8f0c",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"1760\",\"name\":\"bromocriptine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFUROXIME&search=0",
+      "retrievedAt": "2026-09-27T14:27:52.414Z",
+      "sha256": "21c7cf54d1fbd71cad64859582817e6229d0c6d99a0bf7e459e920d2eeaeeca3",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2194\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2194/properties.json",
+      "retrievedAt": "2026-09-27T14:27:52.892Z",
+      "sha256": "54682f90862c3512de97b826f554813fd260612e834570c683533e3521ec733d",
+      "raw": "{\"properties\":{\"rxcui\":\"2194\",\"name\":\"cefuroxime\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFUROXIME%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:27:53.377Z",
+      "sha256": "889303217953be4821ad45e1c24a0f0e133a5359d96c9554a9701ced307c456a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"204144\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/204144/properties.json",
+      "retrievedAt": "2026-09-27T14:27:53.869Z",
+      "sha256": "4429e13c0dd648c197ec687a56bf0ad93ef5da50750a240aeb1d283be24f487c",
+      "raw": "{\"properties\":{\"rxcui\":\"204144\",\"name\":\"cefuroxime sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/204144/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:54.354Z",
+      "sha256": "f5e68aecf2e41077d1d1a73091eaa75d381f2d3a1a17e9d9802f3ffb614dcb3d",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2194\",\"name\":\"cefuroxime\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMIKACIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:54.841Z",
+      "sha256": "9202e4c18683c9fd4c0959ef7f4862c3e6fb4d084159fdfac9e08a2d35b9e031",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"641\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/641/properties.json",
+      "retrievedAt": "2026-09-27T14:27:55.333Z",
+      "sha256": "dc5bd5faf2c1ba09f072b1d0225b3c24de7155080fc2aac7afd0a6c0b29849f8",
+      "raw": "{\"properties\":{\"rxcui\":\"641\",\"name\":\"amikacin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMIKACIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:55.820Z",
+      "sha256": "a6d6ec549ca631d30bb21bc381af65ccfe7731a99ab68b7c3e72e673d549b78d",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"643\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/643/properties.json",
+      "retrievedAt": "2026-09-27T14:27:56.301Z",
+      "sha256": "a27540a42ac677a22b7f6de780a240db68317588dbe4525dc7f5db176fbd4eed",
+      "raw": "{\"properties\":{\"rxcui\":\"643\",\"name\":\"amikacin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/643/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:56.780Z",
+      "sha256": "c7f775c49b5e757f3af93d7864e48ee50ad51b468581393c45e94e264cc55354",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"641\",\"name\":\"amikacin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ERYTHROMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:27:57.270Z",
+      "sha256": "fe1764b9cf70f17f6d8eede14869ce17768b139b736f66457118e727d3fa9ef8",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4053\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4053/properties.json",
+      "retrievedAt": "2026-09-27T14:27:57.761Z",
+      "sha256": "181a876498988df4f87f0d53e054726603c4566d0bba3225e829d23d7e95db28",
+      "raw": "{\"properties\":{\"rxcui\":\"4053\",\"name\":\"erythromycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ERYTHROMYCIN%20ESTOLATE&search=0",
+      "retrievedAt": "2026-09-27T14:27:58.251Z",
+      "sha256": "b70b88c3e012400df5f48b8126f463df55535b6c0d46ee48c22f8bca777ab877",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4055\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4055/properties.json",
+      "retrievedAt": "2026-09-27T14:27:58.741Z",
+      "sha256": "d29ea4f4a40cf48ca02e2a85138ff87b7280c06f3eba7166f47f390885b4b3a8",
+      "raw": "{\"properties\":{\"rxcui\":\"4055\",\"name\":\"erythromycin estolate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4055/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:27:59.238Z",
+      "sha256": "343d2577fc2bca7914a666c1d5f3c9a72ca984ce0c6006563114e89abb8f785c",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"4053\",\"name\":\"erythromycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=RANITIDINE&search=0",
+      "retrievedAt": "2026-09-27T14:27:59.728Z",
+      "sha256": "9e45dbb6db91b0bba03a696d3686751cb2f0a7b01a07288e8bebeec93865f28e",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"9143\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9143/properties.json",
+      "retrievedAt": "2026-09-27T14:28:00.218Z",
+      "sha256": "9e9cd68ee2b5afee2f0415dfa599549fc95b5115c3d7e0594b807536aea9fcbe",
+      "raw": "{\"properties\":{\"rxcui\":\"9143\",\"name\":\"ranitidine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=RANITIDINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:28:00.698Z",
+      "sha256": "737e3450bb9423f5491383cd2c1f79d632994bb7f22fc23b998ddf80056889c9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203136\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203136/properties.json",
+      "retrievedAt": "2026-09-27T14:28:01.192Z",
+      "sha256": "8a9f4b827738d329e7e0cb769ca576242b4853bee76e90054cb91f52f5844184",
+      "raw": "{\"properties\":{\"rxcui\":\"203136\",\"name\":\"ranitidine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203136/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:01.675Z",
+      "sha256": "622dd55e1b6668fe81195fb781a52d1710b49ce77f70aeb93dfbd49c2d9a4fa5",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"9143\",\"name\":\"ranitidine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFACLOR&search=0",
+      "retrievedAt": "2026-09-27T14:28:02.153Z",
+      "sha256": "483212ff8e0e19d614051d2f0e9f707db689e57daf76c36333e518597bb0d8c9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2176\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2176/properties.json",
+      "retrievedAt": "2026-09-27T14:28:02.650Z",
+      "sha256": "41481fd342cb75b7dc14cd0cc640363c97ce943ff5c501a2c9f66e478196b523",
+      "raw": "{\"properties\":{\"rxcui\":\"2176\",\"name\":\"cefaclor\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFACLOR%20MONOHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:03.140Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VANCOMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:03.637Z",
+      "sha256": "8ec94fb34bdcf6d65ba00b4657c67918961257da4de98b8c870ca6b8af89bfaa",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"11124\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11124/properties.json",
+      "retrievedAt": "2026-09-27T14:28:04.116Z",
+      "sha256": "cb1b057f07b6c141a02c4d3a516ef2e09750d21b1931cd9c42b5581c217de307",
+      "raw": "{\"properties\":{\"rxcui\":\"11124\",\"name\":\"vancomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VANCOMYCIN%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:28:04.594Z",
+      "sha256": "2751063ead21ef9efbf818a3916e1e5f9efe90bf4612c8d14d209618e2a6ad0d",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"66955\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/66955/properties.json",
+      "retrievedAt": "2026-09-27T14:28:05.080Z",
+      "sha256": "b5c4813b9a3aa82a09d460962eb96c288f17c5df242747cf4a9e50f0de2f7b79",
+      "raw": "{\"properties\":{\"rxcui\":\"66955\",\"name\":\"vancomycin hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/66955/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:05.561Z",
+      "sha256": "50de42b48d94e6da98886f5d54d0460ad874e6ad220b2400cb2a5b474953e9be",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"11124\",\"name\":\"vancomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOXITIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:06.056Z",
+      "sha256": "c9b63f90fc92342bcef7fdb165c1b181196f06749e877bfa4fe55507e785740d",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2189\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2189/properties.json",
+      "retrievedAt": "2026-09-27T14:28:06.534Z",
+      "sha256": "2cf2763ef905156e71df7940c1f0f9228a3005d0cc64553faa3600b20ad86bae",
+      "raw": "{\"properties\":{\"rxcui\":\"2189\",\"name\":\"cefoxitin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOXITIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:07.032Z",
+      "sha256": "90aff73846f8cd454e9aa55b826cc9717bb488a9badc0546ec138b8c51dce4ff",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203118\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203118/properties.json",
+      "retrievedAt": "2026-09-27T14:28:07.530Z",
+      "sha256": "b61c84c45f4ccb640d293140807b669b7a7ee13f69411d1cd83b4706b6293626",
+      "raw": "{\"properties\":{\"rxcui\":\"203118\",\"name\":\"cefoxitin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203118/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:08.015Z",
+      "sha256": "b9ef9d856d7a0f7af1db5612c1682f6be0bfbe32fc0bb82966c778157a86b0f3",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2189\",\"name\":\"cefoxitin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POLYMYXIN%20B&search=0",
+      "retrievedAt": "2026-09-27T14:28:08.502Z",
+      "sha256": "1e507a7541a980377bcc18a0ea58a6d9823c27f5fdbe166701a943eaa5df4d66",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"8536\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8536/properties.json",
+      "retrievedAt": "2026-09-27T14:28:08.991Z",
+      "sha256": "3ba9471d342df724d5d8f02e5b45ad73da4cf53503a2d20fdb1cf2a45868fb50",
+      "raw": "{\"properties\":{\"rxcui\":\"8536\",\"name\":\"polymyxin B\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POLYMYXIN%20B%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:09.478Z",
+      "sha256": "52110c701564e1fc5c864fe143e7aaa9812a6ec08ef26eda6dba8e8b1724372f",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"388\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/388/properties.json",
+      "retrievedAt": "2026-09-27T14:28:09.976Z",
+      "sha256": "176b760605af172cf4780471baca19da3eafafd6ca31e0bb5f1a528d5275956e",
+      "raw": "{\"properties\":{\"rxcui\":\"388\",\"name\":\"polymyxin B sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/388/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:10.467Z",
+      "sha256": "67600baffea1e6fb3b2a58d2414665feec5477a41b500d89d02170003c88531f",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"8536\",\"name\":\"polymyxin B\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KANAMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:10.966Z",
+      "sha256": "904669a111358f60d8e9b11f9368960d5d9ccff431be02797e710d7abd49337c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6099\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6099/properties.json",
+      "retrievedAt": "2026-09-27T14:28:11.456Z",
+      "sha256": "cb3444b830e8769285cd91795f3efe1995780fdc3ecf57719268737f01c17e39",
+      "raw": "{\"properties\":{\"rxcui\":\"6099\",\"name\":\"kanamycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KANAMYCIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:11.939Z",
+      "sha256": "9e50816b200f053edd6db1856e1b12d6bc51271eb150f3f25de809c28d534fd5",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203183\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203183/properties.json",
+      "retrievedAt": "2026-09-27T14:28:12.422Z",
+      "sha256": "2b1e7b0b340fa17046c2a311f098f38001b2dab0c2c2d4cf62d2e10481c3844f",
+      "raw": "{\"properties\":{\"rxcui\":\"203183\",\"name\":\"kanamycin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203183/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:12.901Z",
+      "sha256": "1cf25489f43d644b6ee33385758743808ce4ef1930a3fc2ec438629bbfa47294",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6099\",\"name\":\"kanamycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXYTETRACYCLINE&search=0",
+      "retrievedAt": "2026-09-27T14:28:13.433Z",
+      "sha256": "86cc73d43c1c7ac552645e7fc2acfa9585978dfb8b9176c25ee2fe60a619e805",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7821\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7821/properties.json",
+      "retrievedAt": "2026-09-27T14:28:13.914Z",
+      "sha256": "cd37dd02405ad2c0225477b18e90680cafbf9738deebaccdaf300f1c4f7a77db",
+      "raw": "{\"properties\":{\"rxcui\":\"7821\",\"name\":\"oxytetracycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXYTETRACYCLINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:28:14.472Z",
+      "sha256": "c4d7f8c0473a312c110c85f0c2b065a650b4af488cddf65f9c6f5e798724ee72",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4780\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4780/properties.json",
+      "retrievedAt": "2026-09-27T14:28:14.964Z",
+      "sha256": "702b2672784071fbf1e26becb4e3a8cde257161b3576b55edca1e794f97bd6a6",
+      "raw": "{\"properties\":{\"rxcui\":\"4780\",\"name\":\"oxytetracycline hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4780/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:15.445Z",
+      "sha256": "6b559df57c12ebb8768aab5b653174a2b5607022c663d912fc433a74198cbba1",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"7821\",\"name\":\"oxytetracycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE%20SODIUM%20PHOSPHATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:15.929Z",
+      "sha256": "9d1ed42fd855ff6d0e23a192ad894e431fff754f5928815971c42ebe5196da7f",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203220\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203220/properties.json",
+      "retrievedAt": "2026-09-27T14:28:16.408Z",
+      "sha256": "ea74550e9af004ed4fcbe533fb85cc14b93ba9553200ccd0894f6379d2e6806c",
+      "raw": "{\"properties\":{\"rxcui\":\"203220\",\"name\":\"betamethasone sodium phosphate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203220/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:16.888Z",
+      "sha256": "4af39156ee269adb71cc5462d23e96e1c0093bd60342d870edf71caae23a27b7",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"1514\",\"name\":\"betamethasone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMOXICILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:17.368Z",
+      "sha256": "0c6041c38e47618a49fa4783216e0a50d86ded5f9f807d1665a65076d0f0c698",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"267360\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267360/properties.json",
+      "retrievedAt": "2026-09-27T14:28:17.851Z",
+      "sha256": "43ebf0f50ecd71c55c745047824eef0f6fc690446207951e773ed8e9f4625be5",
+      "raw": "{\"properties\":{\"rxcui\":\"267360\",\"name\":\"amoxicillin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267360/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:18.334Z",
+      "sha256": "d783257f97c2255fc54c0d4b7a18dab72c032308cfa39d3abd4d16a5d02be02e",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"723\",\"name\":\"amoxicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:18.829Z",
+      "sha256": "41b43a247d0edd70d1b94abca24ceffee4ed72c1632176d8b6426d04d7d0ee03",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"733\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/733/properties.json",
+      "retrievedAt": "2026-09-27T14:28:19.311Z",
+      "sha256": "f24c00dc6a21155a89fe7d6f4732e9d437d651eb6902c9f9060689cfa7f2ee61",
+      "raw": "{\"properties\":{\"rxcui\":\"733\",\"name\":\"ampicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN%20TRIHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:19.799Z",
+      "sha256": "8e1a7afba05ba8fd8daf5d01d7e76e1a3871d6791c0511c35bb682edd01b582c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203115\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203115/properties.json",
+      "retrievedAt": "2026-09-27T14:28:20.290Z",
+      "sha256": "803ef0213cca8348f80aedb51e6fd651f0eae1b7c45cf5551ab19c35b1053728",
+      "raw": "{\"properties\":{\"rxcui\":\"203115\",\"name\":\"ampicillin trihydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203115/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:20.782Z",
+      "sha256": "2cd5bea4ed00c6384e3ade257710945127cefc6e727fded714e848b6f1965e84",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"733\",\"name\":\"ampicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DICLOXACILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:21.272Z",
+      "sha256": "0276c8d266312e3952486228e7d5e5d1ccf265adc13382962b91df6e92b7ad35",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3356\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3356/properties.json",
+      "retrievedAt": "2026-09-27T14:28:21.767Z",
+      "sha256": "ff50a655cc6bebf7ce93496668d8a13361a070aebd7ac1db08c0843bf678106d",
+      "raw": "{\"properties\":{\"rxcui\":\"3356\",\"name\":\"dicloxacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DICLOXACILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:22.262Z",
+      "sha256": "b57cb7bd056e5992769ee859bf4ea73f0fc7b22089aafcbbe3e1c61c78b7df35",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"267257\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267257/properties.json",
+      "retrievedAt": "2026-09-27T14:28:22.755Z",
+      "sha256": "d67a89bfdb5f37e5fa18fe733916ca05662a22459cc174effa88210854c7e6fd",
+      "raw": "{\"properties\":{\"rxcui\":\"267257\",\"name\":\"dicloxacillin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267257/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:23.235Z",
+      "sha256": "fd656ba35d7ea7938ea783e6d68eb48506c5deabb9db963fa3ed4f49ffd3cbfa",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3356\",\"name\":\"dicloxacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEPHALEXIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:23.715Z",
+      "sha256": "6b46d1b190072ecd352c54e9474aa26aff2bc2690492dcbff5171a93c38910cc",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2231\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2231/properties.json",
+      "retrievedAt": "2026-09-27T14:28:24.199Z",
+      "sha256": "6608d298da1dce71ba4fc857c8b568983e7b0a38eaea6e4f13e57fed998607db",
+      "raw": "{\"properties\":{\"rxcui\":\"2231\",\"name\":\"cephalexin\",\"synonym\":\"cefalexin\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEPHALEXIN%20MONOHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:24.679Z",
+      "sha256": "fec576b968bafe4582f141ca71eb3e34613aba48e5082ec072ff08ca5a8cda85",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"215948\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/215948/properties.json",
+      "retrievedAt": "2026-09-27T14:28:25.162Z",
+      "sha256": "ef88f08edfd26e8ff4969a32c659ea9a7845ee4842f600b5e51185cf6f4c48d2",
+      "raw": "{\"properties\":{\"rxcui\":\"215948\",\"name\":\"cephalexin monohydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/215948/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:25.658Z",
+      "sha256": "e772917dd758d65616ce5987dcb5b92182155a48be747647aeb4a64d57a607bc",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2231\",\"name\":\"cephalexin\",\"synonym\":\"cefalexin\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOPERAZONE&search=0",
+      "retrievedAt": "2026-09-27T14:28:26.152Z",
+      "sha256": "40f32b3c1d01448eaa4301c1deaf7963b9639e51f989a5ecb34f24c0ca33beeb",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2184\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2184/properties.json",
+      "retrievedAt": "2026-09-27T14:28:26.638Z",
+      "sha256": "d0564a043e838f439b70ed3fcd717ea26550e84c1bcc6c323c8bd148b37085ae",
+      "raw": "{\"properties\":{\"rxcui\":\"2184\",\"name\":\"cefoperazone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOPERAZONE%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:27.129Z",
+      "sha256": "4a660adffe0b00e73b630dc2df0b0b5d7302dbbc52d4361bc8b75abc74c7acfe",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"227214\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227214/properties.json",
+      "retrievedAt": "2026-09-27T14:28:27.619Z",
+      "sha256": "62360bf7858f5d30975bb922031e611ebb323f94b9c917e5c5fbc3f8d52e11a9",
+      "raw": "{\"properties\":{\"rxcui\":\"227214\",\"name\":\"cefoperazone sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227214/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:28.102Z",
+      "sha256": "4d08a9f615aed20eb4d5d183ad01c7cc8de5b9957bb4827159abe844d3c9f2ee",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2184\",\"name\":\"cefoperazone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETOTIFEN&search=0",
+      "retrievedAt": "2026-09-27T14:28:28.602Z",
+      "sha256": "51b83e9061deaccf2e78fdd0e3599a2bb4348c966417286372ec80b170168d95",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6146\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6146/properties.json",
+      "retrievedAt": "2026-09-27T14:28:29.096Z",
+      "sha256": "202d1373e0a1061f2503b4561b4098748379516375fed230bd7f317c8dd32dc8",
+      "raw": "{\"properties\":{\"rxcui\":\"6146\",\"name\":\"ketotifen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=KETOTIFEN%20FUMARATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:29.584Z",
+      "sha256": "6cb5a5af9a346a3cead3f2bde8e3f50df8957677a8a8169a87071d162bde3539",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"11404\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11404/properties.json",
+      "retrievedAt": "2026-09-27T14:28:30.079Z",
+      "sha256": "9ac87d911a8d358cbff85fa353a6cc009a2d063fcd193dd3f57ebb1795213a55",
+      "raw": "{\"properties\":{\"rxcui\":\"11404\",\"name\":\"ketotifen fumarate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/11404/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:30.558Z",
+      "sha256": "84cd612d57eb2df19f2de390fcc0ac8803427d39f50b9e53bd68354a616774f5",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6146\",\"name\":\"ketotifen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOTAXIME&search=0",
+      "retrievedAt": "2026-09-27T14:28:31.037Z",
+      "sha256": "304f15a3f268d5b2b65d0e474fe08b51dfb738a92890667a1b7c886d9cda8007",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2186\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2186/properties.json",
+      "retrievedAt": "2026-09-27T14:28:31.520Z",
+      "sha256": "92783a32993987dd79092c078d2d8c53112c4ae8e9d16fcf72fd0f7688b8917f",
+      "raw": "{\"properties\":{\"rxcui\":\"2186\",\"name\":\"cefotaxime\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFOTAXIME%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:32.000Z",
+      "sha256": "f3a65b11fdf6b0aac99c65370b509d694635a31ea5de71fe3541dde093757d58",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203117\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203117/properties.json",
+      "retrievedAt": "2026-09-27T14:28:32.479Z",
+      "sha256": "6392d4ce984bddc99adfe3d0d996db5c6c2a09389db675601c2e9a0b46d47efc",
+      "raw": "{\"properties\":{\"rxcui\":\"203117\",\"name\":\"cefotaxime sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203117/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:32.960Z",
+      "sha256": "f5b1de1cc742cb49399655a33f8a93ec05645f0eac572d894d99413b4a669399",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2186\",\"name\":\"cefotaxime\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GRANISETRON&search=0",
+      "retrievedAt": "2026-09-27T14:28:33.446Z",
+      "sha256": "1c027d9f360d78994ff53b37cb34e1d347e363148afde8fd28abea192479e4c4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"26237\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/26237/properties.json",
+      "retrievedAt": "2026-09-27T14:28:33.933Z",
+      "sha256": "66fb59497a5a1f120872071dbb372909796483c90c4e4f251345915f962c7d4e",
+      "raw": "{\"properties\":{\"rxcui\":\"26237\",\"name\":\"granisetron\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=GRANISETRON%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:28:34.421Z",
+      "sha256": "7010645e5e9f8504dffaf07253a32cbdf4a072253d952be68acd8424fd90b17c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142149\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142149/properties.json",
+      "retrievedAt": "2026-09-27T14:28:34.915Z",
+      "sha256": "f98cbc731dcd55d5a97ef6d3d2f2eff3f869c34e149adbf3c6a6bbc5edb85777",
+      "raw": "{\"properties\":{\"rxcui\":\"142149\",\"name\":\"granisetron hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142149/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:35.395Z",
+      "sha256": "7c3d9c55b1b21b9a99098820554b3668dfd69b62c24a147a74886983a2068bf4",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"26237\",\"name\":\"granisetron\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CASPOFUNGIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:35.877Z",
+      "sha256": "e95a2dfcf849dda952783d8a901a20c5638bac1a78a09631e23838e4caed41f4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"140108\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/140108/properties.json",
+      "retrievedAt": "2026-09-27T14:28:36.369Z",
+      "sha256": "b4da0aa1156c86069357ee24517feb79d2c561e1b00b687fa198ae361864873c",
+      "raw": "{\"properties\":{\"rxcui\":\"140108\",\"name\":\"caspofungin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CASPOFUNGIN%20ACETATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:36.864Z",
+      "sha256": "554f45398ac4b9320610da530cda696de13e4b5754e4e18e8d293ae197b4b2e6",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"282363\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/282363/properties.json",
+      "retrievedAt": "2026-09-27T14:28:37.354Z",
+      "sha256": "c529b9591ddada30e4436871618bd495502a673909d5875289f83ed1a1504e2c",
+      "raw": "{\"properties\":{\"rxcui\":\"282363\",\"name\":\"caspofungin acetate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/282363/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:37.832Z",
+      "sha256": "276804953b9ca1c7c4e0f2afffb7bb5435a2b2e223d3325ad2c752b84b018b9f",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"140108\",\"name\":\"caspofungin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=HYDROXOCOBALAMIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:38.317Z",
+      "sha256": "cb08ced0469c43c575a1c087ff7e1e3e4acfb4fe174b5ff8176782d6e5701447",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"5514\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5514/properties.json",
+      "retrievedAt": "2026-09-27T14:28:38.801Z",
+      "sha256": "06c83786194cee2184a029b1e2c56e4206362501686cbc3b360e4faa267d852f",
+      "raw": "{\"properties\":{\"rxcui\":\"5514\",\"name\":\"hydroxocobalamin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=HYDROXOCOBALAMIN%20ACETATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:39.284Z",
+      "sha256": "58631b40329d42375335ed43b28986a189fbbe980b4165a2e0408f35ae80b9c3",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"236302\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236302/properties.json",
+      "retrievedAt": "2026-09-27T14:28:39.776Z",
+      "sha256": "3d0e823a45110736b166444c3a9181a4664d0074c0f5e04044f408695f23f576",
+      "raw": "{\"properties\":{\"rxcui\":\"236302\",\"name\":\"hydroxocobalamin acetate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236302/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:40.270Z",
+      "sha256": "dd4655815df43d72ced716df3f19125c03a7ca9db67c8e791a56dddbbb9eceb4",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"5514\",\"name\":\"hydroxocobalamin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFADROXIL&search=0",
+      "retrievedAt": "2026-09-27T14:28:40.761Z",
+      "sha256": "3f017f86be073506bb5c64871a36b5e691306402ccaffb4c5c34f36dc16a9222",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2177\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2177/properties.json",
+      "retrievedAt": "2026-09-27T14:28:41.247Z",
+      "sha256": "435470118b43415cfb6b6c0d9e543cdfb195063a69367659744e274a73af2b89",
+      "raw": "{\"properties\":{\"rxcui\":\"2177\",\"name\":\"cefadroxil\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFADROXIL%20MONOHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:41.741Z",
+      "sha256": "62de5754a5f8d4cc4fc571df19d7b78ad6b8ff8cc8ec353c5abc498e7b679608",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"204175\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/204175/properties.json",
+      "retrievedAt": "2026-09-27T14:28:42.239Z",
+      "sha256": "60b188de479ec105dba0cf544e2380d5c8b853438a48d6b36c771a1e225aeb50",
+      "raw": "{\"properties\":{\"rxcui\":\"204175\",\"name\":\"cefadroxil monohydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/204175/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:42.742Z",
+      "sha256": "c99ab2249bc72563b5c28883a04a9f4c8ba5b4c2f81e292b9d225ed101a4d140",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2177\",\"name\":\"cefadroxil\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TIMOLOL&search=0",
+      "retrievedAt": "2026-09-27T14:28:43.227Z",
+      "sha256": "709b3b3abfbc11adb36e2235959ec820230f55a81bda617a1267bf678c25bce6",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10600\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10600/properties.json",
+      "retrievedAt": "2026-09-27T14:28:43.712Z",
+      "sha256": "28de016cc367f96924befdda983b9fd6e87d9cf423549128eb0284f41f1fdc25",
+      "raw": "{\"properties\":{\"rxcui\":\"10600\",\"name\":\"timolol\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TIMOLOL%20MALEATE&search=0",
+      "retrievedAt": "2026-09-27T14:28:44.192Z",
+      "sha256": "2369841a3455437025e2003f042ff6fe781f5275c1870a3f60d732bd4f0654c8",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"42933\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/42933/properties.json",
+      "retrievedAt": "2026-09-27T14:28:44.681Z",
+      "sha256": "c8b63f8c278e9e34a3b06ac4a972cca09d2e3fc72cc5154c2cc47083b767af47",
+      "raw": "{\"properties\":{\"rxcui\":\"42933\",\"name\":\"timolol maleate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/42933/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:45.178Z",
+      "sha256": "255f6e94be24989e540211942f8d8db7a0248d24aab7eccddfd3edad851e3dfd",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"10600\",\"name\":\"timolol\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CIPROFLOXACIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:45.689Z",
+      "sha256": "f94e17335e8b912e091b2a486bc3d42c797f2f62de6520d19089a92202c42b8b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2551\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2551/properties.json",
+      "retrievedAt": "2026-09-27T14:28:46.182Z",
+      "sha256": "df9be19ef03f3e711edc4341661be93f37377a662d0b9be767afc66c7fcce11c",
+      "raw": "{\"properties\":{\"rxcui\":\"2551\",\"name\":\"ciprofloxacin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CIPROFLOXACIN%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:28:46.669Z",
+      "sha256": "5d2059b2acf23a8fecf51c2cfa1e3e75e9e3986f3483c3f050014b918f287a02",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"81981\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/81981/properties.json",
+      "retrievedAt": "2026-09-27T14:28:47.152Z",
+      "sha256": "7cc5180b38f89b0c2e476463ee7425480a91427a06592a2aa9d5e3a4fa998271",
+      "raw": "{\"properties\":{\"rxcui\":\"81981\",\"name\":\"ciprofloxacin hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/81981/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:47.636Z",
+      "sha256": "8a6dabb65555919f5ae57aa8d11d6e7a55a705e33d3b84084b2f714cbbeb8097",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2551\",\"name\":\"ciprofloxacin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METOCLOPRAMIDE&search=0",
+      "retrievedAt": "2026-09-27T14:28:48.138Z",
+      "sha256": "27d2d8c2124e21af5b663f8eb0707ff8ced62fe3f53957ad77410fbb811ec0bd",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6915\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6915/properties.json",
+      "retrievedAt": "2026-09-27T14:28:48.633Z",
+      "sha256": "44dab8481ab249422536c2e5bf85ffd9df2bc97a3d2340d3b2d536b6342b0f45",
+      "raw": "{\"properties\":{\"rxcui\":\"6915\",\"name\":\"metoclopramide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METOCLOPRAMIDE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:28:49.133Z",
+      "sha256": "8e84ddd4557fad4df14a1b40cc57bfe576d27554b22e6ec33681db5d2ff4d8ce",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"267036\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267036/properties.json",
+      "retrievedAt": "2026-09-27T14:28:49.620Z",
+      "sha256": "b2b9ef7e926b218dfba888c953ff6f9929b6188784d7ded41df5e7baacba2f51",
+      "raw": "{\"properties\":{\"rxcui\":\"267036\",\"name\":\"metoclopramide hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267036/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:50.114Z",
+      "sha256": "048612a1ddac0ba5eb22dc9cb1b9f24f6f8763e03b6b9438b3dcb947d13afb6a",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6915\",\"name\":\"metoclopramide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEPHALEXIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:50.611Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXACILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:51.094Z",
+      "sha256": "75172bb0eba43fcbed30026dc12c7e066cdf9332d4ad04de09fe1c5afcc703f3",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7773\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7773/properties.json",
+      "retrievedAt": "2026-09-27T14:28:51.589Z",
+      "sha256": "ce518a35ea143bcbcae54a591eac850f580026bd3a7a73749bf3132fed832a15",
+      "raw": "{\"properties\":{\"rxcui\":\"7773\",\"name\":\"oxacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=OXACILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:52.073Z",
+      "sha256": "7e93f090106c09e6a09d848101bbea01e0207d5f4885c9ab781b815952aaba01",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"9898\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9898/properties.json",
+      "retrievedAt": "2026-09-27T14:28:52.557Z",
+      "sha256": "ec52d02b62b1d67f7100471605fa9ae3a1c27ba3794d7590682f4feca5df1e08",
+      "raw": "{\"properties\":{\"rxcui\":\"9898\",\"name\":\"oxacillin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9898/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:53.062Z",
+      "sha256": "365524211732649f56d141ebc746a2c9d538be5efe527e109e3e939fc3930cb3",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"7773\",\"name\":\"oxacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ATORVASTATIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:53.545Z",
+      "sha256": "6d9213215e3ca53478b07c015710b94ccf5f0deda5ec586418bd379185ae10a0",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"83367\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/83367/properties.json",
+      "retrievedAt": "2026-09-27T14:28:54.030Z",
+      "sha256": "a4a634532b2b12ec9dcda62f3ca288fd5138deebdf5d9605f798ddb3fdea32b3",
+      "raw": "{\"properties\":{\"rxcui\":\"83367\",\"name\":\"atorvastatin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ATORVASTATIN%20CALCIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:54.526Z",
+      "sha256": "355423de94586c4bd715e3a8f0fd644c92fd882e44519b76c477f1d7eca8b641",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"83366\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/83366/properties.json",
+      "retrievedAt": "2026-09-27T14:28:55.022Z",
+      "sha256": "8d247c43e17381e031751256ef258bd40e75501d14fdc1cb8eb8461412d46913",
+      "raw": "{\"properties\":{\"rxcui\":\"83366\",\"name\":\"atorvastatin calcium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/83366/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:55.526Z",
+      "sha256": "553ca19fa0e5909dc266f446e0937825112fb9f89e36ac88b1393ffbc1e20cb0",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"83367\",\"name\":\"atorvastatin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMPICILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:56.028Z",
+      "sha256": "298a4a24e0fc1ae53494f10cb0b1f661904ff62c03c99f7ad43aa9e61447bba1",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"81953\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/81953/properties.json",
+      "retrievedAt": "2026-09-27T14:28:56.524Z",
+      "sha256": "4da6cc5607eb98f6e1d35a3c6c79b2151d14a6e73162fdf9d94591238639187e",
+      "raw": "{\"properties\":{\"rxcui\":\"81953\",\"name\":\"ampicillin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/81953/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:57.012Z",
+      "sha256": "2cd5bea4ed00c6384e3ade257710945127cefc6e727fded714e848b6f1965e84",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"733\",\"name\":\"ampicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLOXACILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:28:57.511Z",
+      "sha256": "ca7e0a07f45e9af9cff25dcc4739215307242aff897641b5c04e754b075c7991",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2625\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2625/properties.json",
+      "retrievedAt": "2026-09-27T14:28:57.995Z",
+      "sha256": "b76c7bb3ac406649ac643b018736b350424cddd689968c0a40200a4119c9a606",
+      "raw": "{\"properties\":{\"rxcui\":\"2625\",\"name\":\"cloxacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLOXACILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:28:58.490Z",
+      "sha256": "0506773e881c042f105125034f21d18d2990a108ad4b25d3f17caa471ea913f9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"9864\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9864/properties.json",
+      "retrievedAt": "2026-09-27T14:28:59.012Z",
+      "sha256": "52fd3fddd1c1a011d39d0d29ce55bd17ca4b9fc2d0d7205f8d65deaef1c90270",
+      "raw": "{\"properties\":{\"rxcui\":\"9864\",\"name\":\"cloxacillin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/9864/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:28:59.495Z",
+      "sha256": "b9a289aa04c889408b6cfefeaa45f1db9df8e3c4cfc48ec7f747497f505bcda9",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2625\",\"name\":\"cloxacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PRAZOSIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:00.036Z",
+      "sha256": "28be3ddc1e997e25e3b9632fa7d7053a99f486fa6ddc3fad9f7123e9d84d0685",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"8629\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8629/properties.json",
+      "retrievedAt": "2026-09-27T14:29:00.518Z",
+      "sha256": "a9cbbf70ee4e4dc9cb5aadc9fe6483077cf019c2b46049693618dc5698e6e04f",
+      "raw": "{\"properties\":{\"rxcui\":\"8629\",\"name\":\"prazosin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PRAZOSIN%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:01.003Z",
+      "sha256": "ec28b1838e7461f724ffa11c605b0ceaf9f6b384764f7bc7ce6a10581873bd54",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203210\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203210/properties.json",
+      "retrievedAt": "2026-09-27T14:29:01.485Z",
+      "sha256": "448a254c0f61d40d4f372b419471a7da33c3bd036958bdd316f6b4d2374d1bfc",
+      "raw": "{\"properties\":{\"rxcui\":\"203210\",\"name\":\"prazosin hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203210/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:01.968Z",
+      "sha256": "6bfb349e654b1c85e721bed72d8a20fde8efb7670070d327404b0a5e349a4a9e",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"8629\",\"name\":\"prazosin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NAPROXEN&search=0",
+      "retrievedAt": "2026-09-27T14:29:02.481Z",
+      "sha256": "ebf93e812c35442b627dd65d4f70fe9e0a5b472d9c7cab55f7eb7cc5dc3a0df1",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7258\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7258/properties.json",
+      "retrievedAt": "2026-09-27T14:29:02.957Z",
+      "sha256": "fc194c674a121b2e578a3027c249f7f817f138c0e5452b0b83faee9bb7104e47",
+      "raw": "{\"properties\":{\"rxcui\":\"7258\",\"name\":\"naproxen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NAPROXEN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:29:03.441Z",
+      "sha256": "7f4d2b8d82d13243bf63ab1914ab430c4a41acfb079cf1e15bc6496b14eca75b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142442\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142442/properties.json",
+      "retrievedAt": "2026-09-27T14:29:03.931Z",
+      "sha256": "4f8f76e335137ae1a67a2408a82f5f24ba3062cec64c260c6ce73b42cfb80f74",
+      "raw": "{\"properties\":{\"rxcui\":\"142442\",\"name\":\"naproxen sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142442/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:04.431Z",
+      "sha256": "cddb532b89b07f872c9c16b31836f0da91eb47ef44df903e988434d337887a0e",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"7258\",\"name\":\"naproxen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=MINOCYCLINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:04.923Z",
+      "sha256": "794e4c48b4dcb425054e33e3c3f568ca2f52899792b82b777fcb9381599e4b7a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6980\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6980/properties.json",
+      "retrievedAt": "2026-09-27T14:29:05.434Z",
+      "sha256": "3ce3a50677a107021e8c676473ced20265a7e9cba66025953c423c4503354bd9",
+      "raw": "{\"properties\":{\"rxcui\":\"6980\",\"name\":\"minocycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=MINOCYCLINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:05.960Z",
+      "sha256": "fe514d608b8898e1945dfb6de64a200e36f276c1e61d224c0da07fb1e7632df6",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6979\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6979/properties.json",
+      "retrievedAt": "2026-09-27T14:29:06.447Z",
+      "sha256": "ed5f6223e4ad4e021088024c7dde4e928138ec0d344108149c32472f78c88fc6",
+      "raw": "{\"properties\":{\"rxcui\":\"6979\",\"name\":\"minocycline hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6979/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:06.928Z",
+      "sha256": "93e3183b673c0e1121e603f538985f3695ed23b28d86c915e4580b8b18e1ecd6",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6980\",\"name\":\"minocycline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLUOXETINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:07.436Z",
+      "sha256": "f644ca9ac04657be5af42b31f84e8edac97ceba258b08c353b2a0627b48b351f",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4493\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4493/properties.json",
+      "retrievedAt": "2026-09-27T14:29:07.927Z",
+      "sha256": "d059a30f754cef9df2db36fc30636af3dd4d43cb1305ea9cd1037e71af47d0bd",
+      "raw": "{\"properties\":{\"rxcui\":\"4493\",\"name\":\"fluoxetine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLUOXETINE%20HYDROCHLORIDE&search=0",
+      "retrievedAt": "2026-09-27T14:29:08.419Z",
+      "sha256": "712312ed164b37c24872a349de1fc1a17d68e34f5ac2ef860f858a1706c6f390",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"227224\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227224/properties.json",
+      "retrievedAt": "2026-09-27T14:29:08.950Z",
+      "sha256": "dd2a30a6fd749658158fef52ba87cf5608ee371c336599f34d8975a313e6b373",
+      "raw": "{\"properties\":{\"rxcui\":\"227224\",\"name\":\"fluoxetine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/227224/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:09.452Z",
+      "sha256": "f56ae8022c144bb81efa3211e1930fc02bd0247627a40fa0039e67892886a53d",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"4493\",\"name\":\"fluoxetine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLINDAMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:09.943Z",
+      "sha256": "cf4eccd6898e6a6fbf686a60fd9ed82c59ee8f3265a5d3324c31290cbbe47d07",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2582\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2582/properties.json",
+      "retrievedAt": "2026-09-27T14:29:10.432Z",
+      "sha256": "00efaf772cc0f5c3b7dd5424336db6fad9dd4611396d542b75563996fdca0146",
+      "raw": "{\"properties\":{\"rxcui\":\"2582\",\"name\":\"clindamycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLINDAMYCIN%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:10.924Z",
+      "sha256": "bcbda425535975f033ac32f05475cb6bfc1d98ab6549953a57c4a28fe8f0a1bc",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"81982\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/81982/properties.json",
+      "retrievedAt": "2026-09-27T14:29:11.425Z",
+      "sha256": "0f6ef2adb7af5d69856701cdea3fb865b4ea0a4d33439e30ec12ef3678adb81d",
+      "raw": "{\"properties\":{\"rxcui\":\"81982\",\"name\":\"clindamycin hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/81982/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:11.917Z",
+      "sha256": "4d83cde947cd899a33f4d96a928e28d2666360703ea027ea7a59b31dcc8c0ca6",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2582\",\"name\":\"clindamycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PIPERACILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:12.420Z",
+      "sha256": "ec65a164f8f666ba7676d18ac7d603a8b3d4083e450927a4279d278cb29c7702",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"8339\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8339/properties.json",
+      "retrievedAt": "2026-09-27T14:29:12.908Z",
+      "sha256": "5b6f1448d99ddc05076f99ef3001e3f21bdbabb53087e8b34468e73d39935e31",
+      "raw": "{\"properties\":{\"rxcui\":\"8339\",\"name\":\"piperacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PIPERACILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:29:13.409Z",
+      "sha256": "655022d1280ada5aef0032e55da4f5661f86a3f8dde439b4689c58bcbcba7ced",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203134\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203134/properties.json",
+      "retrievedAt": "2026-09-27T14:29:13.919Z",
+      "sha256": "b2bb3ed3a6fece1da91606b8e3d8494907fcb9044afb0e092927d698260b84a7",
+      "raw": "{\"properties\":{\"rxcui\":\"203134\",\"name\":\"piperacillin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203134/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:14.400Z",
+      "sha256": "4646b1f86577c66a08d39b8b5cc0e76158159bbc82fd2f3aa71eea72ed8bd5aa",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"8339\",\"name\":\"piperacillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LINCOMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:14.900Z",
+      "sha256": "eab12cd7ac2d03928433b3f45e3f9d7b8ae8e0749c855294085ccbe0973a6348",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6398\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6398/properties.json",
+      "retrievedAt": "2026-09-27T14:29:15.394Z",
+      "sha256": "a31cd076a25b6627190d51da23108b70f60501daabd35d321be2a50104577cc5",
+      "raw": "{\"properties\":{\"rxcui\":\"6398\",\"name\":\"lincomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LINCOMYCIN%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:15.900Z",
+      "sha256": "2877eff85802131df29786943bfecc119bbcb7901ef12d99e74577f339759be2",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"82036\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/82036/properties.json",
+      "retrievedAt": "2026-09-27T14:29:16.390Z",
+      "sha256": "1384d1beca85144dd33e09a82356edb2a8ca850420ca1ca68b1f2769a741bb8b",
+      "raw": "{\"properties\":{\"rxcui\":\"82036\",\"name\":\"lincomycin hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/82036/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:16.897Z",
+      "sha256": "b4bded6e3c950043658cd30bf178033c566c28b49c3a27ade2279f3ca55a4728",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6398\",\"name\":\"lincomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFMETAZOLE&search=0",
+      "retrievedAt": "2026-09-27T14:29:17.394Z",
+      "sha256": "04658ad819bddd3befcfcda0b22d1b3897a2f722dab2a394c955aa26777d13d9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2182\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2182/properties.json",
+      "retrievedAt": "2026-09-27T14:29:17.878Z",
+      "sha256": "0a4b5bab3c39ad6ea1f3bfe5ec53171172751c68c24d85cc5f383d4f722e6a78",
+      "raw": "{\"properties\":{\"rxcui\":\"2182\",\"name\":\"cefmetazole\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CEFMETAZOLE%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:29:18.379Z",
+      "sha256": "2e694ec43e1b3680e468285b79317b315f33d52ca495baf79db9a76408317849",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203140\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203140/properties.json",
+      "retrievedAt": "2026-09-27T14:29:18.868Z",
+      "sha256": "40c00027afd25784b30833afc20aa9e2cdcab64b6dac0d99c79b7881db468590",
+      "raw": "{\"properties\":{\"rxcui\":\"203140\",\"name\":\"cefmetazole sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203140/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:19.362Z",
+      "sha256": "d5df3275751475b7d254c05b7a6d9265cde4b6bfc3eff9aeeadf947c2379d618",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2182\",\"name\":\"cefmetazole\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TOBRAMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:19.846Z",
+      "sha256": "8744620391c59febad05fcf1eef216d8daec48f1892d1cca125830825c6257dd",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10627\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10627/properties.json",
+      "retrievedAt": "2026-09-27T14:29:20.337Z",
+      "sha256": "4247a784ccbb19dd00cccf2b7b76bbff0421289bcb1982632726df38fc3b94e7",
+      "raw": "{\"properties\":{\"rxcui\":\"10627\",\"name\":\"tobramycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TOBRAMYCIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:20.843Z",
+      "sha256": "8b679ce347ea85c22a202a9c1dea76dfb0f0d5ce7c2252e9d4dff0e37dff64c3",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7276\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7276/properties.json",
+      "retrievedAt": "2026-09-27T14:29:21.343Z",
+      "sha256": "ebe2d42af8ed2e6c7eab50b18ef270773dff9f9b593c445138541d62c4795cb4",
+      "raw": "{\"properties\":{\"rxcui\":\"7276\",\"name\":\"tobramycin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7276/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:21.835Z",
+      "sha256": "aa68ac301e166d8f1e90a200226106af86094c8ac485da30b765ad6ff9e0b936",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"10627\",\"name\":\"tobramycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SERTRALINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:22.322Z",
+      "sha256": "d1e0b88f1427e7dc462446be2aac03f4f6b23ca86db78add28335ded295280c3",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"36437\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/36437/properties.json",
+      "retrievedAt": "2026-09-27T14:29:22.805Z",
+      "sha256": "4f33a9023f4e842114113cf64b5364bf4a6613f831ff6929f3a4a6df1670781a",
+      "raw": "{\"properties\":{\"rxcui\":\"36437\",\"name\":\"sertraline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SERTRALINE%20HYDROCHLORIDE&search=0",
+      "retrievedAt": "2026-09-27T14:29:23.283Z",
+      "sha256": "65916c80e1031dd38e06cd7734bd494a68726b35a043911ba85283d68fbc04b0",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"155137\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/155137/properties.json",
+      "retrievedAt": "2026-09-27T14:29:23.771Z",
+      "sha256": "31deb58e38670976a083e00d24148f1ea053ece2a7f3df5af7c03cfe025b02c4",
+      "raw": "{\"properties\":{\"rxcui\":\"155137\",\"name\":\"sertraline hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/155137/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:24.263Z",
+      "sha256": "da55acaa7f68609b7666fb30e48e0d82d87f051665778a617a35511b93d05b0f",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"36437\",\"name\":\"sertraline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMLODIPINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:24.743Z",
+      "sha256": "f9724876fd58b88f2e289ad69b38d6d2831b79220dfcc7e233dc8a43549f694a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"17767\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/17767/properties.json",
+      "retrievedAt": "2026-09-27T14:29:25.236Z",
+      "sha256": "4ad23943b095f7c96f270645c2d2c382a4595afd81a11d675c948052da8a8d20",
+      "raw": "{\"properties\":{\"rxcui\":\"17767\",\"name\":\"amlodipine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=AMLODIPINE%20BESYLATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:25.727Z",
+      "sha256": "4896ad79b0f2365a463e95fff3207fae16191f5a4405f49c0edea4ae2d69c5d7",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"104416\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/104416/properties.json",
+      "retrievedAt": "2026-09-27T14:29:26.225Z",
+      "sha256": "fe228c2822e9eeea1031a9f5de70756e32fd7df1b0b106fb09daedd968833167",
+      "raw": "{\"properties\":{\"rxcui\":\"104416\",\"name\":\"amlodipine besylate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/104416/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:26.715Z",
+      "sha256": "9b64bda828e7af77160784c72bd6e41d41a37eb927769bd77d243c9b98cb13da",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"17767\",\"name\":\"amlodipine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LANREOTIDE&search=0",
+      "retrievedAt": "2026-09-27T14:29:27.204Z",
+      "sha256": "7f58a787a5baaf863f6ef9b6dd2f7b5445ace7c9d8686d300b50357e585db158",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"68092\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/68092/properties.json",
+      "retrievedAt": "2026-09-27T14:29:27.689Z",
+      "sha256": "a8cb1802e208c6d1d9cb3fd09d456d25267039abdde256d3cd4ac00beee3709e",
+      "raw": "{\"properties\":{\"rxcui\":\"68092\",\"name\":\"lanreotide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LANREOTIDE%20ACETATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:28.168Z",
+      "sha256": "9d8cb6743fa6f72071da1b7232e140ee1e8e330c2fd5b56fe954fc34ad3f627e",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"236167\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236167/properties.json",
+      "retrievedAt": "2026-09-27T14:29:28.649Z",
+      "sha256": "9009913ac9f7f41306c532f5cd3a24d462468fd9bed51745e1b2c15aab01784f",
+      "raw": "{\"properties\":{\"rxcui\":\"236167\",\"name\":\"lanreotide acetate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236167/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:29.143Z",
+      "sha256": "db007a0c52b99b46522b188b76ad7134d7caac3cd651b8ae1b3e5fd58757172d",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"68092\",\"name\":\"lanreotide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NETILMICIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:29.636Z",
+      "sha256": "e934a0bb5c8ce952545e1c6e1b67d2fb043397ab1eb5538968cddf6492f54816",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7337\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7337/properties.json",
+      "retrievedAt": "2026-09-27T14:29:30.118Z",
+      "sha256": "1a62ffd4dd3dad896ae513f24b3bbbbb3d2a6229e81a2024d21e9d76637122a6",
+      "raw": "{\"properties\":{\"rxcui\":\"7337\",\"name\":\"netilmicin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NETILMICIN%20SULFATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:30.595Z",
+      "sha256": "8eec96887074ddb577981b0b0f5f7f7deeba1d6c242efd0badd801b4d4653ca3",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203193\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203193/properties.json",
+      "retrievedAt": "2026-09-27T14:29:31.074Z",
+      "sha256": "7f6d647990d34390ae91c59094e04a63623dbb0710a99c767f1fbe9cf4ec6cb4",
+      "raw": "{\"properties\":{\"rxcui\":\"203193\",\"name\":\"netilmicin sulfate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203193/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:31.564Z",
+      "sha256": "675306140e9928f6430ba745a3ac5258e546d6df1ba632c866aa03c350a934cf",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"7337\",\"name\":\"netilmicin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=THEOPHYLLINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:32.059Z",
+      "sha256": "00261b6b55d3a0c52ca430434add69b4ce98621efee5b94f25ae9a56812841c2",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10438\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10438/properties.json",
+      "retrievedAt": "2026-09-27T14:29:32.543Z",
+      "sha256": "af47e148ab8f6436bc43380680efe2134c3edfdb9e61fe10af884df99ba99f88",
+      "raw": "{\"properties\":{\"rxcui\":\"10438\",\"name\":\"theophylline\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=THEOPHYLLINE%20MONOHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:33.043Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PHENYTOIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:33.533Z",
+      "sha256": "a59750cddd24a7dfc55e91981326075841ce3fc37b5f6c18466617bbc1915016",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"8183\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/8183/properties.json",
+      "retrievedAt": "2026-09-27T14:29:34.020Z",
+      "sha256": "65ed0c00cd3dc88e4faa558f22b3123637c82efdddf23920f20457ab2a8e7755",
+      "raw": "{\"properties\":{\"rxcui\":\"8183\",\"name\":\"phenytoin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=PHENYTOIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:29:34.500Z",
+      "sha256": "fd1cc3cb8f3f0711fc72720881d7850103e7f5d9a95a3bb57154df8c882cced8",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"71227\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/71227/properties.json",
+      "retrievedAt": "2026-09-27T14:29:34.984Z",
+      "sha256": "e321fa2b671c8f5090c09b564dd21a3b61c32b834b2dd680d091c3679d2ec53e",
+      "raw": "{\"properties\":{\"rxcui\":\"71227\",\"name\":\"phenytoin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/71227/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:35.478Z",
+      "sha256": "c94be3eea940d1029b94d31d54d7f372001a2ea3310ac55a7ed11a6b1375736b",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"8183\",\"name\":\"phenytoin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXAZOSIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:35.965Z",
+      "sha256": "2669ef50c211c453651ad2fedf3274288de1fd100e47dbbf18c9fa26ecd83544",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"49276\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/49276/properties.json",
+      "retrievedAt": "2026-09-27T14:29:36.456Z",
+      "sha256": "048a8a77a2a710607c159f22d3aed82be6bb57237fe44a402a497ed0b9f0d21a",
+      "raw": "{\"properties\":{\"rxcui\":\"49276\",\"name\":\"doxazosin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXAZOSIN%20MESYLATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:36.938Z",
+      "sha256": "e0970716a22e52dbb0b8c27e824cee8348d4e8f8e53d51cafce362c982a94daa",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"39173\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39173/properties.json",
+      "retrievedAt": "2026-09-27T14:29:37.427Z",
+      "sha256": "ddacba1e064abe1c6eb8acef10d6fafd3a0e316622d008aab65af3a779567d99",
+      "raw": "{\"properties\":{\"rxcui\":\"39173\",\"name\":\"doxazosin mesylate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39173/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:37.914Z",
+      "sha256": "f09d3caa345a402550fd604296e93d3b407bbda984437faad8d2e3af9afd56de",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"49276\",\"name\":\"doxazosin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CARBENICILLIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:38.409Z",
+      "sha256": "328c346e8ba8930ecfcf5f382dcd7574ed77cee832fcf993a06fbf5aca86b0a4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2015\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2015/properties.json",
+      "retrievedAt": "2026-09-27T14:29:38.890Z",
+      "sha256": "6a782f4193eb9d7c922c4c75d8c942180b29c156e7b9c81ae7f6d3ed060fa4ec",
+      "raw": "{\"properties\":{\"rxcui\":\"2015\",\"name\":\"carbenicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CARBENICILLIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:29:39.371Z",
+      "sha256": "0402e5e0900e300f97769b81e205930a21393ce9b00814541be6da5d667a9d25",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"258332\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/258332/properties.json",
+      "retrievedAt": "2026-09-27T14:29:39.873Z",
+      "sha256": "face85bc16a043b7ce7c13c1d17b93d4a6d6142bcce6757421cf3eb0c51b1519",
+      "raw": "{\"properties\":{\"rxcui\":\"258332\",\"name\":\"carbenicillin disodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/258332/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:40.366Z",
+      "sha256": "939f3721574b22384b72da0f69be659db5fc2123a5e5edda92193ec66d70dade",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2015\",\"name\":\"carbenicillin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXEPIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:40.860Z",
+      "sha256": "e62119e9b6798fc99fb07260558c51cc7c10834bd0a1551154e4e7017c3787bf",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3638\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3638/properties.json",
+      "retrievedAt": "2026-09-27T14:29:41.338Z",
+      "sha256": "f60393d21de9cef1c41020f5f1b3d3a4bbf80e96c6d6a6d9c145b3e3283f582a",
+      "raw": "{\"properties\":{\"rxcui\":\"3638\",\"name\":\"doxepin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXEPIN%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:41.819Z",
+      "sha256": "4c470217ac386606dc55b9b9e753f40d20ef0fbce4f65ff05f739490e9b103c9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203179\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203179/properties.json",
+      "retrievedAt": "2026-09-27T14:29:42.298Z",
+      "sha256": "2dfc30dd142d89a1db5c08a35380ed74005222c210af3a86bed1fdc2fd64d409",
+      "raw": "{\"properties\":{\"rxcui\":\"203179\",\"name\":\"doxepin hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203179/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:42.791Z",
+      "sha256": "4127fb73471157fd31dcb0b44217a8426005ec760bd0fd4206c6cd593d587204",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3638\",\"name\":\"doxepin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CITRIC%20ACID&search=0",
+      "retrievedAt": "2026-09-27T14:29:43.280Z",
+      "sha256": "61521a30d66834e2ad16dba38fa2903e1bf39d57b8e535f060b2840cd211cd73",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"21183\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21183/properties.json",
+      "retrievedAt": "2026-09-27T14:29:43.764Z",
+      "sha256": "401b7d45e918cba220ffaa4b4dc58e4e36aad3c819b8d9c289cf189d1537f407",
+      "raw": "{\"properties\":{\"rxcui\":\"21183\",\"name\":\"citric acid\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CITRIC%20ACID%20MONOHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:44.261Z",
+      "sha256": "ccfa0d2fb17cefb98ba606c2d925dafc8cded4b1962a8c00029adc387f9f9646",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"221079\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/221079/properties.json",
+      "retrievedAt": "2026-09-27T14:29:44.749Z",
+      "sha256": "1022b858b2295c69aa28974670cd575c40f09f12cf51a5f586e02ddc85719afe",
+      "raw": "{\"properties\":{\"rxcui\":\"221079\",\"name\":\"citric acid monohydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/221079/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:45.236Z",
+      "sha256": "66c89dab0fdeea64249a7318c9d16138dbb80cfeb1a53d909ab744409631c537",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"21183\",\"name\":\"citric acid\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=BETAMETHASONE%2017-VALERATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:45.722Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VENLAFAXINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:46.211Z",
+      "sha256": "8858955cd4aa5168ec2b6d1faa65a7b3dece4d42fb63fea5a21981828fa20cf2",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"39786\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/39786/properties.json",
+      "retrievedAt": "2026-09-27T14:29:46.701Z",
+      "sha256": "aa50a0b577bd27d494a3c864abcd43a2ca8f561d5c1ce245d828617f38c528d2",
+      "raw": "{\"properties\":{\"rxcui\":\"39786\",\"name\":\"venlafaxine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=VENLAFAXINE%20HYDROCHLORIDE&search=0",
+      "retrievedAt": "2026-09-27T14:29:47.184Z",
+      "sha256": "95d4a6f904e90786af68f0eccd938a52e798b53f030a952574813883fec1c73f",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"235988\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/235988/properties.json",
+      "retrievedAt": "2026-09-27T14:29:47.664Z",
+      "sha256": "096a7bbd7566639eabbbc74b485d17c36ea56d5eb52393228bcfeab3132b9199",
+      "raw": "{\"properties\":{\"rxcui\":\"235988\",\"name\":\"venlafaxine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/235988/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:48.153Z",
+      "sha256": "7f15c81f6532eb9f9999e6c96af32fac2b78261c0f5097ec795310f672dc8ccb",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"39786\",\"name\":\"venlafaxine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TAMOXIFEN&search=0",
+      "retrievedAt": "2026-09-27T14:29:48.649Z",
+      "sha256": "e10b6a802fd81014a4a62b81a6ce6b7d59bd2a19c2b51588c2c94b0ac2c8a4b9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"10324\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/10324/properties.json",
+      "retrievedAt": "2026-09-27T14:29:49.194Z",
+      "sha256": "86e1f48cda8d405af09537d39c92bdabc96219fe35c086d3f8632cc8a057a7d3",
+      "raw": "{\"properties\":{\"rxcui\":\"10324\",\"name\":\"tamoxifen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TAMOXIFEN%20CITRATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:49.726Z",
+      "sha256": "de43cde58458e64e452debe5607c21043f9dcc64717a1bae6bbe9c8901d6125b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"40137\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/40137/properties.json",
+      "retrievedAt": "2026-09-27T14:29:50.257Z",
+      "sha256": "72f1e3e5ac11a490fdc30410a6fdbb20694041a8844ddb3f51f4d8f395853b56",
+      "raw": "{\"properties\":{\"rxcui\":\"40137\",\"name\":\"tamoxifen citrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/40137/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:50.777Z",
+      "sha256": "028ab4ca17d4d28126ff4e6f211297fdf0b42ea928ece2d22bb2e910bc29b090",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"10324\",\"name\":\"tamoxifen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TRIPTORELIN&search=0",
+      "retrievedAt": "2026-09-27T14:29:51.312Z",
+      "sha256": "28df8a1fe4a6130638ad198df0406d38837b967755df0c560b9de66290a008c4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"38782\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/38782/properties.json",
+      "retrievedAt": "2026-09-27T14:29:51.919Z",
+      "sha256": "0f8eeff892dbed27f34bc25b722573589bd8dd28281187342b18287590c1fd54",
+      "raw": "{\"properties\":{\"rxcui\":\"38782\",\"name\":\"triptorelin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=TRIPTORELIN%20ACETATE&search=0",
+      "retrievedAt": "2026-09-27T14:29:52.399Z",
+      "sha256": "478f809f9aa3fc9d278e562a91e0b6e2f0dde2456d68084c6ccbfc8f4f3d25f0",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"236538\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236538/properties.json",
+      "retrievedAt": "2026-09-27T14:29:52.884Z",
+      "sha256": "f0849a6024516e60b5ee00b0767a074d3cc54cafef55cc49a8febf3252d6456f",
+      "raw": "{\"properties\":{\"rxcui\":\"236538\",\"name\":\"triptorelin acetate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/236538/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:53.379Z",
+      "sha256": "96747a45061fb2e2945d95e5f9cf63a017faf929002285044aba633a85649a69",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"38782\",\"name\":\"triptorelin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ACEBUTOLOL&search=0",
+      "retrievedAt": "2026-09-27T14:29:53.860Z",
+      "sha256": "02dc702f2b6c404d8468b8445ea065c70cb966bb2e109dfe3cd467e194b644e9",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"149\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/149/properties.json",
+      "retrievedAt": "2026-09-27T14:29:54.340Z",
+      "sha256": "7b72d281901361df651f5eb43b34352c30f0c14117d7ffdba26c85d090566b06",
+      "raw": "{\"properties\":{\"rxcui\":\"149\",\"name\":\"acebutolol\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=ACEBUTOLOL%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:54.827Z",
+      "sha256": "d739a4bba75dec701260627a45089bb82a2127d8b31b237ef67e5b71a9803a1b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142130\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142130/properties.json",
+      "retrievedAt": "2026-09-27T14:29:55.317Z",
+      "sha256": "89fe4cfac40d3b1af46358c304e31b262bfb049ff6ea02549590aeea205f3ba5",
+      "raw": "{\"properties\":{\"rxcui\":\"142130\",\"name\":\"acebutolol hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142130/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:55.808Z",
+      "sha256": "1e97a5e7d33bcd3a23c264929cbf33deb17c27178158da293de1ab83e3953129",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"149\",\"name\":\"acebutolol\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DILTIAZEM&search=0",
+      "retrievedAt": "2026-09-27T14:29:56.292Z",
+      "sha256": "94bd9a26df565496bf68ca410426dc69b8b06247a6ccff919bed687ab13f94e5",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3443\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3443/properties.json",
+      "retrievedAt": "2026-09-27T14:29:56.772Z",
+      "sha256": "a940aeb9cd5659697f5e12ade1457ad3628070fd2e0f25aa1ecb5bc1b553a49f",
+      "raw": "{\"properties\":{\"rxcui\":\"3443\",\"name\":\"diltiazem\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DILTIAZEM%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:57.254Z",
+      "sha256": "aa72a833e54177c0e18a292bc33b97baa7dbfc65ba7e6c82bca25bd1790ba06c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203211\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203211/properties.json",
+      "retrievedAt": "2026-09-27T14:29:57.734Z",
+      "sha256": "2ab05759d43fed0601626c3e0dc874d22d76f7440e1d8b6049626bbf85d22dc4",
+      "raw": "{\"properties\":{\"rxcui\":\"203211\",\"name\":\"diltiazem hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203211/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:29:58.215Z",
+      "sha256": "16952ddff89205dea9b8d44c54bc8344bbcb84c8ce427328f558bae402e5d9db",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3443\",\"name\":\"diltiazem\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOBUTAMINE&search=0",
+      "retrievedAt": "2026-09-27T14:29:58.711Z",
+      "sha256": "7010cbf43ea7632ae90e8aac2117ac12cd97c4cf6de0cb5b5568db78b3d1162a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3616\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3616/properties.json",
+      "retrievedAt": "2026-09-27T14:29:59.193Z",
+      "sha256": "f487bb15d28ffe3e4ff5d4e4f17ebf8d4d2147559d5b06f59cddc1d44e348e6a",
+      "raw": "{\"properties\":{\"rxcui\":\"3616\",\"name\":\"dobutamine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOBUTAMINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:29:59.678Z",
+      "sha256": "137cf8bdefe9b3b2aacd7c0adc55120458c356fd075221b6d9b7731b2bf44a9c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203121\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203121/properties.json",
+      "retrievedAt": "2026-09-27T14:30:00.209Z",
+      "sha256": "f2566875c2898f9f764593d1b313a85c9e1e712ba29012af1b54ab78976261eb",
+      "raw": "{\"properties\":{\"rxcui\":\"203121\",\"name\":\"dobutamine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203121/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:00.710Z",
+      "sha256": "a5d139db6ed05a49a8294b76b6327634198cb52da6bec1a2b260f9e963a1911f",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3616\",\"name\":\"dobutamine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CHLORDIAZEPOXIDE&search=0",
+      "retrievedAt": "2026-09-27T14:30:01.194Z",
+      "sha256": "2f4c33c1e091dcd395ff109cc0157657cc7dd3a26dc4fe1bb1b9fd61ab9f9345",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2356\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2356/properties.json",
+      "retrievedAt": "2026-09-27T14:30:01.758Z",
+      "sha256": "38f5f41331cf2a20c7400ed70c9d22daa645e1de3482561cedba5dcecb393e20",
+      "raw": "{\"properties\":{\"rxcui\":\"2356\",\"name\":\"chlordiazepoxide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CHLORDIAZEPOXIDE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:30:02.566Z",
+      "sha256": "09beec27e69e005c42346534320258dc75d29fd7bffb49567da5d6b541584de8",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"203173\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203173/properties.json",
+      "retrievedAt": "2026-09-27T14:30:03.058Z",
+      "sha256": "789f6377eb3b5bc9012e29f628b5a48c72017196934919e3659cd8239ff44997",
+      "raw": "{\"properties\":{\"rxcui\":\"203173\",\"name\":\"chlordiazepoxide hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/203173/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:03.555Z",
+      "sha256": "c2af937361128ace4814c754c9a4b840a3fadf26e9b7ca3eb8ce65128941dd28",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"2356\",\"name\":\"chlordiazepoxide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FOSFOMYCIN&search=0",
+      "retrievedAt": "2026-09-27T14:30:04.047Z",
+      "sha256": "574f2b25a68fb7b0007ff56f043752c6a3a891d9fc32265dc3a0bb4693fcdd3b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4550\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4550/properties.json",
+      "retrievedAt": "2026-09-27T14:30:04.536Z",
+      "sha256": "f295b7894952b09cbfdb6650929272e192462b7414f95dcc92d75ddf6f38e81d",
+      "raw": "{\"properties\":{\"rxcui\":\"4550\",\"name\":\"fosfomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FOSFOMYCIN%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:30:05.027Z",
+      "sha256": "d3668a08eb854fbcc166491f710879a1ada68abb6b4b8773c9692abd55f07235",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"2727193\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2727193/properties.json",
+      "retrievedAt": "2026-09-27T14:30:05.524Z",
+      "sha256": "f308c62f1e9952e2e8d2bbe99573a88d5f31335c25ce19d16ded1e26525ad927",
+      "raw": "{\"properties\":{\"rxcui\":\"2727193\",\"name\":\"fosfomycin sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/2727193/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:06.025Z",
+      "sha256": "2258a21b4f2d610b2f285ce8893e8c655b694aff628234863b84ed7716ddf382",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"4550\",\"name\":\"fosfomycin\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=EPINEPHRINE&search=0",
+      "retrievedAt": "2026-09-27T14:30:06.520Z",
+      "sha256": "91d038d25893baa4211087c7de31bc17ae2efc5a249c66496c6563b8b042d784",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3992\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3992/properties.json",
+      "retrievedAt": "2026-09-27T14:30:07.016Z",
+      "sha256": "47fae85178aed13c4d45cf9cb22d39575202c023372b7a82553606a62cea9859",
+      "raw": "{\"properties\":{\"rxcui\":\"3992\",\"name\":\"epinephrine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=EPINEPHRINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:30:07.505Z",
+      "sha256": "f4a55e0dc644328b322d9195bc958dcc47985a59f9c4d409f06339e8774bb458",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"362\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/362/properties.json",
+      "retrievedAt": "2026-09-27T14:30:07.988Z",
+      "sha256": "c008588163913318968ad90bfe29af4f3bdc6b916d75f856637fe7ca15392024",
+      "raw": "{\"properties\":{\"rxcui\":\"362\",\"name\":\"epinephrine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/362/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:08.485Z",
+      "sha256": "23fc34342ab4ccbe3342bdd56c8aff822ea666d434db896575cadd3c7255dda2",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3992\",\"name\":\"epinephrine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NICOTINAMIDE&search=0",
+      "retrievedAt": "2026-09-27T14:30:08.994Z",
+      "sha256": "231f22aa5db774036edc9037106c6dd49b40f389434d347b31818d90ae2899cc",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7405\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7405/properties.json",
+      "retrievedAt": "2026-09-27T14:30:09.488Z",
+      "sha256": "7dc5c007e8095c4f0d94a6cf8fbf864ad0e99ca2fcf6d093ca1d8d531a8431af",
+      "raw": "{\"properties\":{\"rxcui\":\"7405\",\"name\":\"niacinamide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NICOTINAMIDE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:30:09.967Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLAVULANIC%20ACID&search=0",
+      "retrievedAt": "2026-09-27T14:30:10.459Z",
+      "sha256": "ae8e691135af8966e494878e146b89b5befa4c0e044bf964658cd277619affe5",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"21216\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/21216/properties.json",
+      "retrievedAt": "2026-09-27T14:30:10.961Z",
+      "sha256": "b13263dd4a7ab49e4c4426e606487b7148c70e1c61c3e78affc006473433ed7e",
+      "raw": "{\"properties\":{\"rxcui\":\"21216\",\"name\":\"clavulanic acid\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=CLAVULANIC%20ACID%20POTASSIUM&search=0",
+      "retrievedAt": "2026-09-27T14:30:11.459Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SODIUM%20ACETATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:11.947Z",
+      "sha256": "b001a397e32f788abaeea42af2a15db15acdf26441e8f249d745a4034eebbb0e",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"56443\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/56443/properties.json",
+      "retrievedAt": "2026-09-27T14:30:12.424Z",
+      "sha256": "d4e00467a1566c2293ec7fa6e746018c3d2ea721e354e0a6b2b1de10381bd774",
+      "raw": "{\"properties\":{\"rxcui\":\"56443\",\"name\":\"sodium acetate\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=SODIUM%20ACETATE%20TRIHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:12.931Z",
+      "sha256": "93fe66258ab4f600d6e710ce6c461d1129edb8452324b6d53c9010105267220a",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"237108\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/237108/properties.json",
+      "retrievedAt": "2026-09-27T14:30:13.484Z",
+      "sha256": "60961d9f135a27202640db4e41e06108f7e60ffdf8265e96a65060cb820c4e2f",
+      "raw": "{\"properties\":{\"rxcui\":\"237108\",\"name\":\"sodium acetate trihydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/237108/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:13.963Z",
+      "sha256": "f227da68a88f8b4d8d705ad262b9abdbc6bd69702ee4ae696d02f65f5d5f55f3",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"56443\",\"name\":\"sodium acetate\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POTASSIUM%20CITRATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:14.464Z",
+      "sha256": "17a597fa9271c0b285587fddbcadeb26a3dba55cad6a036f9a2e8c7e45c8fafe",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"54993\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/54993/properties.json",
+      "retrievedAt": "2026-09-27T14:30:14.947Z",
+      "sha256": "a144f8ce712580a0aea737409a34206f29cfdd4398ea16b761920404e628f30b",
+      "raw": "{\"properties\":{\"rxcui\":\"54993\",\"name\":\"potassium citrate\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=POTASSIUM%20CITRATE%20MONOHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:15.442Z",
+      "sha256": "6db771f1aa0448fc34823ce4a79d8958a3523fcc1ff9d65e316f735c56383bfc",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"221149\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/221149/properties.json",
+      "retrievedAt": "2026-09-27T14:30:15.926Z",
+      "sha256": "1cb36f454e7994f7d4680f543c6e275530c3b2919bcf6177bace03f4887d35af",
+      "raw": "{\"properties\":{\"rxcui\":\"221149\",\"name\":\"potassium citrate monohydrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/221149/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:16.413Z",
+      "sha256": "71cc54dceeeebc95afcfd3a1d7cd95023446881173d8f449d935ba0cef9d4cb4",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"54993\",\"name\":\"potassium citrate\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=IODINE&search=0",
+      "retrievedAt": "2026-09-27T14:30:16.900Z",
+      "sha256": "0235f7053dcd123a1439cf6a10c3f161fae809abe51bf6cec382711f0c69ea44",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"5933\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5933/properties.json",
+      "retrievedAt": "2026-09-27T14:30:17.385Z",
+      "sha256": "1bc0c17ba559bb7127e61eaa67fe505dc5a6778d6cc116409bcb6b0a598c3495",
+      "raw": "{\"properties\":{\"rxcui\":\"5933\",\"name\":\"iodine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=IODINE%20POTASSIUM&search=0",
+      "retrievedAt": "2026-09-27T14:30:17.875Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLURAZEPAM&search=0",
+      "retrievedAt": "2026-09-27T14:30:18.360Z",
+      "sha256": "058ac291142b639953d6d4e75fce655f8ee48dac0ea6e83fa2832ce7e2d37ff4",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4501\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4501/properties.json",
+      "retrievedAt": "2026-09-27T14:30:18.854Z",
+      "sha256": "b0db7f59890f3532570e8494badacacf5d0386d81cc8403fa382a55695875c0b",
+      "raw": "{\"properties\":{\"rxcui\":\"4501\",\"name\":\"flurazepam\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FLURAZEPAM%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:30:19.337Z",
+      "sha256": "151c4610f371f0981413608915d1f2992bdb89df8b9ef33de0932998eaafffbf",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"71484\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/71484/properties.json",
+      "retrievedAt": "2026-09-27T14:30:19.830Z",
+      "sha256": "53ec26031066c548b9777f77fb22b5850d67a6368620c2386f7a44ff489e50ad",
+      "raw": "{\"properties\":{\"rxcui\":\"71484\",\"name\":\"flurazepam hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/71484/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:20.320Z",
+      "sha256": "6c52fb2204c717de5d67796a3911eb8031b6e66aadd59ac3ceb7ad5f883d98f5",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"4501\",\"name\":\"flurazepam\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENOPROFEN&search=0",
+      "retrievedAt": "2026-09-27T14:30:20.817Z",
+      "sha256": "0573fb4a332882c13b66ed539e75bd65e284ee3ad7dba8fa38d8eb7562d434d2",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4331\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4331/properties.json",
+      "retrievedAt": "2026-09-27T14:30:21.295Z",
+      "sha256": "82e93b1b311e80c5802043cb64ce03ac163acb671a0da7a9b9cdca15f0d1ba32",
+      "raw": "{\"properties\":{\"rxcui\":\"4331\",\"name\":\"fenoprofen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENOPROFEN%20CALCIUM&search=0",
+      "retrievedAt": "2026-09-27T14:30:21.782Z",
+      "sha256": "6e1e0c19d33f7f442640fac7775803ceb3c83ff5e68ea489adf154939819eb82",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"267171\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267171/properties.json",
+      "retrievedAt": "2026-09-27T14:30:22.274Z",
+      "sha256": "3c0a968def055f27682a98a843da9e3f1c37a7a74fd956e4d9f04c7f4e5f9bee",
+      "raw": "{\"properties\":{\"rxcui\":\"267171\",\"name\":\"fenoprofen calcium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/267171/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:22.750Z",
+      "sha256": "cd406538a18ab663cf8b15bbc6f058831c41cb3fe3ceeb9980a79fa973d8c8b6",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"4331\",\"name\":\"fenoprofen\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LIDOCAINE&search=0",
+      "retrievedAt": "2026-09-27T14:30:23.236Z",
+      "sha256": "1e2cdfb641ca70030e4ad212c69c1f09e6a272288eb1a545777fba521d744a8b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6387\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6387/properties.json",
+      "retrievedAt": "2026-09-27T14:30:23.731Z",
+      "sha256": "6d278ad1bb1014073c010bea4487224debf6a38040b5a6fec668a8149c161e02",
+      "raw": "{\"properties\":{\"rxcui\":\"6387\",\"name\":\"lidocaine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=LIDOCAINE%20HCL&search=0",
+      "retrievedAt": "2026-09-27T14:30:24.222Z",
+      "sha256": "fc965fcc989be95d04f52b11d548002d8e1a4ee8970f3a31310278061a8e66c7",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142440\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142440/properties.json",
+      "retrievedAt": "2026-09-27T14:30:24.707Z",
+      "sha256": "54cec7c77612a82986e38b3db6527f7309ad0b787dc396f640e8fbf350d54f5a",
+      "raw": "{\"properties\":{\"rxcui\":\"142440\",\"name\":\"lidocaine hydrochloride\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142440/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:25.198Z",
+      "sha256": "7ed3b06c64835a46c2cb36a07de04245bc6904249cc23c73e82dbb519acbeda8",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6387\",\"name\":\"lidocaine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DEXAMETHASONE&search=0",
+      "retrievedAt": "2026-09-27T14:30:25.705Z",
+      "sha256": "8002b334d41dd2c2a1e4a858c19354df466c5e63f6bc56068e2e66319b462579",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"3264\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/3264/properties.json",
+      "retrievedAt": "2026-09-27T14:30:26.200Z",
+      "sha256": "16a4d067a88657416c2f89cad32634ccf19332aa2c6a73f8dfd7d256d8762b20",
+      "raw": "{\"properties\":{\"rxcui\":\"3264\",\"name\":\"dexamethasone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DEXAMETHASONE%20SODIUM%20PHOSPHATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:26.740Z",
+      "sha256": "a6d2e99d89aae1b115092aa87e91fb5a3ad90c8d29a3ac33c09c95541eb6a926",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"48933\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/48933/properties.json",
+      "retrievedAt": "2026-09-27T14:30:27.230Z",
+      "sha256": "bc1718188654d4b57e5617b1b20c8b2e21988301f933e7535f826e896422ddf4",
+      "raw": "{\"properties\":{\"rxcui\":\"48933\",\"name\":\"dexamethasone sodium phosphate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/48933/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:27.721Z",
+      "sha256": "3ca36a084077891d4b05ee2dc318603093f774a3ea8a4e7c82bb6af63cef3ed1",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"3264\",\"name\":\"dexamethasone\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=INDAPAMIDE&search=0",
+      "retrievedAt": "2026-09-27T14:30:28.210Z",
+      "sha256": "8df5e20609b6444c5eab013dc6a8789ea10202ce15b8020265e90720f065eee7",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"5764\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/5764/properties.json",
+      "retrievedAt": "2026-09-27T14:30:28.740Z",
+      "sha256": "5734166d3b7aa0f58f43d3e3b28a9b8793dae7447e8bcbeb9ac88d76bd52ddb3",
+      "raw": "{\"properties\":{\"rxcui\":\"5764\",\"name\":\"indapamide\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=INDAPAMIDE%20HEMIHYDRATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:29.246Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENTANYL&search=0",
+      "retrievedAt": "2026-09-27T14:30:29.764Z",
+      "sha256": "4cab4364ea4a57449941cd00ec023b4a32a7518e9ee99e11625b1ab4a338b013",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"4337\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/4337/properties.json",
+      "retrievedAt": "2026-09-27T14:30:30.277Z",
+      "sha256": "a443ad48bc75e7caad0b0f2af3b5ed43f9895ce7739584d73ebe9efe4b14bf21",
+      "raw": "{\"properties\":{\"rxcui\":\"4337\",\"name\":\"fentanyl\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=FENTANYL%20CITRATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:30.767Z",
+      "sha256": "e0e7f8c712dba4c56b93cc3f82e180d55ce56a8e2160f28805497c283d51e46b",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"142436\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142436/properties.json",
+      "retrievedAt": "2026-09-27T14:30:31.247Z",
+      "sha256": "db6df8c41b22af7bf0c1e8f33aa393f08f5d6990a28cc81042079374602d7764",
+      "raw": "{\"properties\":{\"rxcui\":\"142436\",\"name\":\"fentanyl citrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/142436/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:31.732Z",
+      "sha256": "ba0d1d29fdf5af9762fd72b165868cced2531e879cfed3186482c24e179eeddd",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"4337\",\"name\":\"fentanyl\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METHOTREXATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:32.223Z",
+      "sha256": "c1afd957f32510c17293dba3a5f963110ea130e2e4bafba0c26d1382fbf74b68",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"6851\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/6851/properties.json",
+      "retrievedAt": "2026-09-27T14:30:32.716Z",
+      "sha256": "449bd8d986346201bd755fb8482612015d753b40265fc2f8c4a30c1ec22538c5",
+      "raw": "{\"properties\":{\"rxcui\":\"6851\",\"name\":\"methotrexate\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=METHOTREXATE%20SODIUM&search=0",
+      "retrievedAt": "2026-09-27T14:30:33.210Z",
+      "sha256": "b3358d0c5101f2d26c3bcf244f3cc18df7a80f2a8f707788396eaa823548312c",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"287734\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/287734/properties.json",
+      "retrievedAt": "2026-09-27T14:30:33.698Z",
+      "sha256": "12f229c0bc1b30a3b835c34b6f036390c0d415027c45cd13179e68f2c173fcc7",
+      "raw": "{\"properties\":{\"rxcui\":\"287734\",\"name\":\"methotrexate sodium\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/287734/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:34.194Z",
+      "sha256": "3510b16cc699423192e501f053ea8be2823f910074cb9c20da75b20a209e94f6",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"6851\",\"name\":\"methotrexate\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=DOXAZOSIN%20METHANESULFONATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:34.687Z",
+      "sha256": "8a2600ea692ce58930504a533e4f62ed942a645d3804eef4013503d9498df6d5",
+      "raw": "{\"idGroup\":{}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NOREPINEPHRINE&search=0",
+      "retrievedAt": "2026-09-27T14:30:35.185Z",
+      "sha256": "0920604f76f18df28a35e24e122a7cc65be3b734c03053a49f5063ce95e52661",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7512\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7512/properties.json",
+      "retrievedAt": "2026-09-27T14:30:35.686Z",
+      "sha256": "2efbbee7f6979b4f584398d950a875819c9a901b83212bf0e0de2470c49d9007",
+      "raw": "{\"properties\":{\"rxcui\":\"7512\",\"name\":\"norepinephrine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui.json?name=NOREPINEPHRINE%20BITARTRATE&search=0",
+      "retrievedAt": "2026-09-27T14:30:36.177Z",
+      "sha256": "59cc04d8e734985e8aab50f694e7b67fb3677ab39ae763ce137aac44769ce180",
+      "raw": "{\"idGroup\":{\"rxnormId\":[\"7508\"]}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7508/properties.json",
+      "retrievedAt": "2026-09-27T14:30:36.661Z",
+      "sha256": "f863ba51ceca2635ff13b65524c642670b2c0a11bc44c0cfe61e034dd6906c10",
+      "raw": "{\"properties\":{\"rxcui\":\"7508\",\"name\":\"norepinephrine bitartrate\",\"synonym\":\"\",\"tty\":\"PIN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}}"
+    },
+    {
+      "url": "https://rxnav.nlm.nih.gov/REST/rxcui/7508/related.json?tty=IN",
+      "retrievedAt": "2026-09-27T14:30:37.164Z",
+      "sha256": "dd91a575c6b69c79786236dbf4aff41a87086aee5ce908856a3bc29297f439e3",
+      "raw": "{\"relatedGroup\":{\"rxcui\":null,\"conceptGroup\":[{\"tty\":\"IN\",\"conceptProperties\":[{\"rxcui\":\"7512\",\"name\":\"norepinephrine\",\"synonym\":\"\",\"tty\":\"IN\",\"language\":\"ENG\",\"suppress\":\"N\",\"umlscui\":\"\"}]}]}}"
+    }
+  ]
+}

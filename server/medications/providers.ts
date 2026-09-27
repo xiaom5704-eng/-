@@ -129,13 +129,27 @@ export class DrugProviders {
       // as evidence that the newly parsed names were checked.
       if (previous?.status === 'matched' && aliases.some(name => name.toLowerCase() === exactLookupName(previous)?.toLowerCase())) stored = previous;
     }
+    // Shipped exact PIN evidence is a fallback for an absent record, never an
+    // override for a later local finding or review requirement.
+    stored ||= verified?.record;
     const fromRecord = (record: IngredientRecord | undefined, reused: boolean): ResolvedIngredient => {
       if (record?.status !== 'matched' || !record.ingredient || !record.matched) return fallback;
       const item = record.ingredient;
       // Re-resolve against the CURRENT DDInter import; never persist stale DDInter IDs.
-      const relatedId = findDdinter(this.db, item.name);
+      const preferredId = findDdinter(this.db, item.name);
+      // A reviewed base spelling may differ from RxNorm's preferred name
+      // (e.g. salbutamol/albuterol). Use its independently verified IN lookup
+      // only while BOTH the PIN and IN still match the shipped relationship.
+      const qualifiedId = verified?.baseName && verified.record?.matched?.rxcui === record.matched.rxcui &&
+        verified.record?.ingredient?.rxcui === item.rxcui ? findDdinter(this.db, verified.baseName) : undefined;
+      if (preferredId && qualifiedId && preferredId !== qualifiedId) return fallback;
+      const relatedId = preferredId || qualifiedId;
       if (directId && relatedId && directId !== relatedId) return fallback;
-      const ddinterNormalization = !directId && !relatedId ? findDdinterByRxnorm(this.db, item.rxcui) : undefined;
+      const ddinterNormalization = !directId && !preferredId && qualifiedId ? {
+        ddinterId: qualifiedId, name: verified!.baseName!, rxCui: item.rxcui,
+        checkedAt: verified!.record!.checkedAt, version: verified!.record!.version, lookupUrl: verified!.baseLookupUrl!,
+        sourceUrl: `${RXNAV}/rxcui/${item.rxcui}/properties.json`,
+      } : !directId && !relatedId ? findDdinterByRxnorm(this.db, item.rxcui) : undefined;
       return { ...fallback, name: item.name, rxCui: item.rxcui, ddinterId: directId || relatedId || ddinterNormalization?.ddinterId,
         ...(ddinterNormalization ? { ddinterNormalization } : {}),
         mapping: verified ? 'verified_alias' : directId ? 'exact' : 'rxnorm',

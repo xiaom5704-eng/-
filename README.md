@@ -50,6 +50,8 @@ npm run dev
 
 部分成分在 TFDA 與 DDInter 使用不同寫法。專案保留有來源的精確對照，現在也能離線核對 `NIACINAMIDE (NICOTINAMIDE)`、`CYANOCOBALAMIN (VIT B12)` 與 `NIACIN (NICOTINIC ACID)`；不任意刪除括號、鹽類或濃度。核對依據與涵蓋範圍見[本機成分對照](docs/本機成分對照.md)。
 
+另已核對 79 種括號內為鹽類／水合物的完整寫法，例如 `GENTAMICIN (AS SULFATE)`、`AMOXICILLIN (TRIHYDRATE)`。它們的精確 RxNorm 關係隨程式提供，可直接接回本機既有交互作用資料，保留原名、完整形式及取得日期；不需要重新下載資料或提供 API Key。未核對的括號寫法不會自動套用。
+
 另隨附 2026-09-27 核對的 44 份 DDInter 成分頁快照，補上部分本機未收錄成分。首次 `npm run data:install` 自動補入；已有資料者可執行 `npm run data:apply-reviewed`，先備份再離線補入，不替換既有快照。來源、授權及固定版本見[補充資料說明](resources/ddinter/README.md)，不代表所有成分均已對照。
 
 「拍照」會先顯示相機預覽，取得可用畫面後才能拍攝；權限拒絕、找不到相機或連線中斷時可重試，或取消後上傳檔案。取消、按 Escape 或離開藥物頁會停止相機，較早的授權結果不會覆蓋新畫面。拍下的照片先加入本次附件，可裁切並沿用 CV／OCR 流程；不會因拍攝就自動確認藥品。

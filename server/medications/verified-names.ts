@@ -1,6 +1,17 @@
 import type { DrugSelection } from '../../shared/medication';
 import { safetySources } from '../../shared/medication-safety';
 import { matchingDocumentSource } from './source-documents';
+import type { IngredientRecord } from './ingredient-registry';
+import { reviewedQualifiedNames } from './reviewed-qualified-names';
+
+interface VerifiedIngredientName {
+  name: string;
+  sourceUrl: string;
+  record?: IngredientRecord;
+  baseName?: string;
+  baseLookupUrl?: string;
+}
+const qualifiedNames = new Map(reviewedQualifiedNames.map(entry => [entry.original, entry]));
 
 const coldExtraLicense = '衛署藥輸字第023784號';
 const coldExtraLabel = {
@@ -20,8 +31,10 @@ const reviewedSynonyms = new Map([
 
 // Reviewed 2026-09-17. These aliases identify ingredients only, never strength,
 // formulation or clinical equivalence. Product-label evidence stays license-scoped.
-export function verifiedIngredientName(original: string, drug?: DrugSelection) {
+export function verifiedIngredientName(original: string, drug?: DrugSelection): VerifiedIngredientName | undefined {
   const name = original.normalize('NFKC').trim().replace(/\s+/g, ' ').toUpperCase();
+  const qualified = qualifiedNames.get(name);
+  if (qualified) return { ...qualified };
   const synonym = reviewedSynonyms.get(name);
   if (synonym) return { ...synonym };
   if (name === 'CAFFEINE ANHYDROUS') return {
