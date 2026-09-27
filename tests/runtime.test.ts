@@ -25,6 +25,33 @@ function configFor(root: string) {
   return loadRuntimeConfig(root, { PORT: '0', HOST: '127.0.0.1', NODE_ENV: 'production', CHAT_DB_PATH: 'nested/chat.db' }, false);
 }
 
+test('Development instances use their own HTTP port for HMR and close independently', async t => {
+  const roots = [fixture(t), fixture(t)];
+  roots.forEach(root => writeFileSync(path.join(root, 'index.html'), '<html><body>SYNTHETIC DEVELOPMENT PAGE</body></html>'));
+  const services: Awaited<ReturnType<typeof startApplication>>[] = [];
+  try {
+    for (const root of roots) services.push(await startApplication({ ...configFor(root), production: false }));
+    for (const service of services) {
+      const base = `http://127.0.0.1:${service.port}`;
+      const script = await (await fetch(base + '/@vite/client')).text();
+      const match = /const wsToken = ("[^"]*")/.exec(script); assert.ok(match, 'Vite serves its public HMR token');
+      const socket = new WebSocket(`ws://127.0.0.1:${service.port}/?token=${encodeURIComponent(JSON.parse(match[1]))}`, 'vite-hmr');
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      try {
+        await new Promise<void>((resolve, reject) => {
+          timer = setTimeout(() => reject(new Error('HMR did not connect on the application port')), 2000);
+          socket.addEventListener('message', event => {
+            if (JSON.parse(String(event.data)).type === 'connected') resolve();
+          });
+          socket.addEventListener('error', () => reject(new Error('HMR connection failed')));
+        });
+      } finally { clearTimeout(timer); socket.close(); }
+    }
+    await services[0].close();
+    assert.equal((await fetch(`http://127.0.0.1:${services[1].port}/api/health`)).status, 200);
+  } finally { await Promise.all(services.map(service => service.close())); }
+});
+
 test('Runtime resolves defaults and relative settings from the application, not the launching directory', t => {
   const root = fixture(t);
   writeFileSync(path.join(root, '.env'), 'DRUG_DB_PATH=imported/drugs.db\nPORT=3100\nVISION_DATA_DIR=references\n');

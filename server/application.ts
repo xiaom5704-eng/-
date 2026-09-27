@@ -1,6 +1,7 @@
 import express, { type ErrorRequestHandler } from 'express';
 import path from 'node:path';
 import { existsSync, statSync } from 'node:fs';
+import { createServer as createHttpServer } from 'node:http';
 import { openSessionDatabase, sessionRouter } from './sessions';
 import { datasetStatus, openDrugDatabase } from './medications/store';
 import { medicationRouter } from './medications/router';
@@ -29,6 +30,7 @@ export async function startApplication(config: RuntimeConfig) {
           existsSync(path.join(config.root, 'data')) ? 'existing_directory' : 'available',
     });
     const app = express();
+    const server = createHttpServer(app);
     app.use(express.json({ limit: '50mb' }));
     app.get('/api/health', (_req, res) => {
       try {
@@ -51,7 +53,9 @@ export async function startApplication(config: RuntimeConfig) {
       });
     } else {
       const { createServer } = await import('vite');
-      vite = await createServer({ root: config.root, server: { middlewareMode: true }, appType: 'spa' });
+      vite = await createServer({ root: config.root, server: {
+        middlewareMode: true, hmr: process.env.DISABLE_HMR === 'true' ? false : { server },
+      }, appType: 'spa' });
       app.use(vite.middlewares);
     }
     const handleError: ErrorRequestHandler = (error, _req, res, next) => {
@@ -60,18 +64,20 @@ export async function startApplication(config: RuntimeConfig) {
       res.status(status).json({ error: status === 413 ? '送出的內容過大，請縮小檔案或分批處理。' : status === 400 ? '資料格式錯誤，請重新送出。' : '本機服務處理失敗，請稍後重試。' });
     };
     app.use(handleError);
-    const server = await new Promise<ReturnType<typeof app.listen>>((resolve, reject) => {
-      const listener = app.listen(config.port, config.host, () => resolve(listener));
-      listener.once('error', reject);
+    await new Promise<void>((resolve, reject) => {
+      server.once('error', reject);
+      server.listen(config.port, config.host, () => { server.removeListener('error', reject); resolve(); });
     });
     const address = server.address();
     if (!address || typeof address === 'string') throw new Error('服務未取得有效連線埠。');
     let closing: Promise<void> | undefined;
     const close = () => closing ||= (async () => {
+      // HMR shares this listener; release upgraded sockets before draining normal requests.
+      await vite?.close();
       // Finish in-flight requests before closing their databases; bound shutdown for slow clients.
       const timer = setTimeout(() => server.closeAllConnections(), 10_000); timer.unref();
       try { await new Promise<void>(resolve => server.close(() => resolve())); }
-      finally { clearTimeout(timer); await vite?.close(); drugDb.close(); sessions.close(); }
+      finally { clearTimeout(timer); drugDb.close(); sessions.close(); }
     })();
     return { port: address.port, close };
   } catch (error) { await vite?.close(); drugs?.close(); sessions.close(); throw error; }

@@ -8,6 +8,7 @@ import AdmZip from 'adm-zip';
 import { installPublicData } from '../scripts/install-public-data.mjs';
 
 const hash = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
+const installedContents = async (root: string) => (await readdir(root)).filter(name => !/^\.data-download-[a-f0-9]{64}$/.test(name));
 const seedFiles = ['drugs.db', 'vision/index.db', 'vision/models/Xenova/dinov2-small/config.json',
   'vision/models/Xenova/dinov2-small/preprocessor_config.json', 'vision/models/Xenova/dinov2-small/onnx/model_quantized.onnx'];
 async function fixture(t: TestContext) {
@@ -30,12 +31,12 @@ function archive(change?: (zip: AdmZip, manifest: { schema: number; preparedAt: 
 
 test('First local install verifies download and every file before publishing data without a key', async t => {
   const { projectRoot } = await fixture(t), bytes = archive(); let downloads = 0;
-  const result = await installPublicData({ projectRoot, expectedHash: hash(bytes), download: async (url) => {
+  const result = await installPublicData({ projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length, download: async (url) => {
     downloads++; assert.match(String(url), /^https:\/\/github.com\/xiaom5704-eng\/\-\/releases\/download\//);
     return new Response(bytes, { status: 200 });
   } });
   assert.equal(downloads, 1); assert.equal(result.verifiedFiles, seedFiles.length);
-  assert.deepEqual(await readdir(projectRoot), ['data']);
+  assert.deepEqual(await installedContents(projectRoot), ['data']);
   assert.equal(await readFile(path.join(projectRoot, 'data/drugs.db'), 'utf8'), 'SYNTHETIC drugs.db');
 });
 
@@ -56,9 +57,9 @@ test('Existing data is never downloaded over or replaced, even when its director
 });
 
 test('Failed requests, interrupted downloads and incorrect archive hashes leave no half-installed data', async t => {
-  const { projectRoot } = await fixture(t);
-  for (const download of [async () => new Response('', { status: 503 }), async () => { throw new Error('network interrupted'); }, async () => new Response(archive())]) {
-    await assert.rejects(installPublicData({ projectRoot, download, expectedHash: '0'.repeat(64) }));
+  const { projectRoot } = await fixture(t), bytes = archive();
+  for (const download of [async () => new Response('', { status: 503 }), async () => { throw new Error('network interrupted'); }, async () => new Response(bytes)]) {
+    await assert.rejects(installPublicData({ projectRoot, download, expectedHash: '0'.repeat(64), expectedBytes: bytes.length, downloadOptions: { attempts: 1 } }));
     assert.deepEqual(await readdir(projectRoot), []);
   }
 });
@@ -73,24 +74,24 @@ test('Missing required files, wrong file hashes and unsafe manifests are not pub
     archive((zip) => zip.addFile('data/extra-private-file.txt', Buffer.from('NOT IN MANIFEST'))),
   ];
   for (const bytes of damaged) {
-    await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), download: async () => new Response(bytes) }));
-    assert.deepEqual(await readdir(projectRoot), []);
+    await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length, download: async () => new Response(bytes) }));
+    assert.deepEqual(await installedContents(projectRoot), []);
   }
 });
 
 test('Data created by another process during download is preserved at publication', async t => {
   const { projectRoot } = await fixture(t), bytes = archive();
-  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), download: async () => {
+  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length, download: async () => {
     await mkdir(path.join(projectRoot, 'data')); await writeFile(path.join(projectRoot, 'data/drugs.db'), 'CONCURRENT USER DATA');
     return new Response(bytes);
   } }), /data 已存在/);
-  assert.deepEqual(await readdir(projectRoot), ['data']);
+  assert.deepEqual(await installedContents(projectRoot), ['data']);
   assert.equal(await readFile(path.join(projectRoot, 'data/drugs.db'), 'utf8'), 'CONCURRENT USER DATA');
 });
 
 test('Supplement preparation sees only verified staged files and must finish before publication', async t => {
   const { projectRoot } = await fixture(t), bytes = archive(); let called = 0;
-  await installPublicData({ projectRoot, expectedHash: hash(bytes), download: async () => new Response(bytes), prepareData: async directory => {
+  await installPublicData({ projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length, download: async () => new Response(bytes), prepareData: async directory => {
     called++; assert.equal(await readFile(path.join(directory, 'drugs.db'), 'utf8'), 'SYNTHETIC drugs.db');
     await assert.rejects(readFile(path.join(projectRoot, 'data/drugs.db')));
     await writeFile(path.join(directory, 'drugs.db'), 'VERIFIED BASE PLUS SUPPLEMENT');
@@ -102,9 +103,47 @@ test('Supplement preparation sees only verified staged files and must finish bef
 test('Failed supplement preparation removes the staged install and never runs on corrupt input', async t => {
   const { projectRoot } = await fixture(t), bytes = archive(); let called = 0;
   const prepareData = async (directory: string) => { called++; await writeFile(path.join(directory, 'drugs.db'), 'PARTIAL'); throw new Error('supplement conflict'); };
-  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), download: async () => new Response(bytes), prepareData }), /supplement conflict/);
-  assert.equal(called, 1); assert.deepEqual(await readdir(projectRoot), []);
+  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length, download: async () => new Response(bytes), prepareData }), /supplement conflict/);
+  assert.equal(called, 1); assert.deepEqual(await installedContents(projectRoot), []);
   const damaged = archive(zip => zip.updateFile('data/drugs.db', Buffer.from('DAMAGED')));
-  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(damaged), download: async () => new Response(damaged), prepareData }), /校驗失敗/);
-  assert.equal(called, 1); assert.deepEqual(await readdir(projectRoot), []);
+  await assert.rejects(installPublicData({ projectRoot, expectedHash: hash(damaged), expectedBytes: damaged.length, download: async () => new Response(damaged), prepareData }), /校驗失敗/);
+  assert.equal(called, 1); assert.deepEqual(await installedContents(projectRoot), []);
+});
+
+test('Interrupted public downloads retain complete chunks and resume without fetching those bytes again', async t => {
+  const { projectRoot } = await fixture(t), bytes = archive(), requests: number[] = [];
+  let interrupted = true;
+  const options = { projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length,
+    downloadOptions: { chunkBytes: 512, concurrency: 1, attempts: 1 },
+    download: async (_url: string, init: RequestInit) => {
+      const match = /^bytes=(\d+)-(\d+)$/.exec(new Headers(init.headers).get('range') || '');
+      assert.ok(match, 'The public archive is requested in bounded ranges');
+      const start = Number(match[1]), end = Number(match[2]); requests.push(start);
+      if (interrupted && start >= 512) return new Response('', { status: 503 });
+      return new Response(bytes.subarray(start, end + 1), { status: 206,
+        headers: { 'Content-Range': `bytes ${start}-${end}/${bytes.length}` } });
+    } };
+  await assert.rejects(installPublicData(options));
+  await assert.rejects(readFile(path.join(projectRoot, 'data/drugs.db')));
+  const cache = (await readdir(projectRoot)).find(name => name.startsWith('.data-download-'));
+  assert.ok(cache, 'Completed chunks survive a failed attempt');
+  assert.equal((await readdir(path.join(projectRoot, cache))).length, 1);
+  interrupted = false; requests.length = 0;
+  const result = await installPublicData(options);
+  assert.equal(result.verifiedFiles, seedFiles.length);
+  assert.ok(requests.length > 0); assert.ok(!requests.includes(0));
+  assert.equal(await readFile(path.join(projectRoot, 'data/drugs.db'), 'utf8'), 'SYNTHETIC drugs.db');
+});
+
+test('A transient range failure is retried before verified installation', async t => {
+  const { projectRoot } = await fixture(t), bytes = archive(); let calls = 0;
+  const options = { projectRoot, expectedHash: hash(bytes), expectedBytes: bytes.length,
+    downloadOptions: { chunkBytes: bytes.length, concurrency: 1, attempts: 2, retryDelayMs: 1 },
+    download: async () => {
+      if (++calls === 1) return new Response('', { status: 503 });
+      return new Response(bytes, { status: 206, headers: { 'Content-Range': `bytes 0-${bytes.length - 1}/${bytes.length}` } });
+    } };
+  await installPublicData(options);
+  assert.equal(calls, 2);
+  assert.equal(await readFile(path.join(projectRoot, 'data/drugs.db'), 'utf8'), 'SYNTHETIC drugs.db');
 });

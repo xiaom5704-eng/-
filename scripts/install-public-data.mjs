@@ -1,13 +1,13 @@
 import { createHash, randomUUID } from 'node:crypto';
-import { createReadStream, createWriteStream } from 'node:fs';
+import { createReadStream } from 'node:fs';
 import { lstat, mkdir, rename, rm, stat, writeFile } from 'node:fs/promises';
-import { Readable, Transform } from 'node:stream';
-import { pipeline } from 'node:stream/promises';
 import path from 'node:path';
 import AdmZip from 'adm-zip';
+import { downloadPublicArchive } from './download-public-data.mjs';
 
 export const publicDataUrl = 'https://github.com/xiaom5704-eng/-/releases/download/local-web-2026-09-28/medsafe-public-data-2026-09-28.zip';
 export const publicDataSha256 = 'de7d3ba8a1713668f56fabd6bc7188954743c9f58f90cb94b97510b2c6d410d7';
+export const publicDataBytes = 309_353_366;
 const previousPublicDataSha256 = 'a5017ea7a5c2b3a7b3852300f16af2dc90a1db2c2c5a375fbb0e5d90647c1dea';
 const maxArchiveBytes = 300 * 1024 * 1024;
 const required = ['drugs.db', 'vision/index.db', 'vision/models/Xenova/dinov2-small/config.json',
@@ -26,7 +26,9 @@ function safeRelative(value) {
 }
 
 // The CLI fixes the URL and hash. Injected values are used only by isolated tests.
-export async function installPublicData({ projectRoot, archivePath = '', download = fetch, expectedHash = publicDataSha256, onProgress = () => {}, prepareData = async (_directory) => {} }) {
+export async function installPublicData({ projectRoot, archivePath = '', download = fetch, expectedHash = publicDataSha256,
+  expectedBytes = publicDataBytes, downloadOptions = {}, signal = undefined, onProgress = () => {}, prepareData = async (_directory) => {} }) {
+  signal?.throwIfAborted();
   const root = path.resolve(projectRoot), destination = path.join(root, 'data');
   await requireNewDataDirectory(destination);
   const staging = path.join(root, `.data-install-${randomUUID()}`);
@@ -35,17 +37,11 @@ export async function installPublicData({ projectRoot, archivePath = '', downloa
     const archive = archivePath ? path.resolve(archivePath) : path.join(staging, 'public-data.zip');
     if (!archivePath) {
       onProgress('正在下載約 310 MB 的公開參考資料；不需要 API Key。');
-      const response = await download(publicDataUrl, { signal: AbortSignal.timeout(600_000) });
-      if (!response.ok || !response.body) throw new Error(`資料包下載失敗：HTTP ${response.status}。可先下載 ZIP，再用 --file 指定本機檔案。`);
-      let bytes = 0, reported = 0;
-      const limit = new Transform({ transform(chunk, _encoding, callback) {
-        bytes += chunk.length;
-        if (bytes - reported >= 16 * 1024 * 1024) { reported = bytes; onProgress(`已下載 ${(bytes / 1024 / 1024).toFixed(0)} MiB…`); }
-        callback(bytes > maxArchiveBytes ? new Error('資料包超過預期大小，停止安裝。') : null, chunk);
-      } });
-      await pipeline(Readable.fromWeb(response.body), limit, createWriteStream(archive, { flags: 'wx' }));
+      await downloadPublicArchive({ ...downloadOptions, url: publicDataUrl, archive, projectRoot: root,
+        expectedHash, expectedBytes, download, onProgress, signal });
     }
     const size = (await stat(archive)).size;
+    signal?.throwIfAborted();
     if (!size || size > maxArchiveBytes) throw new Error('資料包大小無效。');
     const digest = createHash('sha256');
     for await (const chunk of createReadStream(archive)) digest.update(chunk);
@@ -82,6 +78,7 @@ export async function installPublicData({ projectRoot, archivePath = '', downloa
     if (!required.every(file => expected.has(file))) throw new Error('資料包缺少藥品、圖片索引或模型。');
     const nextData = path.join(staging, 'data');
     for (const [relative, digest] of expected) {
+      signal?.throwIfAborted();
       const bytes = files.get(relative).getData();
       if (sha256(bytes) !== digest) throw new Error(`檔案校驗失敗：${relative}，未安裝。`);
       const target = path.resolve(nextData, relative);
@@ -92,6 +89,7 @@ export async function installPublicData({ projectRoot, archivePath = '', downloa
     await writeFile(path.join(nextData, 'manifest.json'), manifestBytes, { flag: 'wx' });
     // Enrichment runs only after base verification and before atomic publication.
     await prepareData(nextData);
+    signal?.throwIfAborted();
     await requireNewDataDirectory(destination);
     await rename(nextData, destination);
     return { directory: destination, verifiedFiles: expected.size, preparedAt: manifest.preparedAt };

@@ -19,7 +19,7 @@ export default defineConfig(({mode}) => {
       // Preserve frontend HMR without resetting an active scan for unrelated local files.
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: {
-        ignored: ['**/data/**', '**/.data-install-*/**', '**/test-results/**', '**/release/**',
+        ignored: ['**/data/**', '**/.data-install-*/**', '**/.data-download-*/**', '**/test-results/**', '**/release/**',
           '**/dist-server/**', '**/scripts/**', '**/tests/**', '**/docs/**', '**/*.md', '**/*.db*'],
       },
     },
