@@ -1,8 +1,27 @@
 import { Router } from 'express';
 import type { OfficialPackageReferences } from './official-packages';
+import { packageStarterItems, preparePackageStarters } from './package-starter';
 
 export function officialPackageRouter(store: OfficialPackageReferences, queue = { busy: false }) {
   const router = Router();
+  router.get('/starter-references', (_req, res) => {
+    res.setHeader('Cache-Control', 'private, no-store'); res.json({ items: packageStarterItems() });
+  });
+  router.post('/starter-references', async (_req, res) => {
+    if (queue.busy) { res.status(429).json({ error: '本機正在處理照片，請稍後再試。' }); return; }
+    queue.busy = true;
+    const controller = new AbortController(), close = () => controller.abort(); res.on('close', close);
+    const timer = setTimeout(() => {
+      controller.abort();
+      if (!res.headersSent && !res.destroyed) res.status(504).json({ error: '下載示範外盒逾時，請重試；已完成的品項會保留。' });
+    }, 120_000);
+    try {
+      const results = await preparePackageStarters(store, controller.signal);
+      if (!controller.signal.aborted && !res.destroyed) res.json({ results });
+    } catch (error) {
+      if (!controller.signal.aborted && !res.destroyed) res.status(422).json({ error: (error as Error).message });
+    } finally { clearTimeout(timer); res.off('close', close); queue.busy = false; }
+  });
   router.get('/official-references', (req, res) => {
     if (typeof req.query.drugId !== 'string' || !req.query.drugId || req.query.drugId.length > 80) { res.status(400).json({ error: '請提供藥品許可證。' }); return; }
     res.setHeader('Cache-Control', 'private, no-store'); res.json(store.snapshot(req.query.drugId).library);

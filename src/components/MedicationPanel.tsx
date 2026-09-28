@@ -12,6 +12,8 @@ import OcrReview from './OcrReview';
 import ObservationReview from './ObservationReview';
 import VisionResults from './VisionResults';
 import PackageReferenceForm from './PackageReferenceForm';
+import PackageStarter from './PackageStarter';
+import type { PackageStarterResult } from '../../shared/package-starter';
 import PillReferenceLibrary from './PillReferenceLibrary';
 import { pillReferenceIdentity, type PersonalPillLibrary } from '../../shared/pill-references';
 import PhotoCropDialog from './PhotoCropDialog';
@@ -280,6 +282,21 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     finally { scanController.current = null; if (mounted.current) { setBusy(null); setScanProgress(''); } }
   }
 
+  async function prepareStarterReferences() {
+    const controller = new AbortController(); scanController.current = controller;
+    setBusy('reference'); setError(''); setNotices([]); setVisionResult(null);
+    setScanProgress('正在下載已核對的官方示範外盒並建立本機特徵；已存的相同版本會沿用…');
+    try {
+      const result = await requestJson<{ results: PackageStarterResult[] }>('/api/medications/packages/starter-references', { method: 'POST', signal: controller.signal });
+      return result.results;
+    } catch (e) {
+      throw new Error(controller.signal.aborted ? '已取消下載；已完成的品項會保留，可重試接續。' : (e as Error).message);
+    } finally {
+      scanController.current = null;
+      if (mounted.current) { setBusy(null); setScanProgress(''); void refreshVisionStatus(); }
+    }
+  }
+
   async function registerPackage(productName: string, sourceNote: string) {
     if (files.length < 1 || files.length > 2 || files.some(file => file.type === 'application/pdf')) { setError('收錄藥盒請選擇 1–2 張同一品項照片。'); return; }
     const controller = new AbortController(); scanController.current = controller;
@@ -456,6 +473,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
         {!!ocrPages.length && <div ref={ocrHeading} className="scroll-mt-6"><OcrReview pages={ocrPages} target={scanEngine === 'vision' ? 'pill' : scanEngine === 'package' ? 'label' : ocrTarget} disabled={!!busy}
           onChange={(index, text) => updateOcrPage(index, page => ({ ...page, text }))} onSwitchReading={index => updateOcrPage(index, switchOcrReading)}
           onSearch={searchOcrLine} onQueryEdit={clearSearchResults} /></div>}
+        {scanEngine === 'package' && <PackageStarter disabled={!!busy} onPrepare={prepareStarterReferences} />}
         {scanEngine === 'package' && <PackageReferenceForm key={files.map(file => file.id).join(',')} disabled={!!busy} photoCount={files.filter(file => file.type !== 'application/pdf').length} onSave={(name, note) => void registerPackage(name, note)} />}
         {scanEngine === 'vision' && <PillReferenceLibrary key={files.map(file => file.id).join(',') + selected.map(pillReferenceIdentity).join(',')} selected={selected} photoCount={files.filter(file => file.type !== 'application/pdf').length} disabled={!!busy} library={personalLibrary}
           onSave={registerPill} onRefresh={() => void refreshVisionStatus()} onDisable={key => void updatePersonalLibrary(`/api/medications/vision/personal-references/${key}/disable`, {}, '已停用這張照片，後續不再用於比對；其他參考圖保持可用。')} />}

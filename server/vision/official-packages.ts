@@ -12,6 +12,7 @@ import { isUnitVisionVector } from '../../shared/vision-vector.mjs';
 import { DIMENSIONS, MODEL_VERSION, VISION_ROOT } from './config.mjs';
 import { downloadBounded } from '../../scripts/verified-download.mjs';
 import type { IndexedReference } from './service';
+import type { ReviewedPackage } from './package-starter';
 
 const hash = (value: Buffer | string) => createHash('sha256').update(value).digest('hex');
 const photoUrl = (sha: string) => `/api/medications/packages/official-images/${sha}.webp`;
@@ -98,15 +99,27 @@ export class OfficialPackageReferences {
     finally { db.close(); }
   }
 
-  async save(drugId: string, sourceUrl: string, expectedIndexSha: string, signal: AbortSignal) {
+  async saveReviewed(review: ReviewedPackage, signal: AbortSignal) {
+    const drug = getTfda(this.drugs, review.drugId), index = drug && readTfdaLabelIndex(this.drugs, drug);
+    return this.save(review.drugId, review.sourceUrl, index?.sha256 || '', signal, review);
+  }
+
+  async save(drugId: string, sourceUrl: string, expectedIndexSha: string, signal: AbortSignal, review?: ReviewedPackage) {
     signal.throwIfAborted();
+    if (review && (!/^[a-f0-9]{64}$/.test(review.sourceSha256) || !Number.isInteger(review.pageCount) || review.pageCount < 1 || review.pageCount > 8 ||
+        !review.reviewedPages.length || review.reviewedPages.some(page => !Number.isInteger(page) || page < 1 || page > review.pageCount)))
+      throw new Error('示範外盒核對設定無效，未保存。');
     const canonical = () => {
       const drug = getTfda(this.drugs, drugId), index = drug && readTfdaLabelIndex(this.drugs, drug);
       if (!drug || !index || index.sha256 !== expectedIndexSha || !validTfdaLabelUrl(sourceUrl, drugId, 'package') || !index.packageUrls.includes(sourceUrl))
         throw new Error('官方外盒來源或品項已變動，請重新分析後再保存。');
-      return { drug, index, identity: officialPackageIdentity(drug) };
+      const identity = officialPackageIdentity(drug);
+      if (review && hash(identity) !== review.identitySha256) throw new Error('示範外盒的品項資料已變動，需要重新核對。');
+      return { drug, index, identity };
     };
     const original = canonical(), saved = this.snapshot(drugId).library.photos.filter(row => row.sourceUrl === sourceUrl);
+    if (review && saved.some(row => row.sourceSha256 !== review.sourceSha256 || row.pageCount !== review.pageCount))
+      throw new Error('本機外盒與已核對的示範版本不同，保留現有圖片，請從官方外盒清單核對。');
     if (saved.length && saved.every(row => row.imageUrl && row.pageCount === saved.length) && new Set(saved.map(row => row.page)).size === saved.length &&
         saved.every(row => row.page >= 1 && row.page <= saved.length)) return { reused: true };
     // Only a currently linked official image; no redirects or arbitrary URL proxy.
@@ -114,7 +127,9 @@ export class OfficialPackageReferences {
       ...init, redirect: 'error', signal: AbortSignal.any([signal, init!.signal!]),
     }), 30_000);
     signal.throwIfAborted();
+    if (review && hash(bytes) !== review.sourceSha256) throw new Error('官方外盒內容已變更，未加入示範比對，請重新核對來源。');
     const retrievedAt = new Date().toISOString(), images = await packagePages(bytes, signal), references = [];
+    if (review && images.length !== review.pageCount) throw new Error('官方外盒頁數與核對紀錄不同，未保存。');
     for (const [i, image] of images.entries()) {
       if (!image.length || image.length > 8 * 1024 * 1024) throw new Error('轉換後圖片大小超過限制，未保存。');
       signal.throwIfAborted(); const vector = await this.embed(image);
@@ -139,13 +154,19 @@ export class OfficialPackageReferences {
         source_sha256 TEXT NOT NULL, retrieved_at TEXT NOT NULL, index_retrieved_at TEXT NOT NULL, index_sha256 TEXT NOT NULL,
         model TEXT NOT NULL, embedding BLOB NOT NULL, disabled INTEGER NOT NULL DEFAULT 2, page INTEGER NOT NULL, page_count INTEGER NOT NULL)`);
       db.transaction(() => {
+        const previousPages = db.prepare('SELECT page, disabled FROM official_package_images WHERE drug_id=? AND source_url=?').all(drugId, sourceUrl) as { page: number; disabled: number }[];
         db.prepare('DELETE FROM official_package_images WHERE drug_id=? AND source_url=?').run(drugId, sourceUrl);
-        // Official files can themselves contain conflicting strengths. Every new
-        // or repaired page must be reviewed before it becomes a search reference.
-        const insert = db.prepare('INSERT INTO official_package_images VALUES (?,?,?,?,?,?,?,?,?,?,?,?,2,?,?)');
-        for (const { vector, sha, page } of references) insert.run(hash(`${drugId}\0${sourceUrl}\0${page}`), drugId, original.identity,
+        // Ordinary downloads remain pending. Only pinned, reviewed starter pages
+        // may start enabled; repairs preserve existing user review/disable choices.
+        const insert = db.prepare('INSERT INTO official_package_images VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        for (const { vector, sha, page } of references) {
+          const previous = previousPages.find(row => row.page === page);
+          let disabled = 2;
+          if (review) disabled = previous?.disabled ?? (review.reviewedPages.includes(page) ? 0 : 2);
+          insert.run(hash(`${drugId}\0${sourceUrl}\0${page}`), drugId, original.identity,
           original.drug.name, sourceUrl, sha, hash(bytes), retrievedAt, original.index.retrievedAt, original.index.sha256,
-          MODEL_VERSION, Buffer.from(vector.buffer, vector.byteOffset, vector.byteLength), page, references.length);
+          MODEL_VERSION, Buffer.from(vector.buffer, vector.byteOffset, vector.byteLength), disabled, page, references.length);
+        }
       })();
     } finally { db.close(); }
     return { reused: false };

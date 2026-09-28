@@ -16,6 +16,10 @@ import { officialPackageRouter } from '../server/vision/official-package-router'
 import { listenForFetch } from './http-listener';
 import { DIMENSIONS } from '../server/vision/config.mjs';
 import { packagePages } from '../server/vision/package-pages';
+import { getTfda } from '../server/medications/store';
+import { officialPackageIdentity } from '../shared/official-packages';
+import { sha256 } from '../scripts/verified-download.mjs';
+import { preparePackageStarters, type ReviewedPackage } from '../server/vision/package-starter';
 
 const id = '衛署藥製字第999991號', otherId = '衛署藥製字第999992號', signal = () => new AbortController().signal;
 const url = 'https://mcp.fda.gov.tw/insert/lablefiles/synthetic?c=2';
@@ -173,4 +177,72 @@ test('PDF page bounds, corrupt PDFs and later-page feature failures leave existi
   await assert.rejects(failing.save(id, url, f.sha, signal()), /Second-page/);
   assert.equal(calls, 2); writeFileSync(image, bytes);
   assert.deepEqual(f.store.snapshot(id).library, original);
+});
+
+function reviewed(f: Awaited<ReturnType<typeof fixture>>, bytes = f.bytes, pages = 1): ReviewedPackage {
+  return { id: 'synthetic-reviewed', name: '人工測試錠', drugId: id, sourceUrl: url, note: 'Synthetic fixture only',
+    identitySha256: sha256(officialPackageIdentity(getTfda(f.db, id)!)), sourceSha256: sha256(bytes), pageCount: pages, reviewedPages: [1] };
+}
+
+test('Pinned starters enable only reviewed pages, retain other pages for review, and preserve user choices offline', async t => {
+  const f = await fixture(t), bytes = pdfFixture(3), entry = reviewed(f, bytes, 3); let requests = 0;
+  const store = new OfficialPackageReferences(f.db, path.join(f.root, 'official'), async () => f.vector, async () => { requests++; return new Response(bytes); });
+  assert.equal((await store.saveReviewed(entry, signal())).reused, false);
+  const photos = store.snapshot(id).library.photos;
+  assert.deepEqual(photos.map(p => [p.page, p.usable, p.pending]), [[1, true, false], [2, false, true], [3, false, true]]);
+  store.disable(photos[0].key); const previous = store.snapshot(id).library;
+  assert.equal((await store.saveReviewed(entry, signal())).reused, true);
+  assert.deepEqual(store.snapshot(id).library, previous); assert.equal(requests, 1);
+  const reopened = new OfficialPackageReferences(f.db, path.join(f.root, 'official'), async () => f.vector, async () => { throw Error('Offline'); });
+  assert.equal((await reopened.saveReviewed(entry, signal())).reused, true);
+  assert.deepEqual(reopened.snapshot(id).library, previous);
+});
+
+test('Starter identity, bytes, page bounds and cached version must match the review before activation', async t => {
+  const f = await fixture(t), entry = reviewed(f);
+  await assert.rejects(f.store.saveReviewed({ ...entry, identitySha256: '0'.repeat(64) }, signal()), /品項/);
+  await assert.rejects(f.store.saveReviewed({ ...entry, reviewedPages: [2] }, signal()), /設定/);
+  assert.equal(f.requests(), 0);
+  await assert.rejects(f.store.saveReviewed({ ...entry, sourceSha256: '0'.repeat(64) }, signal()), /內容已變更/);
+  await assert.rejects(f.store.saveReviewed({ ...entry, pageCount: 2 }, signal()), /頁數/);
+  assert.equal(f.store.snapshot(id).library.photos.length, 0);
+  await f.store.save(id, url, f.sha, signal()); const previous = f.store.snapshot(id).library;
+  await assert.rejects(f.store.saveReviewed({ ...entry, sourceSha256: '0'.repeat(64) }, signal()), /保留現有/);
+  await f.store.saveReviewed(entry, signal());
+  assert.deepEqual(f.store.snapshot(id).library, previous, 'Existing manual pending pages are not auto-approved');
+});
+
+test('Repairing a pinned starter preserves a disable made while embeddings are rebuilding', async t => {
+  const f = await fixture(t), entry = reviewed(f); await f.store.saveReviewed(entry, signal());
+  const original = f.store.snapshot(id).library.photos[0];
+  writeFileSync(f.store.imagePath(path.basename(original.imageUrl!, '.webp'))!, 'corrupt');
+  const repairing = new OfficialPackageReferences(f.db, path.join(f.root, 'official'), async () => { f.store.disable(original.key); return f.vector; }, async () => new Response(f.bytes));
+  await repairing.saveReviewed(entry, signal());
+  const repaired = f.store.snapshot(id).library.photos[0];
+  assert.ok(repaired.imageUrl); assert.ok(repaired.disabled); assert.equal(repaired.usable, false);
+});
+
+test('Starter preparation reports partial failures and retries completed entries without downloading again', async t => {
+  const f = await fixture(t), entry = reviewed(f), entries = [entry, { ...entry, id: 'missing', drugId: otherId }];
+  const first = await preparePackageStarters(f.store, signal(), entries);
+  assert.deepEqual(first.map(result => [result.outcome, result.usablePages]), [['saved', 1], ['failed', 0]]);
+  const second = await preparePackageStarters(f.store, signal(), entries);
+  assert.deepEqual(second.map(result => result.outcome), ['reused', 'failed']); assert.equal(f.requests(), 1);
+  const controller = new AbortController();
+  const cancelling = new OfficialPackageReferences(f.db, path.join(f.root, 'cancelled'), async () => { controller.abort(); return f.vector; }, async () => new Response(f.bytes));
+  await assert.rejects(preparePackageStarters(cancelling, controller.signal, entries), { name: 'AbortError' });
+  assert.equal(cancelling.snapshot(id).library.photos.length, 0);
+});
+
+test('Starter HTTP exposes a fixed catalog, respects the shared queue and ignores caller review overrides', async t => {
+  const f = await fixture(t), queue = { busy: false }, app = express(); app.use(express.json()); app.use('/packages', officialPackageRouter(f.store, queue));
+  const server = await listenForFetch(app); t.after(() => new Promise<void>(resolve => server.close(() => resolve())));
+  const base = `http://127.0.0.1:${(server.address() as { port: number }).port}/packages/starter-references`;
+  const list = await (await fetch(base)).json(); assert.equal(list.items.length, 2);
+  assert.ok(list.items.every((item: { sourceUrl: string }) => item.sourceUrl.startsWith('https://mcp.fda.gov.tw/')));
+  const post = () => fetch(base, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(reviewed(f)) });
+  queue.busy = true; assert.equal((await post()).status, 429); queue.busy = false;
+  const result = await post(); assert.equal(result.status, 200);
+  assert.ok((await result.json()).results.every((r: { outcome: string }) => r.outcome === 'failed'));
+  assert.equal(f.requests(), 0); assert.equal(queue.busy, false); assert.equal(f.store.snapshot(id).library.photos.length, 0);
 });
