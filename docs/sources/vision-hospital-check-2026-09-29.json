@@ -1,0 +1,402 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-09-28T16:48:33.220Z",
+  "registeredAt": "2026-09-28T16:45:14.480Z",
+  "codeCommit": "c1e4994f39e87399d969ef9b07e6f84b8dd73b23",
+  "modelVersion": "dinov2-small-q8-c2bb04a51fab207c420665f1946016107bffc701-contain224-cls-v1",
+  "imageCount": 6146,
+  "productCount": 5791,
+  "scope": "Convenience cohort of hospital-hosted public images. Not a clinical or independent phone-photo benchmark. Five raw images, no OCR/crop/imprint/personal references in baseline. No tuning or index additions. Full production service; database read-only; fetch disabled during inference.",
+  "rights": "URLs and identity facts only. Source images and clinical text are not redistributed.",
+  "excluded": [
+    {
+      "name": "abilify",
+      "page": "https://www.cth.org.tw/?aid=606&iid=705&page_name=detail&pid=0",
+      "reason": "Error: Identity/image count:  / 1"
+    },
+    {
+      "name": "acetazolamide",
+      "page": "https://www.cth.org.tw/?aid=606&iid=1345&page_name=detail&pid=0",
+      "reason": "Error: Identity/image count: 衛署藥製字第003389號 / 0"
+    }
+  ],
+  "results": [
+    {
+      "name": "norvasc",
+      "page": "https://www.cth.org.tw/?aid=606&iid=1313&page_name=detail&pid=40",
+      "imageUrl": "https://www.cth.org.tw/public/medi_news/65f57835e15eae17f536316c0cf639aa.jpg",
+      "expectedLicense": "衛署藥輸字第021571號",
+      "sha256": "1c3ada9090972984eaa03dfb34149f2aac4b709005cb9bda25dfb50ac83068b5",
+      "htmlSha256": "a0169c316ec7cb1c1418a4e0c86c125be0c4fabbc56b6a83fbfafbc8fd66461b",
+      "retrievedAt": "2026-09-28T16:45:47.426Z",
+      "width": 1178,
+      "height": 1088,
+      "exactReferenceHashMatch": false,
+      "referenceCountForExpected": 1,
+      "diagnosticFullRank": 1094,
+      "expectedSimilarity": 0.5082423503164639,
+      "actualRankWithinEight": null,
+      "outcome": "review",
+      "candidates": [
+        {
+          "license": "衛署藥製字第049663號",
+          "similarity": 0.7570792499419772,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥輸字第028120號",
+          "similarity": 0.7050129055511795,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第051198號",
+          "similarity": 0.687678639657092,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第008953號",
+          "similarity": 0.6686176187085081,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第049787號",
+          "similarity": 0.6347308224829391,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥製字第059654號",
+          "similarity": 0.6329915510418183,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥輸字第027288號",
+          "similarity": 0.6306424615207518,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第057731號",
+          "similarity": 0.6286921086510178,
+          "matchedBy": "image"
+        }
+      ]
+    },
+    {
+      "name": "a-cal",
+      "page": "https://www.cth.org.tw/?aid=606&iid=1769&page_name=detail&pid=0",
+      "imageUrl": "https://www.cth.org.tw/public/medi_news/fcb5df2d261d94b9577563b08b7caa91.jpg",
+      "expectedLicense": "衛署藥製字第057816號",
+      "sha256": "719ab0ed98c7bebc058dffd99e4c482c9d0a9f2bbc7b2ac2426885d82142073b",
+      "htmlSha256": "22f5777be8936164b46572d6878bb2783d1148487249a7de9298ad5eaef16c7b",
+      "retrievedAt": "2026-09-28T16:45:47.704Z",
+      "width": 727,
+      "height": 867,
+      "exactReferenceHashMatch": false,
+      "referenceCountForExpected": 1,
+      "diagnosticFullRank": 667,
+      "expectedSimilarity": 0.7106296935606118,
+      "actualRankWithinEight": null,
+      "outcome": "review",
+      "candidates": [
+        {
+          "license": "衛署藥製字第033082號",
+          "similarity": 0.8839159346362568,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第044365號",
+          "similarity": 0.8803989726286232,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第024639號",
+          "similarity": 0.8775062100544366,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第025898號",
+          "similarity": 0.876243326357299,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第038139號",
+          "similarity": 0.8761525682877112,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥輸字第028783號",
+          "similarity": 0.8748508940757872,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第046440號",
+          "similarity": 0.8741511605532859,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第014469號",
+          "similarity": 0.8731215175021699,
+          "matchedBy": "image"
+        }
+      ]
+    },
+    {
+      "name": "acetal",
+      "page": "https://www.cth.org.tw/?aid=606&iid=1770&page_name=detail&pid=0",
+      "imageUrl": "https://www.cth.org.tw/public/medi_news/b4bae8837d47ee8d6acbb6864fb91e8d.jpg",
+      "expectedLicense": "衛署藥製字第032320號",
+      "sha256": "36871b0b87a24d7a962ace5a5ce88700828519229e724b7a9335988305f43afe",
+      "htmlSha256": "06280b62b420cdf4c70ce238cb51d5c7263da299f9f1d3a52ce392289a87dde0",
+      "retrievedAt": "2026-09-28T16:45:48.171Z",
+      "width": 1233,
+      "height": 777,
+      "exactReferenceHashMatch": false,
+      "referenceCountForExpected": 1,
+      "diagnosticFullRank": 655,
+      "expectedSimilarity": 0.6721416812614983,
+      "actualRankWithinEight": null,
+      "outcome": "review",
+      "candidates": [
+        {
+          "license": "衛署藥製字第057173號",
+          "similarity": 0.7962501941767243,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第057147號",
+          "similarity": 0.7945886569319042,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥製字第058783號",
+          "similarity": 0.7875897531297646,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第049288號",
+          "similarity": 0.7834054960194147,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥輸字第029122號",
+          "similarity": 0.7829502309319684,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第046733號",
+          "similarity": 0.7824674626215417,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥製字第060402號",
+          "similarity": 0.7819516135606318,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥製字第061850號",
+          "similarity": 0.7811384094546561,
+          "matchedBy": "image"
+        }
+      ]
+    },
+    {
+      "name": "actein",
+      "page": "https://www.cth.org.tw/?aid=606&iid=1172&page_name=detail&pid=0",
+      "imageUrl": "https://www.cth.org.tw/public/medi_news/2ab1aa912a963fcb2b15df4df98d3b42.jpg",
+      "expectedLicense": "衛署藥製字第045993號",
+      "sha256": "5cddfe5b56fd59d0b59702fcd811a753dde89ba4233fac0ae2f29936ebbcacda",
+      "htmlSha256": "44b7ee1ef7131fba2e27b6d466370a22554e3194326c60109981ae9327bed389",
+      "retrievedAt": "2026-09-28T16:45:49.060Z",
+      "width": 1888,
+      "height": 1260,
+      "exactReferenceHashMatch": false,
+      "referenceCountForExpected": 1,
+      "diagnosticFullRank": 4048,
+      "expectedSimilarity": 0.417486303418415,
+      "actualRankWithinEight": null,
+      "outcome": "review",
+      "candidates": [
+        {
+          "license": "衛署藥製字第055972號",
+          "similarity": 0.7055151435126207,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第020911號",
+          "similarity": 0.6851575603248335,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第026263號",
+          "similarity": 0.6820350016043744,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥輸字第026668號",
+          "similarity": 0.6769795500697947,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第057228號",
+          "similarity": 0.6724511732942792,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥製字第058373號",
+          "similarity": 0.6693872579722308,
+          "matchedBy": "image"
+        },
+        {
+          "license": "內衛藥製字第001706號",
+          "similarity": 0.6688853874276605,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第024280號",
+          "similarity": 0.6674808291113239,
+          "matchedBy": "image"
+        }
+      ]
+    },
+    {
+      "name": "acylete",
+      "page": "https://www.cth.org.tw/?aid=606&iid=1493&page_name=detail&pid=0",
+      "imageUrl": "https://www.cth.org.tw/public/medi_news/327d0dbbae80d06d8bbb03cbb28bf9b3.jpg",
+      "expectedLicense": "衛署藥製字第039315號",
+      "sha256": "809ea887d510788b6dc0852267ccd52452c48295b487a63c6fdb1464bcac8969",
+      "htmlSha256": "6ecb0ebae7cd9e14ad80f1688fa20dac8688ccbf77931c812bdfd26319c99685",
+      "retrievedAt": "2026-09-28T16:45:49.259Z",
+      "width": 267,
+      "height": 267,
+      "exactReferenceHashMatch": false,
+      "referenceCountForExpected": 1,
+      "diagnosticFullRank": 433,
+      "expectedSimilarity": 0.7627530022066287,
+      "actualRankWithinEight": null,
+      "outcome": "review",
+      "candidates": [
+        {
+          "license": "衛署藥製字第047114號",
+          "similarity": 0.8731339392592542,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第050251號",
+          "similarity": 0.8635495110006145,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第040794號",
+          "similarity": 0.8549828462549498,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥輸字第022778號",
+          "similarity": 0.8536962782883342,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第048506號",
+          "similarity": 0.8523103668420589,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第023606號",
+          "similarity": 0.8505577245942555,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛署藥製字第040887號",
+          "similarity": 0.8461149813166724,
+          "matchedBy": "image"
+        },
+        {
+          "license": "衛部藥製字第058285號",
+          "similarity": 0.8428257626821304,
+          "matchedBy": "image"
+        }
+      ]
+    }
+  ],
+  "manualLookup": {
+    "note": "Unblinded human-entered visible imprints, not OCR or CV accuracy. No name, license or strength in lookup. Two faces remain separate. Actual HTTP against isolated public database; no external fetch in server.",
+    "results": [
+      {
+        "name": "norvasc",
+        "expectedLicense": "衛署藥輸字第021571號",
+        "imprints": [
+          "VLE",
+          "AML 5"
+        ],
+        "candidateCount": 1,
+        "pageCount": 1,
+        "expectedRank": 1
+      },
+      {
+        "name": "a-cal",
+        "expectedLicense": "衛署藥製字第057816號",
+        "imprints": [
+          "R"
+        ],
+        "candidateCount": 18,
+        "pageCount": 1,
+        "expectedRank": 2
+      },
+      {
+        "name": "acetal",
+        "expectedLicense": "衛署藥製字第032320號",
+        "imprints": [
+          "PURZER",
+          "07 07"
+        ],
+        "candidateCount": 1,
+        "pageCount": 1,
+        "expectedRank": 1
+      },
+      {
+        "name": "actein",
+        "expectedLicense": "衛署藥製字第045993號",
+        "imprints": [
+          "SYN"
+        ],
+        "candidateCount": 35,
+        "pageCount": 2,
+        "expectedRank": 8
+      },
+      {
+        "name": "acylete",
+        "expectedLicense": "衛署藥製字第039315號",
+        "imprints": [
+          "CCP"
+        ],
+        "candidateCount": 59,
+        "pageCount": 3,
+        "expectedRank": 30
+      }
+    ]
+  },
+  "browserCheck": {
+    "sample": "acetal",
+    "originalOcrLines": [
+      "PURZER",
+      "07107",
+      "3",
+      "4",
+      "1",
+      "2"
+    ],
+    "ocrLineQueried": "PURZER",
+    "candidateCount": 6,
+    "manualImprints": [
+      "PURZER",
+      "07 07"
+    ],
+    "afterManualCandidateCount": 1,
+    "expectedLicense": "衛署藥製字第032320號",
+    "localReferenceLoaded": {
+      "width": 640,
+      "height": 533
+    },
+    "automaticConfirmation": false
+  },
+  "verdict": "Top-8 hit count 0/5. All expected products have current references. Manual lookup and UI recovery work but do not establish automatic image identification. Keep overall acceptance at 5/8."
+}
