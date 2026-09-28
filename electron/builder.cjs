@@ -1,9 +1,8 @@
 const path = require('node:path');
-const root = path.resolve(__dirname, '..');
 module.exports = {
   appId: 'com.medsafe.ai', productName: '智慧醫療助理',
   electronVersion: require('electron/package.json').version,
-  electronDist: path.join(root, 'node_modules/electron/dist'),
+  electronDist: path.join(path.dirname(require.resolve('electron/package.json')), 'dist'),
   directories: { app: 'release/app', output: 'release/windows' },
   files: ['dist/**/*', 'dist-server/**/*', 'electron/*.cjs', 'electron/loading.html', 'package.json'],
   extraResources: [{ from: 'release/seed', to: 'medsafe-data' }],

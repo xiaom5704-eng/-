@@ -73,6 +73,22 @@ test('Missing frontend build fails before creating blank databases', async t => 
   assert.equal(existsSync(config.paths.drugDb), false);
 });
 
+test('Development serving denies synthetic environment files, including Windows alternate data stream paths', async t => {
+  const root = fixture(t), secret = 'SYNTHETIC_ENV_SENTINEL_NOT_A_REAL_KEY';
+  writeFileSync(path.join(root, 'index.html'), '<html><body>SYNTHETIC PAGE</body></html>');
+  writeFileSync(path.join(root, '.env'), secret);
+  writeFileSync(path.join(root, 'public-test.txt'), 'PUBLIC_TEST_CONTENT');
+  const service = await startApplication({ ...configFor(root), production: false });
+  try {
+    const base = `http://127.0.0.1:${service.port}`;
+    assert.match(await (await fetch(`${base}/public-test.txt?raw`)).text(), /PUBLIC_TEST_CONTENT/);
+    for (const route of ['/.env?raw', '/.env::$DATA?raw', '/.env%3A%3A%24DATA?raw']) {
+      const response = await fetch(base + route);
+      assert.ok(!(await response.text()).includes(secret), `Sensitive test file escaped dev-server deny rules: ${route}`);
+    }
+  } finally { await service.close(); }
+});
+
 test('Health identifies missing datasets, API errors stay JSON, and conversations survive service restart', async t => {
   const root = fixture(t), config = configFor(root);
   openDrugDatabase(config.paths.drugDb).close();

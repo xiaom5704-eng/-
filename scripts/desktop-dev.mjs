@@ -1,7 +1,9 @@
 import { fork, spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { loadDesktopTools } from './desktop-tools.mjs';
 const root = fileURLToPath(new URL('../', import.meta.url)), require = createRequire(import.meta.url);
+const desktopTools = loadDesktopTools(root);
 const env = { ...process.env }; delete env.ELECTRON_RUN_AS_NODE;
 const server = fork(fileURLToPath(new URL('../server.ts', import.meta.url)), [], { execArgv: ['--import', pathToFileURL(require.resolve('tsx')).href], cwd: root,
   env: { ...env, PORT: '0', HOST: '127.0.0.1' }, stdio: ['inherit', 'inherit', 'inherit', 'ipc'], windowsHide: true });
@@ -17,7 +19,7 @@ const timeout = setTimeout(() => { console.error('開發服務啟動逾時。');
 server.on('message', message => {
   if (desktop || stopping || message?.type !== 'ready' || !Number.isInteger(message.port)) return;
   clearTimeout(timeout);
-  desktop = spawn(require('electron'), ['.'], { cwd: root, env: { ...env, ELECTRON_DEV_URL: `http://127.0.0.1:${message.port}` }, stdio: 'inherit' });
+  desktop = spawn(desktopTools.binary, ['.'], { cwd: root, env: { ...env, ELECTRON_DEV_URL: `http://127.0.0.1:${message.port}` }, stdio: 'inherit' });
   desktop.once('error', error => { console.error(error.message); process.exitCode = 1; stop(); });
   desktop.once('exit', code => { process.exitCode = code || 0; stop(); });
 });

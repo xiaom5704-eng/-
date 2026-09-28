@@ -1,16 +1,17 @@
 import { spawn } from 'node:child_process';
 import { mkdir, cp, readFile, writeFile, readdir, rm, access, copyFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import Database from 'better-sqlite3';
 import { moveSeedDirectory } from './seed-directory.mjs';
+import { loadDesktopTools } from './desktop-tools.mjs';
 
-const root = fileURLToPath(new URL('../', import.meta.url)), require = createRequire(import.meta.url);
+const root = fileURLToPath(new URL('../', import.meta.url));
 const release = path.join(root, 'release'), stage = path.join(release, 'app'), seed = path.join(release, 'seed');
 const args = process.argv.slice(2);
 if (args.some(arg => !['--dir', '--prepare-only'].includes(arg))) throw new Error('只支援 --dir 或 --prepare-only。');
+const desktopTools = loadDesktopTools(root);
 const env = { ...process.env, GEMINI_API_KEY: '', VITE_GEMINI_API_KEY: '' };
 delete env.ELECTRON_RUN_AS_NODE;
 const npm = process.env.npm_execpath;
@@ -34,7 +35,7 @@ for (const folder of ['dist', 'dist-server', 'electron']) {
   if (path.dirname(target) !== stage) throw new Error('Unsafe staging path');
   await rm(target, { recursive: true, force: true });
   await cp(path.join(root, folder), target, { recursive: true,
-    filter: file => !['runtime-package-lock.json', 'builder.cjs'].includes(path.basename(file)) });
+    filter: file => !['runtime-package-lock.json', 'builder.cjs', 'package.json', 'package-lock.json', 'node_modules'].includes(path.basename(file)) });
 }
 const dependencies = {};
 for (const name of ['express', 'better-sqlite3', 'dotenv', '@huggingface/transformers', 'sharp', 'adm-zip', 'csv-parse', 'opencc-js', 'parse5']) {
@@ -52,8 +53,8 @@ catch (error) { if (error.code !== 'ENOENT') throw error; }
 // No lifecycle runs in the web app's node_modules. Prepare the ABI-specific binary only in release/app.
 await run(npm, ['install', '--omit=dev', '--ignore-scripts', '--no-audit', '--no-fund'], stage);
 await copyFile(path.join(stage, 'package-lock.json'), lock);
-const electronVersion = require('electron/package.json').version;
-const abi = require('node-abi').getAbi(electronVersion, 'electron');
+const electronVersion = desktopTools.version;
+const abi = desktopTools.getAbi(electronVersion, 'electron');
 if (abi !== '145') throw new Error('Electron ABI 已改變，請先更新並查證桌面 SQLite 預編譯版本。');
 const nativeName = `better-sqlite3-v${dependencies['better-sqlite3']}-electron-v${abi}-win32-x64.tar.gz`;
 const nativeFile = path.join(stage, 'node_modules/better-sqlite3/prebuilds', nativeName);
@@ -131,6 +132,6 @@ try {
   await removeBuildDirectory(previousSeed);
 } finally { await removeBuildDirectory(nextSeed); }
 
-const builder = require.resolve('electron-builder/cli.js');
+const builder = desktopTools.builder;
 if (!args.includes('--prepare-only')) await run(builder, ['--config', 'electron/builder.cjs', '--win', '--x64', '--publish', 'never', ...(args.includes('--dir') ? ['--dir'] : [])]);
 console.log('桌面資料與獨立執行環境已完成；網頁版 node_modules 未被重新編譯。');
