@@ -2,7 +2,7 @@ import { patientAgeText, safetyKindText, type MedicationDemo, type MedicationSaf
 import { sourceTableHtml, sourceTableUnavailable } from './label-tables';
 import { interactionDetailScope, type InteractionDetail } from './interaction-detail';
 import { validLocalDocument, type SavedSourceDocument } from './source-document';
-import type { TfdaLabelIndexEntry } from './tfda-label-index';
+import type { TfdaLabelDocument, TfdaLabelIndexEntry } from './tfda-label-index';
 import { mechanismDefinitions, mechanismDefinitionUrl, mechanismScope, type InteractionMechanism } from './interaction-mechanism';
 
 export type DrugSource = 'tfda' | 'rxnorm';
@@ -158,6 +158,15 @@ export const sourceMarkdownLink = (title: string, url: string) => `[${escapeMark
 const savedDocumentMarkdown = (document?: SavedSourceDocument) => document && validLocalDocument(document)
   ? `[開啟本機 PDF 副本](${document.url}) · 取得時間：${escapeMarkdown(document.retrievedAt)} · SHA256：${document.sha256}。需在保存此副本的專案服務開啟；不是最新版本保證。` : '';
 
+export function withSavedTfdaDocument(report: MedicationReport, index: TfdaLabelIndexEntry, document: TfdaLabelDocument): MedicationReport {
+  if (!validLocalDocument(document) || !index.labelUrls.includes(document.sourceUrl)) return report;
+  return { ...report, medications: report.medications.map(entry => {
+    const current = entry.taiwanLabelIndex;
+    if (!current || current.licenseId !== index.licenseId || current.sha256 !== index.sha256 || current.name !== index.name || current.englishName !== index.englishName || !current.labelUrls.includes(document.sourceUrl)) return entry;
+    return { ...entry, taiwanLabelIndex: { ...current, documents: [...(current.documents || []).filter(item => item.sourceUrl !== document.sourceUrl), document] } };
+  }) };
+}
+
 export function labelLookupNotes(lookup: LabelLookup): string[] {
   const notes = [`${lookup.reused ? '重用本機紀錄' : '已保存到本機'}；資料取得時間：${lookup.retrievedAt}。`];
   if (lookup.textSectionsExpanded === false) notes.push('此為舊版保存紀錄，可能缺少注意事項等文字段落。請使用「補查線上仿單與標準名稱」更新，或核對原始來源。');
@@ -200,9 +209,9 @@ export function reportToMarkdown(report: MedicationReport): string {
     if (entry.localLabel) lines.push(`[${text(entry.localLabel.title)}](${entry.localLabel.sourceUrl})`, savedDocumentMarkdown(entry.localLabel.document));
     if (entry.taiwanLabelIndex) {
       const index = entry.taiwanLabelIndex;
-      lines.push(`臺灣仿單／外盒索引：許可證及中英文品名相符；取得日期 ${text(index.retrievedAt)}。僅保存連結，原始文件需連線開啟，未核對內容或修訂版本。`,
+      lines.push(`臺灣仿單／外盒索引：許可證及中英文品名相符；取得日期 ${text(index.retrievedAt)}。原始文件需連線開啟；下列已保存的副本可於本機閱讀，未人工核對內容或修訂版本。`,
         sourceMarkdownLink('TFDA 索引來源', index.sourceUrl), `索引 SHA-256：${text(index.sha256)}`,
-        ...index.labelUrls.map((url, i) => sourceMarkdownLink(`官方仿單入口 ${i + 1}（需連線）`, url)),
+        ...index.labelUrls.flatMap((url, i) => [sourceMarkdownLink(`官方仿單入口 ${i + 1}（需連線）`, url), savedDocumentMarkdown(index.documents?.find(document => document.sourceUrl === url))]),
         ...index.packageUrls.map((url, i) => sourceMarkdownLink(`官方外盒圖 ${i + 1}（需連線）`, url)));
       if (index.unavailableLabelLinks) lines.push('原始資料中的部分仿單連結不完整，已略過。');
     }

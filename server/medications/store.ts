@@ -9,6 +9,7 @@ import { initializeDdinterSupplements } from './ddinter-supplements';
 import { initializeDdinterDetails, readDdinterDetail } from './ddinter-details';
 import { initializeSourceDocuments } from './source-documents';
 import { initializeTfdaLabelIndex } from './tfda-label-index';
+import { initializeTfdaDocuments } from './tfda-documents';
 import { tfdaLabelIndexUrl } from '../../shared/tfda-label-index';
 import { createDdinterMechanismReader } from './ddinter-mechanisms';
 import { appearanceTerms } from '../../shared/appearance-search';
@@ -51,6 +52,7 @@ export function openDrugDatabase(filename = process.env.DRUG_DB_PATH || 'data/dr
   initializeDdinterDetails(db);
   initializeSourceDocuments(db);
   initializeTfdaLabelIndex(db);
+  initializeTfdaDocuments(db);
   initializeSearchIndex(db);
   return db;
   } catch (error) { db.close(); throw error; }

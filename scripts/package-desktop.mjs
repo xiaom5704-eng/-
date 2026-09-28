@@ -90,7 +90,14 @@ try {
     await source.backup(path.join(nextSeed, 'drugs.db'));
   } finally { source.close(); }
   const clean = new Database(path.join(nextSeed, 'drugs.db'));
-  try { clean.exec('DELETE FROM drug_api_cache; PRAGMA journal_mode=DELETE; VACUUM;'); }
+  try {
+    // On-demand downloads reveal which products were looked up on this machine.
+    // Keep the reviewed public catalog, but exclude this personal download cache.
+    for (const table of ['tfda_document_heads', 'tfda_documents']) {
+      if (clean.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?").get(table)) clean.exec(`DELETE FROM ${table}`);
+    }
+    clean.exec('DELETE FROM drug_api_cache; PRAGMA journal_mode=DELETE; VACUUM;');
+  }
   finally { clean.close(); }
   const vision = new Database(path.join(root, 'data/vision/index.db'), { readonly: true, fileMustExist: true });
   try { await vision.backup(path.join(nextSeed, 'vision/index.db')); } finally { vision.close(); }

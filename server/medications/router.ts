@@ -20,6 +20,7 @@ import { suggestLocalNames } from './name-suggestions';
 import type { MedicationReport } from '../../shared/medication';
 import { attachSourceDocuments, readSourceDocument } from './source-documents';
 import { missingLocalNames, type LocalDataSetup } from '../../shared/local-data';
+import { TfdaDocuments, tfdaDocumentRouter } from './tfda-documents';
 
 export function validSelections(value: unknown): value is DrugSelection[] {
   if (!Array.isArray(value) || value.length < 1 || value.length > 6) return false;
@@ -36,6 +37,8 @@ export function validSelections(value: unknown): value is DrugSelection[] {
 
 export function medicationRouter(db: DrugDatabase, providers = new DrugProviders(db), localImages = new LocalMedicationImages(db), dataSetup?: () => LocalDataSetup) {
   const router = Router();
+  const documents = new TfdaDocuments(db);
+  router.use('/tfda-documents', tfdaDocumentRouter(documents));
   const requireLocalNames = (res: Response) => {
     const { available } = db.prepare('SELECT EXISTS(SELECT 1 FROM tfda_drugs) OR EXISTS(SELECT 1 FROM tfda_appearances) AS available').get() as { available: number };
     if (!available) res.status(503).json({ error: missingLocalNames });
@@ -43,7 +46,7 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
   };
   const reportImages = (report: MedicationReport) => {
     const drugs = localImages.attach(report.medications.map(entry => entry.drug));
-    return attachSourceDocuments(db, { ...report, medications: report.medications.map((entry, i) => ({ ...entry, drug: drugs[i] })) });
+    return documents.attach(attachSourceDocuments(db, { ...report, medications: report.medications.map((entry, i) => ({ ...entry, drug: drugs[i] })) }));
   };
   const visionQueue = { busy: false };
   const personalPills = new PersonalPillReferences(db);

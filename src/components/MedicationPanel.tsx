@@ -2,7 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { Camera, Check, FileText, Loader2, Search, ShieldCheck, Trash2, Upload, X } from 'lucide-react';
 import MarkdownContent from './MarkdownContent';
 import type { DatasetStatus, DrugCandidate, DrugSource, MedicationReport, MedicationMatch, MedicationObservation, ReportMode, SearchPagination } from '../../shared/medication';
-import { datasetNames, reportToMarkdown } from '../../shared/medication';
+import { datasetNames, reportToMarkdown, withSavedTfdaDocument } from '../../shared/medication';
 import MedicationResults from './MedicationResults';
 import MedicationDataSetup from './MedicationDataSetup';
 import type { LocalDataSetup } from '../../shared/local-data';
@@ -587,7 +587,9 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       <div className="flex flex-wrap justify-between gap-3 items-center"><div><h3 ref={resultHeading} tabIndex={-1} className="font-bold text-xl outline-none scroll-mt-6">3. 查詢重點</h3><p className="text-xs text-slate-500 mt-1">{report.mode === 'local' ? '本機資料分析' : '含線上補查'} · {report.medications.length} 款藥 · {dateText(report.checkedAt)}</p></div>
         <div className="flex flex-wrap gap-2"><button className={secondary} onClick={() => selectionSection.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>調整年齡／查詢清單</button><button className={secondary} onClick={() => searchSection.current?.scrollIntoView({ block: 'start', behavior: 'smooth' })}>加入其他藥品</button><button className={secondary} disabled={!!busy || saveDisabled || reportSaved} onClick={save}>{reportSaved ? '已儲存至對話' : '儲存報告至對話'}</button></div>
       </div>
-      <MedicationResults report={report} onPackageChange={() => void refreshVisionStatus()} />
+      <MedicationResults report={report} onPackageChange={() => void refreshVisionStatus()} onLabelSaved={(index, document) => {
+        setReport(current => current?.checkedAt === report.checkedAt ? withSavedTfdaDocument(current, index, document) : current);
+      }} />
       <details className="rounded-2xl border border-slate-200 bg-white p-5">
         <summary className="cursor-pointer text-sm font-medium text-slate-700">需要其他語言？整理查詢摘要</summary><p className="text-xs text-slate-500 mt-2">依查詢結果整理，保留未查得紀錄與資料不足的部分。</p>
         <div className="flex flex-wrap gap-2 mt-3"><select aria-label="摘要語言" className="border border-slate-300 rounded-xl p-2 text-sm" value={language} disabled={!!busy} onChange={e => { setLanguage(e.target.value); setExplanation(''); setSaved(false); }}>
