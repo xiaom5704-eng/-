@@ -17,6 +17,7 @@ import { measurementSearchNotice } from './search-measurements';
 import { localDosageForms, dosageFormSearchNotice } from './dosage-forms';
 import { LocalMedicationImages } from './local-images';
 import { suggestLocalNames } from './name-suggestions';
+import { suggestLocalImprints } from './imprint-suggestions';
 import type { MedicationReport } from '../../shared/medication';
 import { attachSourceDocuments, readSourceDocument } from './source-documents';
 import { missingLocalNames, type LocalDataSetup } from '../../shared/local-data';
@@ -68,6 +69,16 @@ export function medicationRouter(db: DrugDatabase, providers = new DrugProviders
     }
     try { if (requireLocalNames(res)) res.json(suggestLocalNames(db, query, form)); }
     catch { res.status(503).json({ error: '本機相近品名查詢未完成，請稍後重試。' }); }
+  });
+  router.post('/imprint-suggestions', (req, res) => {
+    if (!validObservations([req.body?.observation])) { res.status(400).json({ error: '請提供有效的刻字與外觀查詢條件。' }); return; }
+    try {
+      if (!requireLocalNames(res)) return;
+      const { available } = db.prepare('SELECT EXISTS(SELECT 1 FROM tfda_appearances) AS available').get() as { available: number };
+      if (!available) { res.status(503).json({ error: '本機藥品外觀資料尚未安裝，請先安裝資料包或匯入 TFDA 外觀 CSV，再查刻字。' }); return; }
+      res.json(suggestLocalImprints(db, req.body.observation));
+    }
+    catch { res.status(503).json({ error: '本機刻字對照未完成，請稍後重試。' }); }
   });
   router.get('/source-documents/:filename', (req, res) => {
     const match = /^([a-f0-9]{64})\.(pdf|json)$/.exec(req.params.filename);

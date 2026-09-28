@@ -4,10 +4,14 @@ import type { MedicationPatient } from '../../shared/medication-safety';
 import type { NameSuggestions } from '../../shared/name-suggestions';
 import type { LocalDataSetup } from '../../shared/local-data';
 import type { AppearanceOptions } from '../../shared/appearance-search';
+import type { ImprintSuggestions } from '../../shared/imprint-suggestions';
 
 export const getMedicationStatus = () => request<{ datasets: DatasetStatus[]; dosageForms: string[]; appearanceOptions?: AppearanceOptions; dataSetup?: LocalDataSetup }>('/api/medications/status');
 export const suggestMedicationNames = (query: string, dosageForm: string) =>
   request<NameSuggestions>(`/api/medications/name-suggestions?${new URLSearchParams({ q: query, dosageForm })}`);
+export const suggestMedicationImprints = (observation: MedicationObservation, signal: AbortSignal) =>
+  request<ImprintSuggestions>('/api/medications/imprint-suggestions', { method: 'POST', signal,
+    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ observation }) });
 export const searchMedications = (query: string, source: DrugSource, offset = 0, revision?: string, dosageForm = '') =>
   request<DrugSearchResult>(`/api/medications/search?${new URLSearchParams({ q: query, source, offset: String(offset), ...(revision ? { revision } : {}), ...(dosageForm.trim() ? { dosageForm: dosageForm.trim() } : {}) })}`);
 export const queryMedicationReport = (drugs: DrugSelection[], mode: ReportMode = 'local', patient?: MedicationPatient, demoId?: string) => sendJson<MedicationReport>('/api/medications/report', { drugs, mode, patient, demoId });

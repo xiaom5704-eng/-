@@ -7,6 +7,8 @@ import MedicationResults from './MedicationResults';
 import MedicationDataSetup from './MedicationDataSetup';
 import type { LocalDataSetup } from '../../shared/local-data';
 import AppearanceSearch from './AppearanceSearch';
+import ImprintSuggestions from './ImprintSuggestions';
+import { imprintSuggestionInputs } from '../../shared/imprint-suggestions';
 import DrugAppearanceDetails from './DrugAppearanceDetails';
 import OcrReview from './OcrReview';
 import ObservationReview from './ObservationReview';
@@ -36,7 +38,7 @@ import { medicationSaveAttempt, type MedicationSaveAttempt } from '../../shared/
 import { combinedImprintNotice, compareStoredImprint, type AppearanceOptions } from '../../shared/appearance-search';
 
 type Props = { apiKey: string; onSave: (report: MedicationSaveAttempt) => Promise<void>; saveDisabled?: boolean; savedRequestId?: string; active?: boolean };
-type CandidatePaging = { page: SearchPagination; request:
+type CandidatePaging = { page: SearchPagination; notice?: string; request:
   { kind: 'name'; query: string; source: DrugSource; dosageForm: string } | { kind: 'appearance'; observation: MedicationObservation } };
 const dateText = (date: string | null) => date ? new Date(date).toLocaleString('zh-TW') : '尚未載入';
 const button = 'rounded-xl px-4 py-2.5 text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed';
@@ -207,7 +209,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       const data = request.kind === 'name' ? await searchMedications(request.query, request.source, offset, revision, request.dosageForm) :
         (await matchMedications([request.observation], offset, revision)).matches[0];
       if (version !== searchVersion.current || !mounted.current) return;
-      replaceCandidates(data.candidates); setNotices(data.warnings);
+      replaceCandidates(data.candidates); setNotices(current.notice ? [current.notice, ...data.warnings] : data.warnings);
       setCandidatePaging({ ...current, page: data.page });
     } catch (e) { if (version === searchVersion.current && mounted.current) setCandidatePageError((e as Error).message); }
     finally { if (mounted.current && version === searchVersion.current) setBusy(null); }
@@ -374,19 +376,19 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     catch (e) { setError((e as Error).message); }
   }
 
-  function showMatch(match: MedicationMatch) {
+  function showMatch(match: MedicationMatch, notice?: string) {
     searchVersion.current++; setQuery([match.observation.name, match.observation.strength].filter(Boolean).join(' ')); setSource('tfda'); setDosageForm(match.observation.dosageForm);
-    replaceCandidates(match.candidates); setSearched(true); setNotices(match.warnings); setError('');
-    setCandidatePaging({ page: match.page, request: { kind: 'appearance', observation: match.observation } });
+    replaceCandidates(match.candidates); setSearched(true); setNotices(notice ? [notice, ...match.warnings] : match.warnings); setError('');
+    setCandidatePaging({ page: match.page, notice, request: { kind: 'appearance', observation: match.observation } });
   }
 
-  async function searchAppearance(observation: MedicationObservation, scanIndex?: number) {
+  async function searchAppearance(observation: MedicationObservation, scanIndex?: number, notice?: string) {
     setBusy('match'); setError(''); replaceCandidates([]); setSearched(false); setNotices([]);
     try {
       const data = await matchMedications([observation]);
       if (mounted.current) {
         if (scanIndex !== undefined) setScanMatches(previous => previous.map((match, i) => i === scanIndex ? data.matches[0] : match));
-        showMatch(data.matches[0]);
+        showMatch(data.matches[0], notice);
       }
     } catch (e) { if (mounted.current) setError((e as Error).message); }
     finally { if (mounted.current) setBusy(null); }
@@ -512,7 +514,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
         {scanEngine === 'vision' && <PillReferenceLibrary key={files.map(file => file.id).join(',') + selected.map(pillReferenceIdentity).join(',')} selected={selected} photoCount={files.filter(file => file.type !== 'application/pdf').length} disabled={!!busy} library={personalLibrary}
           onSave={registerPill} onRefresh={() => void refreshVisionStatus()} onDisable={key => void updatePersonalLibrary(`/api/medications/vision/personal-references/${key}/disable`, {}, '已停用這張照片，後續不再用於比對；其他參考圖保持可用。')} />}
         <div ref={visionHeading} className="scroll-mt-6">{visionResult && <VisionResults result={visionResult} disabled={!!busy} onImprintSearch={input => void searchAppearance({ name: '', strength: '', dosageForm: '', appearance: { shape: '', color: '', imprints: [input] } })} onPackage={() => { setScanEngine('package'); setVisionResult(null); void extract('package', 'label'); }} onOcr={() => void extract('local', 'pill')} onLabelOcr={() => { setScanEngine('local'); setOcrTarget('label'); setVisionResult(null); void extract('local', 'label'); }} onReview={drug => { searchVersion.current++; replaceCandidates([drug]); setSearched(true); setNotices(['您正在核對候選，請確認品名、規格與實際包裝後再分析。', ...(visionResult.imprintSearch && compareStoredImprint(visionResult.imprintSearch.input, drug.appearance) === 'combined_fields' ? [combinedImprintNotice] : [])]); setQuery(drug.name); setSource('tfda'); setDosageForm(drug.dosageForm); }} />}</div>
-        <ObservationReview matches={scanMatches} disabled={!!busy} formListId={formListId} onSelect={showMatch}
+        <ObservationReview matches={scanMatches} disabled={!!busy} formListId={formListId} onSelect={match => showMatch(match)}
           onSearch={(observation, index) => void searchAppearance(observation, index)}
           onEdit={clearSearchResults} />
       </details>
@@ -535,7 +537,12 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       </form>
       <div ref={candidateSection} className="scroll-mt-6">
       {notices.map(n => <p key={n} className="mt-3 text-sm text-amber-800">{n}</p>)}
-      {searched && !candidates.length && <p className="mt-4 text-sm text-slate-600">未找到品項。請核對拼字、改用成分名稱或切換資料來源；不代表此藥不存在。</p>}
+      {searched && !candidates.length && <p className="mt-4 text-sm text-slate-600">{suggestionRequest?.kind === 'appearance' && suggestionRequest.observation.appearance?.imprints.some(text => text.trim()) ?
+        '未找到符合這組完整刻字與篩選條件的品項。請核對照片及正反面，也可改查藥袋上的品名；不代表此藥不存在。' :
+        '未找到品項。請核對拼字、改用成分名稱或切換資料來源；不代表此藥不存在。'}</p>}
+      {searched && !candidates.length && suggestionRequest?.kind === 'appearance' && !!imprintSuggestionInputs(suggestionRequest.observation).length &&
+        <ImprintSuggestions key={JSON.stringify(suggestionRequest.observation)} observation={suggestionRequest.observation} disabled={!!busy} active={active}
+          onSearch={(observation, notice) => void searchAppearance(observation, undefined, notice)} />}
       {searched && !candidates.length && canSuggestName(suggestionQuery) && <section aria-label="相近品名建議" className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm">
         <p className="font-medium text-slate-800">可能是品名拼字不同</p>
         <p className="mt-1 text-slate-600">最多列出 8 個相差一個字的本機品名寫法，排序不代表正確率。請對照原圖或藥袋，選擇後才重新搜尋，劑型篩選會保留；不會自動確認藥品。</p>
