@@ -81,6 +81,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const [ocrTarget, setOcrTarget] = useState<OcrTarget>('label');
   const [ocrPages, setOcrPages] = useState<OcrPage[]>([]);
   const [scanProgress, setScanProgress] = useState('');
+  const [photoResultReady, setPhotoResultReady] = useState(false);
   const scanController = useRef<AbortController | null>(null);
   const [report, setReport] = useState<MedicationReport | null>(null);
   const [reportRefreshError, setReportRefreshError] = useState('');
@@ -109,6 +110,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const selectionSection = useRef<HTMLElement>(null);
   const candidateSection = useRef<HTMLDivElement>(null);
   const visualMode = scanEngine === 'vision' || scanEngine === 'package';
+  const scanRunning = busy === 'extract';
   const activeVisionStatus = scanEngine === 'package' ? packageStatus : visionStatus;
   const maxFiles = visualMode ? 2 : 4;
   const suggestionRequest = candidatePaging?.request;
@@ -142,10 +144,10 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     catch { if (mounted.current) setPersonalLibrary({ photos: [], warning: '無法讀取自存照片，請確認後端已啟動後重試。' }); }
   }
   useEffect(() => {
-    if (!active) return;
+    if (!active || scanRunning) return;
     if (ocrPages.length) ocrHeading.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
     else if (visionResult) visionHeading.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
-  }, [visionResult, ocrPages.length]);
+  }, [visionResult, ocrPages.length, scanRunning]);
 
   useEffect(() => {
     if (active && searched) candidateSection.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
@@ -247,14 +249,20 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
 
   async function extract(engine: ScanEngine = scanEngine, target: OcrTarget = engine === 'local' && scanEngine === 'vision' ? 'pill' : ocrTarget) {
     const controller = new AbortController(); scanController.current = controller;
+    let completedPart = false;
+    setPhotoResultReady(false);
     setBusy('extract'); setError(''); setScanWarnings([]); setScanMatches([]); setOcrPages([]); if (engine === 'vision' || engine === 'package') setVisionResult(null); replaceCandidates([]); setNotices([]); setSearched(false); setScanProgress('準備辨識…');
     try {
       if ((engine === 'vision' || engine === 'package') && readPhotoText) {
-        const result = await readMedicationPhoto(engine, files, { target, imprint: visionImprint, signal: controller.signal,
-          onProgress: message => { if (mounted.current && !controller.signal.aborted) setScanProgress(message); } });
-        if (!mounted.current || controller.signal.aborted) return;
-        setVisionResult(result.vision); setOcrPages(result.pages); setScanWarnings(result.issues);
-        if (result.vision) (engine === 'package' ? setPackageStatus : setVisionStatus)(result.vision.status);
+        await readMedicationPhoto(engine, files, { target, imprint: visionImprint, signal: controller.signal,
+          onProgress: message => { if (mounted.current && !controller.signal.aborted) setScanProgress(message); },
+          onResult: result => {
+            if (!mounted.current || controller.signal.aborted) return;
+            completedPart = !!result.vision || !!result.pages.length;
+            setPhotoResultReady(completedPart);
+            setVisionResult(result.vision); setOcrPages(result.pages); setScanWarnings(result.issues);
+            if (result.vision) (engine === 'package' ? setPackageStatus : setVisionStatus)(result.vision.status);
+          } });
         return;
       }
       const result = await readMedicationScan(engine, files, apiKey, { target, imprint: visionImprint, signal: controller.signal,
@@ -267,8 +275,13 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       if (mounted.current) {
         setScanMatches(data.matches); showMatch(data.matches[0]);
       }
-    } catch (e) { if (mounted.current) setError(controller.signal.aborted ? '已取消本機辨識，可重新開始或手動輸入。' : (e as Error).message || '辨識失敗，請手動輸入藥名。'); }
-    finally { scanController.current = null; if (mounted.current) { setBusy(null); setScanProgress(''); } }
+    } catch (e) {
+      if (mounted.current) {
+        if (controller.signal.aborted && completedPart) setNotices(['已停止剩餘辨識，完成的結果已保留，可直接核對查詢。']);
+        else setError(controller.signal.aborted ? '已取消本機辨識，可重新開始或手動輸入。' : (e as Error).message || '辨識失敗，請手動輸入藥名。');
+      }
+    }
+    finally { scanController.current = null; if (mounted.current) { setBusy(null); setScanProgress(''); setPhotoResultReady(false); } }
   }
 
   async function observePill() {
@@ -457,7 +470,11 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
           {(busy === 'extract' || busy === 'reference') && scanEngine !== 'gemini' && <button className={secondary} onClick={() => scanController.current?.abort()}>{busy === 'reference' ? '取消收錄' : '取消辨識'}</button>}
         </div>
         {(busy === 'extract' || busy === 'reference') && <p role="status" className="mt-3 text-sm text-emerald-800">{scanEngine !== 'gemini' ? scanProgress : '正在使用 Gemini 辨識並比對本機資料…'}</p>}
-        {!!scanWarnings.length && <div role="status" className="mt-3 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">{scanWarnings.map(warning => <p key={warning}>{warning}</p>)}<p className="mt-1">已保留完成的部分，可核對結果後查詢，或重新辨識。</p></div>}
+        {scanRunning && photoResultReady && <div role="status" className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900">
+          <p>{visionResult ? '照片比對' : '文字讀取'}已完成，結果已顯示在下方。可繼續等待，或停止剩餘辨識後核對已完成的結果。</p>
+          <button type="button" className={`${secondary} mt-2`} onClick={() => scanController.current?.abort()}>停止剩餘辨識並使用結果</button>
+        </div>}
+        {!!scanWarnings.length && <div role="status" className="mt-3 rounded-lg bg-amber-50 p-3 text-sm text-amber-900">{scanWarnings.map(warning => <p key={warning}>{warning}</p>)}{(visionResult || ocrPages.length > 0) && <p className="mt-1">已保留完成的部分，可核對結果後查詢，或重新辨識。</p>}</div>}
         {!!files.length && <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">{files.map(file => <div key={file.id} className="relative border rounded-xl p-2">
           {file.type === 'application/pdf' ? <FileText className="h-20 mx-auto text-slate-400" /> : <img src={file.data} alt={file.name} className="w-full h-20 object-contain" />}
           <p className="text-xs truncate mt-2">{file.name}</p>

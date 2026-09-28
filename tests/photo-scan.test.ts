@@ -11,6 +11,40 @@ const options=(controller=new AbortController()):LocalOcrOptions=>({target:'labe
 const cloud=async()=>{assert.fail('Combined local scans must never call Gemini');};
 function deferred<T>() {let resolve!:(value:T)=>void;const promise=new Promise<T>(done=>{resolve=done;});return {promise,resolve};}
 
+test('Completed photo results are available before OCR finishes and survive cancellation of the remaining work',async()=>{
+ const controller=new AbortController(),image=deferred<VisionResult>(),text=deferred<OcrPage[]>();
+ const updates:unknown[]=[];
+ const config={...options(controller),onResult:(result:unknown)=>{updates.push(result);}};
+ const result=readMedicationPhoto('vision',files,config,{vision:async()=>image.promise,local:async()=>text.promise,gemini:cloud});
+ const rejected=assert.rejects(result,{name:'AbortError'});
+ image.resolve(vision);
+ await new Promise(resolve=>setImmediate(resolve));
+ controller.abort();await rejected;
+ text.resolve(pages);await new Promise(resolve=>setImmediate(resolve));
+ assert.deepEqual(updates,[{vision,pages:[],issues:[]}], 'ready candidates must not wait for or be erased by slower OCR');
+});
+
+test('Completed OCR is available while photo search is pending, then gains the image error without losing text',async()=>{
+ const image=deferred<void>(),updates:unknown[]=[];
+ const result=readMedicationPhoto('package',files,{...options(),onResult:(update:unknown)=>{updates.push(update);}},
+  {package:async()=>{await image.promise;throw Error('photo timeout');},local:async()=>pages,gemini:cloud});
+ await new Promise(resolve=>setImmediate(resolve));
+ const early=updates.slice();image.resolve();const final=await result;
+ assert.deepEqual(early,[{vision:null,pages,issues:[]}]);
+ assert.deepEqual(updates,[{vision:null,pages,issues:[]},final]);
+ assert.deepEqual(final.pages,pages);assert.match(final.issues[0],/圖片比對.*photo timeout/);
+});
+
+test('An early image error is visible while OCR is pending, without claiming a completed result',async()=>{
+ const text=deferred<OcrPage[]>(),updates:unknown[]=[];
+ const result=readMedicationPhoto('vision',files,{...options(),onResult:update=>updates.push(update)},
+  {vision:async()=>{throw Error('missing index');},local:async()=>text.promise,gemini:cloud});
+ await new Promise(resolve=>setImmediate(resolve));
+ const early=updates.slice();text.resolve(pages);const final=await result;
+ assert.deepEqual(early,[{vision:null,pages:[],issues:['圖片比對未完成：missing index']}]);
+ assert.deepEqual(updates,[early[0],final]);assert.deepEqual(final.pages,pages);
+});
+
 test('Photo and OCR start together, retain separate evidence and use the correct target',async()=>{
  for(const engine of ['vision','package'] as const){
   const image=deferred<VisionResult>(),text=deferred<OcrPage[]>(),calls:string[]=[];

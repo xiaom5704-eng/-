@@ -5,6 +5,8 @@ import { requestJson } from './http';
 
 export interface ScanFile { name: string; data: string }
 export interface LocalOcrOptions { target: OcrTarget; signal: AbortSignal; onProgress: (message: string) => void; imprint?: string }
+export interface PhotoScanResult { vision: VisionResult | null; pages: OcrPage[]; issues: string[] }
+interface PhotoScanOptions extends LocalOcrOptions { onResult?: (result: PhotoScanResult) => void }
 interface Readers {
   local: (files: ScanFile[], options: LocalOcrOptions) => Promise<OcrPage[]>;
   gemini: (files: string[], apiKey: string) => Promise<MedicationObservation[]>;
@@ -29,10 +31,21 @@ const readers: Readers = {
 
 // Both local readers see the same photos, but their evidence stays separate.
 // A failed index must not hide readable text; OCR never supplies an unreviewed imprint to CV.
-export async function readMedicationPhoto(engine: 'vision' | 'package', files: ScanFile[], options: LocalOcrOptions, dependencies = readers) {
+export async function readMedicationPhoto(engine: 'vision' | 'package', files: ScanFile[], options: PhotoScanOptions, dependencies = readers): Promise<PhotoScanResult> {
   options.signal.throwIfAborted();
   validatePhotoFiles(files);
   const progress = { image: '正在比對', text: '正在準備' };
+  let vision: VisionResult | null = null;
+  let pages: OcrPage[] = [];
+  const failures = { image: '', text: '' };
+  const snapshot = (): PhotoScanResult => ({ vision, pages, issues: [failures.image, failures.text].filter(Boolean) });
+  const publish = () => { if (!options.signal.aborted) options.onResult?.(snapshot()); };
+  const failed = (part: keyof typeof progress, error: unknown) => {
+    if (options.signal.aborted) return;
+    const message = error instanceof Error ? error.message : '請稍後重試。';
+    failures[part] = `${part === 'image' ? '圖片比對' : '文字讀取'}未完成：${message}`;
+    update(part, '未完成'); publish();
+  };
   const update = (part: keyof typeof progress, message: string) => {
     if (options.signal.aborted) return;
     progress[part] = message;
@@ -50,21 +63,19 @@ export async function readMedicationPhoto(engine: 'vision' | 'package', files: S
         const reader = dependencies[engine];
         if (!reader) throw new Error('圖片比對服務未設定。');
         const result = await reader(files, { ...options, onProgress: message => update('image', message) });
-        update('image', '已完成'); return result;
-      }).catch(error => { update('image', '未完成'); throw error; }),
+        options.signal.throwIfAborted();
+        vision = result; update('image', '已完成'); publish(); return result;
+      }).catch(error => { failed('image', error); throw error; }),
       Promise.resolve().then(async () => {
         options.signal.throwIfAborted();
-        const pages = await dependencies.local(files, { ...options, target: engine === 'vision' ? 'pill' : 'label', onProgress: message => update('text', message) });
-        update('text', '已完成'); return pages;
-      }).catch(error => { update('text', '未完成'); throw error; }),
+        const result = await dependencies.local(files, { ...options, target: engine === 'vision' ? 'pill' : 'label', onProgress: message => update('text', message) });
+        options.signal.throwIfAborted();
+        pages = result; update('text', '已完成'); publish(); return result;
+      }).catch(error => { failed('text', error); throw error; }),
     ]), stopped]);
     options.signal.throwIfAborted();
-    const issues: string[] = [];
-    const message = (reason: unknown) => reason instanceof Error ? reason.message : '請稍後重試。';
-    if (image.status === 'rejected') issues.push(`圖片比對未完成：${message(image.reason)}`);
-    if (text.status === 'rejected') issues.push(`文字讀取未完成：${message(text.reason)}`);
-    if (image.status === 'rejected' && text.status === 'rejected') throw new Error(issues.join(' '));
-    return { vision: image.status === 'fulfilled' ? image.value : null, pages: text.status === 'fulfilled' ? text.value : [], issues };
+    if (image.status === 'rejected' && text.status === 'rejected') throw new Error(snapshot().issues.join(' '));
+    return snapshot();
   } finally { options.signal.removeEventListener('abort', abort); }
 }
 
