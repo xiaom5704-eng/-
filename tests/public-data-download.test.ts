@@ -31,7 +31,8 @@ function response(start: number, end: number, source = bytes) {
     headers: { 'Content-Range': `bytes ${start}-${end}/${bytes.length}`, 'Content-Length': String(end - start + 1) } });
 }
 
-test('Parallel ranges stay bounded, assemble in order and fully verified cached chunks work offline', { timeout: 2000 }, async t => {
+// Bound a broken concurrency barrier without treating busy filesystem I/O as a speed test.
+test('Parallel ranges stay bounded, assemble in order and fully verified cached chunks work offline', { timeout: 10000 }, async t => {
   const { root, options } = await fixture(t);
   let active = 0, maximum = 0, release!: () => void;
   const ready = new Promise<void>(resolve => { release = resolve; }), requested: number[] = [];

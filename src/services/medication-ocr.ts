@@ -89,6 +89,22 @@ export async function readLocalMedicationFiles(files: ScanFile[], { target, sign
             result.readNotice = '小字補讀未完成，已保留原尺寸結果；可裁切照片後重新辨識。';
           }
         }
+        // Tiny crops can be too small natively and too large at 1280. Only fill
+        // an empty result; never replace a reading or choose text by drug names.
+        if (photo && target === 'pill' && !result.text.trim() && Math.max(canvas.width, canvas.height) < 224) {
+          const small = canvasFor(canvas.width, canvas.height, 224 / Math.max(canvas.width, canvas.height));
+          try {
+            onProgress(`${progressLabel} · 正在補讀小幅裁切的刻字…`);
+            const width = canvas.width * small.ratio, height = canvas.height * small.ratio;
+            small.context.drawImage(canvas, (small.canvas.width - width) / 2, (small.canvas.height - height) / 2, width, height);
+            const recovered = reading(await wait(labelReader!.recognize(small.canvas)));
+            result = withEnlargedReading(result, recovered);
+            if (recovered.text) result.readNotice = '小圖已另以適度放大的尺寸補讀；請切換結果並對照照片，核對完整刻字，仍可能漏字或誤讀。';
+          } catch (error) {
+            if (stopReason || signal.aborted) throw error;
+            result.readNotice = '小圖補讀未完成，可重新辨識、補拍清楚近照，或手動填寫刻字。';
+          } finally { small.canvas.width = 0; small.canvas.height = 0; }
+        }
         pages.push(result);
       } finally { canvas.width = 0; canvas.height = 0; if (enlarged) { enlarged.width = 0; enlarged.height = 0; } }
     }
