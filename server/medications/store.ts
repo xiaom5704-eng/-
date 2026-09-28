@@ -12,6 +12,7 @@ import { initializeTfdaLabelIndex } from './tfda-label-index';
 import { tfdaLabelIndexUrl } from '../../shared/tfda-label-index';
 import { createDdinterMechanismReader } from './ddinter-mechanisms';
 import { appearanceTerms } from '../../shared/appearance-search';
+import { findImprintMatches } from './imprint-search';
 export { appearanceTerms } from '../../shared/appearance-search';
 
 export const TFDA_URL = 'https://data.gov.tw/dataset/9122';
@@ -108,10 +109,16 @@ export function searchLocalCandidates(db: DrugDatabase, query: string, appearanc
     }
   }
   if (appearance) {
+    for (const input of appearance.imprints.filter(value => value.trim())) {
+      const matches = findImprintMatches(db, input);
+      if (!matches.length) return { candidates: [], total: 0, page: page(0) };
+      if (!seed) seed = "SELECT json_extract(value,'$.id') AS id,json_extract(value,'$.rank') AS rank FROM json_each(?)";
+      else conditions.push("ids.id IN (SELECT json_extract(value,'$.id') FROM json_each(?))");
+      values.push(JSON.stringify(matches));
+    }
     const filters = [
       ...appearanceTerms(appearance.shape, 'shape').map(value => ['shape', value]),
       ...appearanceTerms(appearance.color, 'color').map(value => ['color', value]),
-      ...appearance.imprints.flatMap(value => appearanceTerms(value, 'imprint')).map(value => ['imprint', value]),
     ];
     for (const [kind, value] of filters) {
       if (!seed) seed = 'SELECT id, 3 AS rank FROM tfda_appearance_terms WHERE kind = ? AND value = ?';

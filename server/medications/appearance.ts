@@ -6,7 +6,7 @@ import { APPEARANCE_URL, appearanceTerms, normalizeName, searchLocalCandidates, 
 import { replaceSearchSource, searchRevision, type SearchPageOptions } from './search-index';
 import { measurementSearchNotice } from './search-measurements';
 import { dosageFormSearchNotice } from './dosage-forms';
-import type { AppearanceOptions } from '../../shared/appearance-search';
+import { combinedImprintNotice, compareStoredImprint, type AppearanceOptions } from '../../shared/appearance-search';
 
 export function localAppearanceOptions(db: DrugDatabase): AppearanceOptions {
   const terms = db.prepare(`SELECT kind,value FROM tfda_appearance_terms
@@ -81,6 +81,7 @@ export function matchObservation(db: DrugDatabase, observation: MedicationObserv
   const query = [name.length >= 2 ? name : '', observation.strength.trim()].filter(Boolean).join(' ');
   const result = searchLocalCandidates(db, query, a, { ...options, dosageForm: observation.dosageForm });
   const warnings = ['候選結果需核對品名、規格及外觀；相似外觀不能直接確認藥品身分。', ...measurementSearchNotice(query), ...dosageFormSearchNotice(db, observation.dosageForm)];
+  if (result.candidates.some(drug => a?.imprints.some(input => compareStoredImprint(input, drug.appearance) === 'combined_fields'))) warnings.push(combinedImprintNotice);
   if (name.length >= 2) warnings.push('藥名搜尋會合併簡繁字形，回傳品名保留資料庫原文；誤字、規格與刻字仍須人工核對。');
   if (!result.total) warnings.push('本機資料沒有符合的候選；請核對辨識文字或補拍清楚的正反面，不會自動改查線上 API。');
   if (result.total > 20) warnings.push(`共有 ${result.total} 個候選，可翻頁查看，也可補充刻字或完整藥名縮小範圍。`);

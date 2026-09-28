@@ -2,6 +2,8 @@ import Database from 'better-sqlite3';
 import { existsSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { getTfda, normalizeName, type DrugDatabase } from '../medications/store';
+import { findImprintMatches } from '../medications/imprint-search';
+import { combinedImprintNotice, hasImprintMatch } from '../../shared/appearance-search';
 import { compareImprint, eligibleForPillSearch, MIN_VISUAL_SIMILARITY, rankVisualReferences, type VisionCandidate, type VisionResult, type VisionStatus, type VisualReference } from '../../shared/medication-vision';
 import { searchRevision } from '../medications/search-index';
 import { MODEL_VERSION, MODEL_PATH, INDEX_PATH, IMAGE_ROOT, DIMENSIONS } from './config.mjs';
@@ -116,12 +118,11 @@ export class VisionService {
     const status = this.status();
     if (!status.ready) throw new Error(status.reason || '圖片比對尚未就緒。');
     const references = [...this.availableReferences(), ...(this.kind === 'pill' ? this.personal?.snapshot().references || [] : this.officialPackages?.snapshot().references || [])];
-    // Exact imprints search the entire appearance database, including products
+    // Complete imprints search the entire appearance database, including products
     // without a usable reference vector. They are independent retrieval evidence.
     const imprintDrugs = this.kind === 'pill' && imprint.trim() ?
-      (this.drugs.prepare("SELECT id FROM tfda_appearance_terms WHERE kind='imprint' AND value=? ORDER BY id")
-        .all(normalizeName(imprint).replace(/\s/g, '')) as { id: string }[])
-        .map(row => getTfda(this.drugs, row.id)).filter(drug => drug && eligibleForPillSearch(drug) && compareImprint(imprint, drug.appearance) === 'match') : [];
+      findImprintMatches(this.drugs, imprint)
+        .map(row => getTfda(this.drugs, row.id)).filter(drug => drug && eligibleForPillSearch(drug) && hasImprintMatch(compareImprint(imprint, drug.appearance))) : [];
     const exactIds = new Set(imprintDrugs.map(drug => drug!.id));
     const threshold = this.kind === 'package' ? 0.75 : MIN_VISUAL_SIMILARITY;
     const ranked = rankVisualReferences(vectors, references, references.length, exactIds.size ? -1 : threshold);
@@ -144,8 +145,9 @@ export class VisionService {
     }
     const included = new Set(matches.map(match => match.drug.id));
     for (const drug of imprintDrugs) if (drug && !included.has(drug.id))
-      matches.push({ drug, similarity: null, matchedBy: 'imprint', imprint: 'match', images: [] });
+      matches.push({ drug, similarity: null, matchedBy: 'imprint', imprint: compareImprint(imprint, drug.appearance), images: [] });
     const candidates = matches.sort((a, b) => Number(b.imprint === 'match') - Number(a.imprint === 'match') ||
+      Number(b.imprint === 'combined_fields') - Number(a.imprint === 'combined_fields') ||
       Number(b.matchedBy !== 'imprint') - Number(a.matchedBy !== 'imprint') || (b.similarity ?? -Infinity) - (a.similarity ?? -Infinity) || a.drug.id.localeCompare(b.drug.id)).slice(0, 8);
     if (this.kind === 'pill') {
       const localDrugs = new LocalMedicationImages(this.drugs, this.indexPath, this.imagesPath).attach(candidates.map(candidate => candidate.drug));
@@ -167,8 +169,9 @@ export class VisionService {
     const visual = candidates.filter(candidate => candidate.matchedBy !== 'imprint');
     if (visual.length > 1 && Math.abs(visual[0].similarity! - visual[1].similarity!) < 0.04) warnings.push('多個品項外觀接近，請補充刻字、藥袋或請藥師核對。');
     if (exactIds.size > 1) warnings.push(`同一刻字符合 ${exactIds.size} 個藥錠品項，刻字本身不能唯一確認藥品，請繼續核對正反面、顏色與規格。`);
-    if (imprint.trim() && !candidates.some(candidate => candidate.imprint === 'match')) warnings.push('沒有候選與輸入刻字完全相符，請核對 0／O、1／I 及另一面的刻字。');
+    if (candidates.some(candidate => candidate.imprint === 'combined_fields')) warnings.push(combinedImprintNotice);
+    if (imprint.trim() && !candidates.some(candidate => hasImprintMatch(candidate.imprint))) warnings.push('沒有候選與輸入刻字完全相符，請核對 0／O、1／I 及另一面的刻字。');
     return { status, candidates, warnings, outcome: candidates.length ? 'review' : 'low_similarity',
-      ...(imprint.trim() ? { imprintSearch: { input: imprint.trim(), total: exactIds.size, shown: candidates.filter(candidate => candidate.imprint === 'match').length } } : {}) };
+      ...(imprint.trim() ? { imprintSearch: { input: imprint.trim(), total: exactIds.size, shown: candidates.filter(candidate => hasImprintMatch(candidate.imprint)).length } } : {}) };
   }
 }

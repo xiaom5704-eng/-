@@ -1,5 +1,7 @@
 import type { DrugCandidate } from './medication';
 import { isUnitVisionVector } from './vision-vector.mjs';
+import type { ImprintMatch } from './appearance-search';
+export { compareStoredImprint as compareImprint } from './appearance-search';
 
 export interface VisionStatus {
   ready: boolean; reason?: string; imageCount: number; drugCount: number;
@@ -11,7 +13,7 @@ export interface VisionStatus {
 export interface VisionCandidate {
   drug: DrugCandidate; similarity: number | null;
   matchedBy: 'image' | 'imprint' | 'image_and_imprint';
-  imprint: 'match' | 'different' | 'missing' | 'not_given';
+  imprint: ImprintMatch;
   images: { url: string; sourceUrl: string; sourceNote?: string; provenance?: 'personal' }[];
 }
 export interface VisionResult {
@@ -54,12 +56,4 @@ export function rankVisualReferences(queries: Float32Array[], references: Visual
   return [...matches.values()].map(drug => ({ ...drug, similarity: drug.views.reduce((n, view) => n + view.similarity, 0) / queries.length }))
     .filter(drug => drug.views.every(view => view.similarity >= minimumSimilarity))
     .sort((a, b) => b.similarity - a.similarity || a.drugId.localeCompare(b.drugId)).slice(0, limit);
-}
-
-export function compareImprint(input: string, appearance?: DrugCandidate['appearance']): VisionCandidate['imprint'] {
-  const normalize = (text: string) => text.normalize('NFKC').toUpperCase().replace(/\s/g, '');
-  if (!input.trim()) return 'not_given';
-  const marks = [appearance?.imprint1 || '', appearance?.imprint2 || ''].flatMap(mark => mark.split(/;;;|；；；/)).map(normalize).filter(Boolean);
-  if (!marks.length) return 'missing';
-  return marks.includes(normalize(input)) ? 'match' : 'different';
 }

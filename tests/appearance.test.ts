@@ -131,6 +131,49 @@ test('Broad appearances remain bounded and missing features do not list arbitrar
   assert.equal(validObservations([observe({ shape: '', color: '', imprints: ['a', 'b', 'c'] })]), false);
 });
 
+test('Complete imprints also retrieve split source fields without substring, glyph or color relaxation', t => {
+  const db = database(t);
+  importAppearance(db, csv([
+    row('SPLIT', { 標註一: 'FY', 標註二: 'C014' }),
+    row('WHOLE', { 標註一: 'FY C014', 標註二: '' }),
+    row('LOOKALIKE', { 標註一: 'FY', 標註二: 'CO14' }),
+    row('ALTERNATIVES', { 標註一: 'FY;;;C014', 標註二: '' }),
+    row('SYMBOL', { 標註一: 'AB/', 標註二: '25' }),
+    row('REPEATED', { 標註一: '10', 標註二: '10' }),
+    row('ALTERNATE-CROSS', { 標註一: 'AB;;;CD', 標註二: '12;;;34' }),
+  ]), 'split.csv');
+  const query = (imprint: string, color = '') => matchObservation(db, observe({ shape: '', color, imprints: [imprint] }));
+  assert.deepEqual(query('ｆ ｙ Ｃ０１４').candidates.map(d => d.id), ['WHOLE', 'SPLIT']);
+  assert.deepEqual(query('C014 FY').candidates.map(d => d.id), ['SPLIT']);
+  assert.match(query('FY C014').warnings.join(' '), /兩欄/);
+  for (const imprint of ['FY C01', 'FY C0I4', 'FY C014 X', 'FY;;;C014', 'AB25']) assert.equal(query(imprint).total, 0, imprint);
+  assert.deepEqual(query('AB/25').candidates.map(d => d.id), ['SYMBOL']);
+  assert.deepEqual(query('10 10').candidates.map(d => d.id), ['REPEATED']);
+  assert.deepEqual(query('CD34').candidates.map(d => d.id), ['ALTERNATE-CROSS']);
+  assert.equal(query('ABCD').total, 0, 'alternatives in one source field must never be concatenated');
+  assert.equal(query('1234').total, 0, 'alternatives in the second source field must never be concatenated');
+  assert.equal(query('FY C014', '紅').total, 0);
+  assert.deepEqual(query('C014').candidates.map(d => d.id).sort(), ['ALTERNATIVES', 'SPLIT']);
+});
+
+test('Split-field candidates retain names, pagination, source updates and stable source records', t => {
+  const db = database(t);
+  importAppearance(db, csv(Array.from({ length: 25 }, (_, i) => row(`SPLIT${String(i).padStart(2, '0')}`, { 標註一: 'XY', 標註二: '123' }))), 'many-split.csv');
+  const before = db.prepare('SELECT * FROM tfda_appearances ORDER BY id').all();
+  const observation = observe({ shape: '圓形', color: '白', imprints: ['XY 123'] }, '測試');
+  const first = matchObservation(db, observation);
+  assert.equal(first.total, 25); assert.equal(first.candidates.length, 20);
+  const second = matchObservation(db, observation, { offset: 20, revision: first.page.revision });
+  assert.equal(second.candidates.length, 5);
+  assert.equal(new Set([...first.candidates, ...second.candidates].map(d => d.id)).size, 25);
+  assert.equal(matchObservation(db, { ...observation, name: '沒有這個品名' }).total, 0);
+  assert.equal(matchObservation(db, { ...observation, dosageForm: '液劑' }).total, 0);
+  assert.deepEqual(db.prepare('SELECT * FROM tfda_appearances ORDER BY id').all(), before);
+  importAppearance(db, csv([row('UPDATED', { 標註一: 'XY', 標註二: '456' })]), 'new.csv');
+  assert.equal(matchObservation(db, observation).total, 0);
+  assert.throws(() => matchObservation(db, observation, { offset: 20, revision: first.page.revision }), /已更新/);
+});
+
 test('Local report makes zero provider requests and distinguishes unrequested labels from no matches', async t => {
   const db = seed(t); let calls = 0;
   const providers = new DrugProviders(db, (async () => { calls++; throw new Error('Network must not be used'); }) as typeof fetch);

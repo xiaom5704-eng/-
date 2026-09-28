@@ -33,7 +33,7 @@ import MedicationPatientField from './MedicationPatientField';
 import { ALLOWED_FILE_TYPES, MAX_FILE_BYTES, MAX_TOTAL_BYTES } from '../services/medication-files';
 import { readMedicationPhoto, readMedicationScan } from '../services/medication-scan';
 import { medicationSaveAttempt, type MedicationSaveAttempt } from '../../shared/medication-save';
-import type { AppearanceOptions } from '../../shared/appearance-search';
+import { combinedImprintNotice, compareStoredImprint, type AppearanceOptions } from '../../shared/appearance-search';
 
 type Attachment = { id: string; name: string; data: string; type: string; size: number };
 type Props = { apiKey: string; onSave: (report: MedicationSaveAttempt) => Promise<void>; saveDisabled?: boolean; savedRequestId?: string; active?: boolean };
@@ -494,7 +494,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
         {scanEngine === 'package' && <PackageReferenceForm key={files.map(file => file.id).join(',')} disabled={!!busy} photoCount={files.filter(file => file.type !== 'application/pdf').length} onSave={(name, note) => void registerPackage(name, note)} />}
         {scanEngine === 'vision' && <PillReferenceLibrary key={files.map(file => file.id).join(',') + selected.map(pillReferenceIdentity).join(',')} selected={selected} photoCount={files.filter(file => file.type !== 'application/pdf').length} disabled={!!busy} library={personalLibrary}
           onSave={registerPill} onRefresh={() => void refreshVisionStatus()} onDisable={key => void updatePersonalLibrary(`/api/medications/vision/personal-references/${key}/disable`, {}, '已停用這張照片，後續不再用於比對；其他參考圖保持可用。')} />}
-        <div ref={visionHeading} className="scroll-mt-6">{visionResult && <VisionResults result={visionResult} disabled={!!busy} onImprintSearch={input => void searchAppearance({ name: '', strength: '', dosageForm: '', appearance: { shape: '', color: '', imprints: [input] } })} onPackage={() => { setScanEngine('package'); setVisionResult(null); void extract('package', 'label'); }} onOcr={() => void extract('local', 'pill')} onLabelOcr={() => { setScanEngine('local'); setOcrTarget('label'); setVisionResult(null); void extract('local', 'label'); }} onReview={drug => { searchVersion.current++; replaceCandidates([drug]); setSearched(true); setNotices(['您正在核對候選，請確認品名、規格與實際包裝後再分析。']); setQuery(drug.name); setSource('tfda'); setDosageForm(drug.dosageForm); }} />}</div>
+        <div ref={visionHeading} className="scroll-mt-6">{visionResult && <VisionResults result={visionResult} disabled={!!busy} onImprintSearch={input => void searchAppearance({ name: '', strength: '', dosageForm: '', appearance: { shape: '', color: '', imprints: [input] } })} onPackage={() => { setScanEngine('package'); setVisionResult(null); void extract('package', 'label'); }} onOcr={() => void extract('local', 'pill')} onLabelOcr={() => { setScanEngine('local'); setOcrTarget('label'); setVisionResult(null); void extract('local', 'label'); }} onReview={drug => { searchVersion.current++; replaceCandidates([drug]); setSearched(true); setNotices(['您正在核對候選，請確認品名、規格與實際包裝後再分析。', ...(visionResult.imprintSearch && compareStoredImprint(visionResult.imprintSearch.input, drug.appearance) === 'combined_fields' ? [combinedImprintNotice] : [])]); setQuery(drug.name); setSource('tfda'); setDosageForm(drug.dosageForm); }} />}</div>
         <ObservationReview matches={scanMatches} disabled={!!busy} formListId={formListId} onSelect={showMatch}
           onSearch={(observation, index) => void searchAppearance(observation, index)}
           onEdit={clearSearchResults} />
@@ -541,8 +541,10 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       </div>}
       {!!candidates.length && <div className="mt-4 max-h-96 overflow-y-auto space-y-3">{candidates.map(drug => {
         const chosen = selected.some(d => d.source === drug.source && d.id === drug.id);
+        const combinedImprint = candidatePaging?.request.kind === 'appearance' && candidatePaging.request.observation.appearance?.imprints.some(input => compareStoredImprint(input, drug.appearance) === 'combined_fields');
         return <div key={`${drug.source}:${drug.id}`} className="rounded-xl border border-slate-200 p-4 flex flex-col sm:flex-row gap-3 sm:items-start">
           <div className="min-w-0 flex-1 break-words"><p className="font-semibold">{drug.name}</p>
+            {combinedImprint && <p className="mt-2 text-xs text-amber-800">刻字比對：來源兩欄合併相符</p>}
             {drug.englishName !== drug.name && <p className="text-xs text-slate-500 mt-1">{drug.englishName}</p>}
             <p className="text-xs text-slate-600 mt-2">{drug.dosageForm} {drug.manufacturer && ` · ${drug.manufacturer}`}</p>
             {drug.ingredients.length > 0 && <p className="text-xs text-slate-600 mt-1">成分：{drug.ingredients.join('、')}</p>}

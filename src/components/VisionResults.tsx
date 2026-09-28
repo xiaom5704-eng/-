@@ -2,8 +2,9 @@ import type { DrugCandidate } from '../../shared/medication';
 import type { VisionResult } from '../../shared/medication-vision';
 import DrugAppearanceDetails from './DrugAppearanceDetails';
 import PackageReferenceImages from './PackageReferenceImages';
+import { combinedImprintNotice } from '../../shared/appearance-search';
 
-const imprintText = { match: '刻字完全相符，仍需核對規格', different: '刻字未完全相符，請再核對', missing: '來源缺少刻字，無法核對', not_given: '' };
+const imprintText = { match: '刻字完全相符，仍需核對規格', combined_fields: '刻字兩欄合併相符，請對照原圖', different: '刻字未完全相符，請再核對', missing: '來源缺少刻字，無法核對', not_given: '' };
 const basisText = { image: '照片相似', imprint: '刻字相符・照片未確認', image_and_imprint: '照片相似＋刻字相符' };
 export default function VisionResults({ result, disabled, onReview, onOcr, onLabelOcr, onPackage, onImprintSearch }: {
   result: VisionResult; disabled: boolean; onReview: (drug: DrugCandidate) => void; onOcr: () => void; onLabelOcr: () => void; onPackage: () => void; onImprintSearch: (input: string) => void;
@@ -33,7 +34,7 @@ export default function VisionResults({ result, disabled, onReview, onOcr, onLab
       <button type="button" disabled={disabled} onClick={() => onReview(item.drug)} className="mt-3 rounded-lg bg-emerald-700 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-800 disabled:opacity-50">查看此候選的品項資料</button>
       <details className="mt-2 text-xs text-slate-500"><summary className="cursor-pointer">比對依據</summary>
         <p className="mt-2">{item.similarity === null ? '此品項沒有可用的圖片特徵，未進行照片比對。' : `影像相似度 ${item.similarity.toFixed(3)}（不是正確率）。${item.matchedBy === 'imprint' ? '本次照片未全數達到圖片比對門檻。' : '本次照片均通過圖片檢索門檻，仍需人工核對。'}`}</p>
-        {item.matchedBy !== 'image' && <p className="mt-2">您填寫的完整刻字與本機外觀資料其中一面相符；可能有其他同刻字品項，不能據此確定藥名。</p>}
+        {item.matchedBy !== 'image' && <p className="mt-2">{item.imprint === 'combined_fields' ? combinedImprintNotice : '您填寫的完整刻字與本機外觀資料其中一欄相符；可能有其他同刻字品項，不能據此確定藥名。'}</p>}
       </details>
     </article>)}</div>
     <div className="rounded-xl bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">{result.warnings.map(warning => <p key={warning}>{warning}</p>)}</div>

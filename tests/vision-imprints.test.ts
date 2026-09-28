@@ -22,14 +22,14 @@ function fixture() {
   index.exec('CREATE TABLE metadata(key TEXT,value TEXT); CREATE TABLE images(key TEXT,drug_id TEXT,source_url TEXT,sha256 TEXT,model TEXT,embedding BLOB);');
   index.prepare('INSERT INTO metadata VALUES (?,?)').run('index', JSON.stringify({ state: 'ready', modelVersion: MODEL_VERSION, indexedAt: 'synthetic' }));
   let sequence = 0;
-  const add = (id: string, imprint: string, ref?: Float32Array, form = '錠劑', stale = false) => {
+  const add = (id: string, imprint: string, ref?: Float32Array, form = '錠劑', stale = false, imprint2 = '') => {
     const drug: DrugCandidate = { source: 'tfda', id, name: `人工測試 ${id}`, englishName: '', ingredients: [`Ingredient ${id}`],
       dosageForm: form, manufacturer: '', licenseStatus: '', validUntil: '', indications: '', dosageText: '', sourceUrl: 'https://example.test' };
     const sourceUrl = `https://example.test/${id}.webp`;
-    const appearance = { shape: '圓形', color: '白', score: '', size: '', imprint1: imprint, imprint2: '', imageUrls: [sourceUrl], sourceUrl: 'https://example.test' };
+    const appearance = { shape: '圓形', color: '白', score: '', size: '', imprint1: imprint, imprint2, imageUrls: [sourceUrl], sourceUrl: 'https://example.test' };
     db.prepare('INSERT INTO tfda_drugs VALUES (?,?,?,?,?,?)').run(id, drug.name, '', id, 1, JSON.stringify(drug));
     db.prepare('INSERT INTO tfda_appearances VALUES (?,?,?,?,?)').run(id, drug.name, '', id, JSON.stringify(appearance));
-    for (const mark of appearanceTerms(imprint, 'imprint')) db.prepare('INSERT INTO tfda_appearance_terms VALUES (?,?,?)').run(id, 'imprint', mark);
+    for (const mark of new Set([imprint, imprint2].flatMap(value => appearanceTerms(value, 'imprint')))) db.prepare('INSERT INTO tfda_appearance_terms VALUES (?,?,?)').run(id, 'imprint', mark);
     if (ref) {
       const sha = (++sequence).toString(16).padStart(64, '0');
       writeFileSync(path.join(imageRoot, `${sha}.webp`), 'synthetic');
@@ -102,4 +102,30 @@ test('Shared imprints expose total counts and recheck canonical appearance inste
 test('An opposite reference vector retains its key when used only as imprint evidence', () => {
   const ranked = rankVisualReferences([vector(1)], [{ key: 'opposite', drugId: 'A', vector: vector(-1, 0) }], 8, -1);
   assert.equal(ranked[0].views[0].key, 'opposite'); assert.equal(ranked[0].similarity, -1);
+});
+
+test('CV includes complete split-field candidates with explicit evidence, exact fields first and stale records excluded', async () => {
+  const f = fixture();
+  try {
+    f.add('WHOLE', 'FY C014');
+    f.add('SPLIT', 'FY', vector(0), '錠劑', false, 'C014');
+    f.add('NO-IMAGE', 'FY', undefined, '錠劑', false, 'C014');
+    f.add('WRONG', 'FY', undefined, '錠劑', false, 'CO14');
+    f.add('ALTERNATIVES', 'FY;;;C014');
+    f.add('LIQUID', 'FY', undefined, '內服液劑', false, 'C014');
+    const pure = await search(f);
+    const result = await search(f, 'F Y C014');
+    assert.equal(result.candidates[0].drug.id, 'WHOLE');
+    assert.deepEqual(result.imprintSearch, { input: 'F Y C014', total: 3, shown: 3 });
+    for (const id of ['SPLIT', 'NO-IMAGE']) {
+      const item = result.candidates.find(item => item.drug.id === id)!;
+      assert.equal(item.matchedBy, 'imprint'); assert.equal(item.imprint, 'combined_fields');
+    }
+    assert.match(result.warnings.join(' '), /兩欄/);
+    assert.doesNotMatch(result.warnings.join(' '), /沒有候選與輸入刻字完全相符/);
+    assert.equal((await search(f, 'FY C0I4')).imprintSearch?.total, 0);
+    f.db.prepare("UPDATE tfda_appearances SET payload=json_set(payload,'$.imprint2','C015') WHERE id='SPLIT'").run();
+    assert.equal((await search(f, 'FY C014')).imprintSearch?.total, 2);
+    assert.deepEqual((await search(f)).candidates, pure.candidates);
+  } finally { f.close(); }
 });
