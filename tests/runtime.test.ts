@@ -73,6 +73,14 @@ test('Missing frontend build fails before creating blank databases', async t => 
   assert.equal(existsSync(config.paths.drugDb), false);
 });
 
+test('An explicitly browser-blocked port is rejected before creating databases', async t => {
+  const root = fixture(t), config = configFor(root);
+  mkdirSync(config.paths.dist); writeFileSync(path.join(config.paths.dist, 'index.html'), 'synthetic');
+  await assert.rejects(startApplication({ ...config, port: 6666 }), /瀏覽器禁止/);
+  assert.equal(existsSync(config.paths.chatDb), false);
+  assert.equal(existsSync(config.paths.drugDb), false);
+});
+
 test('Development serving denies synthetic environment files, including Windows alternate data stream paths', async t => {
   const root = fixture(t), secret = 'SYNTHETIC_ENV_SENTINEL_NOT_A_REAL_KEY';
   writeFileSync(path.join(root, 'index.html'), '<html><body>SYNTHETIC PAGE</body></html>');

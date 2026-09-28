@@ -8,8 +8,13 @@ import { medicationRouter } from './medications/router';
 import { ollamaRouter } from './ollama';
 import type { RuntimeConfig } from './runtime';
 import type { LocalDataSetup } from '../shared/local-data';
+import { startBrowserService } from './browser-port';
 
-export async function startApplication(config: RuntimeConfig) {
+export function startApplication(config: RuntimeConfig) {
+  return startBrowserService(config.port, () => startApplicationOnce(config));
+}
+
+async function startApplicationOnce(config: RuntimeConfig) {
   if (config.production && !existsSync(path.join(config.paths.dist, 'index.html'))) {
     throw new Error('找不到前端建置檔，請先執行 npm run build。');
   }

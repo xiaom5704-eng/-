@@ -25,11 +25,13 @@ export default function PhotoCropDialog({ data, onApply, onClose }: { data: stri
     if (!context) { setError('無法處理圖片，請改用原始照片。'); return; }
     context.fillStyle = '#fff'; context.fillRect(0, 0, canvas.width, canvas.height);
     context.drawImage(source, source.naturalWidth * crop.x / 100, source.naturalHeight * crop.y / 100, width, height, 0, 0, canvas.width, canvas.height);
-    onApply(canvas.toDataURL('image/jpeg', 0.94)); close();
+    try { onApply(canvas.toDataURL('image/jpeg', 0.94)); close(); }
+    catch (e) { setError(e instanceof Error ? e.message : '無法套用裁切，請重試。'); }
   }
   return createPortal(<dialog ref={dialog} onCancel={event => { event.preventDefault(); close(); }} aria-labelledby="photo-crop-title" className="m-auto max-h-[94dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-2xl bg-white p-5 text-slate-800 backdrop:bg-slate-950/70">
     <h3 id="photo-crop-title" className="font-bold text-lg">框選藥品或文字區域</h3>
     <p className="mt-2 text-sm text-slate-600">拖曳選取要辨識的範圍。藥錠請保留完整輪廓與刻字；藥盒、藥袋請保留完整藥名與規格。也可展開數值調整。</p>
+    <p className="mt-1 text-xs text-slate-500">套用後可在照片下方還原原圖。裁切或還原會清除舊辨識結果與刻字，請重新核對。</p>
     <div className="mt-4 text-center"><div ref={stage} className="relative inline-block max-w-full touch-none select-none align-top cursor-crosshair"
       onPointerDown={event => { if (!ready) return; event.currentTarget.setPointerCapture(event.pointerId); start.current = position(event); }}
       onPointerMove={event => { if (!start.current) return; const end = position(event); setCrop({ x: Math.min(start.current.x, end.x), y: Math.min(start.current.y, end.y), width: Math.abs(end.x - start.current.x), height: Math.abs(end.y - start.current.y) }); }}

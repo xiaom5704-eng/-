@@ -30,12 +30,11 @@ import { ageError } from '../../shared/consultation';
 import type { MedicationPatient } from '../../shared/medication-safety';
 import MedicationDemo from './MedicationDemo';
 import MedicationPatientField from './MedicationPatientField';
-import { ALLOWED_FILE_TYPES, MAX_FILE_BYTES, MAX_TOTAL_BYTES } from '../services/medication-files';
+import { ALLOWED_FILE_TYPES, assertAttachmentLimits, cropAttachment, restoreAttachment, type MedicationAttachment } from '../services/medication-files';
 import { readMedicationPhoto, readMedicationScan } from '../services/medication-scan';
 import { medicationSaveAttempt, type MedicationSaveAttempt } from '../../shared/medication-save';
 import { combinedImprintNotice, compareStoredImprint, type AppearanceOptions } from '../../shared/appearance-search';
 
-type Attachment = { id: string; name: string; data: string; type: string; size: number };
 type Props = { apiKey: string; onSave: (report: MedicationSaveAttempt) => Promise<void>; saveDisabled?: boolean; savedRequestId?: string; active?: boolean };
 type CandidatePaging = { page: SearchPagination; request:
   { kind: 'name'; query: string; source: DrugSource; dosageForm: string } | { kind: 'appearance'; observation: MedicationObservation } };
@@ -64,7 +63,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const replaceCandidates = (items: DrugCandidate[]) => { setCandidateItems(items); setCandidatePaging(null); setCandidatePageError(''); setNameSuggestions(null); };
   const [searched, setSearched] = useState(false);
   const [selected, setSelected] = useState<DrugCandidate[]>([]);
-  const [files, setFiles] = useState<Attachment[]>([]);
+  const [files, setFiles] = useState<MedicationAttachment[]>([]);
   const [scanMatches, setScanMatches] = useState<MedicationMatch[]>([]);
   const [scanEngine, setScanEngine] = useState<ScanEngine>('vision');
   const [visionStatus, setVisionStatus] = useState<VisionStatus | null>(null);
@@ -113,6 +112,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
   const scanRunning = busy === 'extract';
   const activeVisionStatus = scanEngine === 'package' ? packageStatus : visionStatus;
   const maxFiles = visualMode ? 2 : 4;
+  const cropFile = files.find(file => file.id === cropId);
   const suggestionRequest = candidatePaging?.request;
   const suggestionQuery = suggestionRequest?.kind === 'name' && suggestionRequest.source === 'tfda' ? suggestionRequest.query :
     suggestionRequest?.kind === 'appearance' && !suggestionRequest.observation.appearance && !suggestionRequest.observation.strength ? suggestionRequest.observation.name : '';
@@ -224,23 +224,37 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
     finally { if (mounted.current && version === searchVersion.current) setBusy(null); }
   }
 
+  function clearPhotoResults() {
+    searchVersion.current++;
+    setScanMatches([]); setOcrPages([]); setVisionResult(null); setObservedPill(null); setVisionImprint('');
+    setScanWarnings([]); setScanProgress(''); setPhotoResultReady(false);
+    replaceCandidates([]); setSearched(false); setNotices([]); setError('');
+  }
+
+  function applyCrop(data: string) {
+    if (!cropFile) throw new Error('照片已移除，請重新選擇。');
+    const cropped = cropAttachment(cropFile, data);
+    const next = files.map(file => file.id === cropFile.id ? cropped : file);
+    assertAttachmentLimits(next);
+    setFiles(next); clearPhotoResults();
+  }
+
   async function addFiles(input: File[]) {
     setError('');
     if (files.length + input.length > maxFiles) { setError(`此模式最多可加入 ${maxFiles} 個檔案。圖片比對請使用同一品項的不同面，勿混入藥盒與藥錠。`); return; }
     if (visualMode && input.some(file => file.type === 'application/pdf')) { setError('PDF 請切換「本機 OCR 讀文字」；藥盒與藥錠比對請使用照片。'); return; }
     if (input.some(file => !ALLOWED_FILE_TYPES.includes(file.type))) { setError('請上傳 JPEG、PNG、WebP 或 PDF 檔案。'); return; }
-    if (input.some(file => file.size > MAX_FILE_BYTES) || [...files, ...input].reduce((n, f) => n + f.size, 0) > MAX_TOTAL_BYTES) {
-      setError('單檔上限 8 MB，全部檔案合計上限 12 MB。'); return;
-    }
+    try { assertAttachmentLimits([...files, ...input]); }
+    catch (e) { setError((e as Error).message); return; }
     setBusy('files');
     try {
-      const additions = await Promise.all(input.map(file => new Promise<Attachment>((resolve, reject) => {
+      const additions = await Promise.all(input.map(file => new Promise<MedicationAttachment>((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = () => resolve({ id: crypto.randomUUID(), name: file.name, data: String(reader.result), type: file.type, size: file.size });
         reader.onerror = () => reject(new Error('無法讀取檔案，請重新選擇。'));
         reader.readAsDataURL(file);
       })));
-      if (mounted.current) { setFiles(prev => [...prev, ...additions]); setScanMatches([]); setOcrPages([]); setVisionResult(null); replaceCandidates([]); setSearched(false); setNotices([]); }
+      if (mounted.current) { setFiles(prev => [...prev, ...additions]); clearPhotoResults(); }
     } catch (e) { if (mounted.current) setError((e as Error).message); }
     finally { if (mounted.current) setBusy(null); }
   }
@@ -478,8 +492,11 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
         {!!files.length && <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">{files.map(file => <div key={file.id} className="relative border rounded-xl p-2">
           {file.type === 'application/pdf' ? <FileText className="h-20 mx-auto text-slate-400" /> : <img src={file.data} alt={file.name} className="w-full h-20 object-contain" />}
           <p className="text-xs truncate mt-2">{file.name}</p>
-          {file.type !== 'application/pdf' && <button type="button" disabled={!!busy} aria-label={`裁切 ${file.name}`} onClick={() => setCropId(file.id)} className="mt-1 text-xs text-emerald-800 underline">裁切照片</button>}
-          <button className="absolute top-1 right-1 bg-white rounded-full p-1 shadow" aria-label={`移除 ${file.name}`} disabled={!!busy} onClick={() => { setFiles(files.filter(f => f.id !== file.id)); setScanMatches([]); setOcrPages([]); setVisionResult(null); replaceCandidates([]); setSearched(false); setNotices([]); }}><X size={14} /></button>
+          <div className="mt-1 flex flex-col items-start gap-2">
+            {file.type !== 'application/pdf' && <button type="button" disabled={!!busy} aria-label={`裁切 ${file.name}`} onClick={() => setCropId(file.id)} className="text-xs text-emerald-800 underline disabled:opacity-50">裁切照片</button>}
+            {file.original && <button type="button" disabled={!!busy} aria-label={`還原原始照片 ${file.original.name}`} onClick={() => { setFiles(files.map(item => item.id === file.id ? restoreAttachment(item) : item)); clearPhotoResults(); }} className="text-xs text-slate-600 underline disabled:opacity-50">還原原始照片</button>}
+          </div>
+          <button className="absolute top-1 right-1 bg-white rounded-full p-1 shadow" aria-label={`移除 ${file.name}`} disabled={!!busy} onClick={() => { setFiles(files.filter(f => f.id !== file.id)); clearPhotoResults(); }}><X size={14} /></button>
         </div>)}</div>}
         {scanEngine === 'vision' && <section aria-label="Ollama 外觀輔助" className="mt-4 rounded-xl border border-sky-200 bg-sky-50/50 p-4">
           <p className="text-sm font-semibold text-slate-800">照片難以比對？讓本機 AI 協助讀外觀</p>
@@ -600,7 +617,7 @@ export default function MedicationPanel({ apiKey, onSave, saveDisabled = false, 
       <details className="rounded-xl border border-slate-200 bg-white p-4 text-xs text-slate-600"><summary className="cursor-pointer font-medium">資料版本、涵蓋範圍與授權</summary>{report.datasets.map(d => <div key={d.source} className="mt-3 space-y-1 break-words"><a href={d.sourceUrl} target="_blank" rel="noreferrer" className="text-emerald-800 underline">{datasetNames[d.source]}</a><p>匯入：{dateText(d.importedAt)} · {d.count.toLocaleString()} 筆</p><p>{d.coverage}</p><p>{d.fileName}</p><p>{d.license}</p></div>)}</details>
     </section>}
 
-    {cropId && files.find(file => file.id === cropId) && <PhotoCropDialog data={files.find(file => file.id === cropId)!.data} onClose={() => setCropId(null)} onApply={data => { setFiles(previous => previous.map(file => file.id === cropId ? { ...file, id: crypto.randomUUID(), data, name: file.name.replace(/\.[^.]+$/, '') + '-裁切.jpg', type: 'image/jpeg', size: Math.ceil(data.split(',')[1].length * 3 / 4) } : file)); setVisionResult(null); setOcrPages([]); setScanMatches([]); replaceCandidates([]); setSearched(false); setNotices([]); }} />}
+    {cropFile && <PhotoCropDialog key={cropFile.id} data={cropFile.data} onClose={() => setCropId(null)} onApply={applyCrop} />}
     {cameraOpen && <CameraDialog onCapture={file => void addFiles([file])} onClose={() => setCameraOpen(false)} />}
   </div>;
 }
